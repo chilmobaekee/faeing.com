@@ -26,11 +26,18 @@
 
     .logo-only {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
 
     .logo-only img {
       height: 12rem; /* 크기를 3배로 증가 */
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: white;
+      margin-top: 5px;
     }
 
     section {
@@ -86,6 +93,7 @@
   <header>
     <div class="logo-only">
       <img src="logo_tb_2.png" alt="faeing logo">
+      <p class="subtitle">당신을 위한, 나만의 스마트 주차스킬</p>
     </div>
   </header>
 
