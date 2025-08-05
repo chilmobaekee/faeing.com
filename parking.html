@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Faeing Parking - 주차 요정</title>
+  <title>faeing parking</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: #fff;
-      color: #111;
+      padding: 0;
     }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
     header {
       background: #000;
-      color: white;
-      padding: 40px 20px;
       text-align: center;
+      padding: 30px 20px 20px;
+      color: white;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
+
+    .logo-only {
+      display: flex;
+      justify-content: center;
     }
-    header p {
-      font-size: 1.2em;
+
+    .logo-only img {
+      height: 12rem; /* 크기를 3배로 증가 */
     }
+
     section {
       padding: 40px 20px;
       max-width: 800px;
       margin: auto;
     }
+
+    section p + .highlight {
+      margin-top: 1em; /* 한 줄 정도 간격 추가 */
+    }
+
     .highlight {
       background: #f0f0f0;
       padding: 20px;
       border-left: 5px solid #000;
     }
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-    }
+
     footer {
       background: #000;
       color: white;
@@ -51,13 +56,37 @@
       padding: 20px;
       font-size: 0.9em;
     }
+
+    #contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 30vh;
+      text-align: center;
+    }
+
+    .home-link {
+      background: #000;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .email-text {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>faeing parking</h1>
-    <p>당신의 위한, 나만의 스마트 주차시스템</p>
+    <div class="logo-only">
+      <img src="logo_tb_2.png" alt="faeing logo">
+    </div>
   </header>
 
   <section>
@@ -74,13 +103,11 @@
         <li>📦 DIY 키트 및 완제품 출시 예정</li>
       </ul>
     </div>
-    <a href="#contact" class="button">문의하기</a>
   </section>
 
   <section id="contact">
-    <h2>문의</h2>
-    <p>faeing parking에 관심이 있으신가요? 아래 이메일로 연락 주세요.</p>
-    <p><strong>📧 parking@faeing.com</strong></p>
+    <a href="index.html" class="home-link">홈으로</a>
+    <p class="email-text">faeing parking에 관심이 있으신가요?<br>📧 parking@faeing.com</p>
   </section>
 
   <footer>
