@@ -3,47 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>faeing run - 달리기 요정</title>
+  <title>faeing run</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: #fff;
-      color: #111;
+      padding: 0;
     }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
     header {
       background: #000;
-      color: white;
-      padding: 40px 20px;
       text-align: center;
+      padding: 30px 20px 20px;
+      color: white;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
+
+    .logo-only {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    header p {
-      font-size: 1.2em;
+
+    .logo-only img {
+      height: 12rem;
     }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: white;
+      margin-top: 5px;
+    }
+
     section {
       padding: 40px 20px;
       max-width: 800px;
       margin: auto;
+      text-align: center;
     }
+
+    section p + .highlight {
+      margin-top: 1em;
+    }
+
     .highlight {
       background: #f0f0f0;
       padding: 20px;
       border-left: 5px solid #000;
-    }
-    .button {
       display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
+      text-align: left;
     }
+
+    .highlight ul {
+      padding-left: 20px;
+    }
+
+    #contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 30vh;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    #contact h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .home-link {
+      background: #000;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .email-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
     footer {
       background: #000;
       color: white;
@@ -56,8 +105,10 @@
 <body>
 
   <header>
-    <h1>faeing run</h1>
-    <p>당신의 위한, 나만의 스마트 페이스메이커</p>
+    <div class="logo-only">
+      <img src="logo_tb_run.png" alt="faeing run logo">
+      <p class="subtitle">당신을 위한, 나만의 스마트 페이스메이커</p>
+    </div>
   </header>
 
   <section>
@@ -74,13 +125,11 @@
         <li>📦 DIY 키트 및 완제품 출시 예정</li>
       </ul>
     </div>
-    <a href="#contact" class="button">문의하기</a>
   </section>
 
   <section id="contact">
-    <h2>문의</h2>
-    <p>faeing run에 관심이 있으신가요? 아래 이메일로 연락 주세요.</p>
-    <p><strong>📧 run@faeing.com</strong></p>
+    <a href="index.html" class="home-link">🏠 홈으로</a>
+    <p class="email-text">faeing run에 관심이 있으신가요?<br>📧 run@faeing.com</p>
   </section>
 
   <footer>
