@@ -1,149 +1,321 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>faeing run</title>
+  <title>Faeing AMM</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     body {
+      margin: 0;
       font-family: 'Noto Sans KR', sans-serif;
-      background: #fff;
-      color: #333;
+      background-color: #f2f2f2;
     }
 
-    header {
-      background: #000;
-      text-align: center;
-      padding: 30px 20px 20px;
-      color: white;
-    }
-
-    .logo-only {
+    .header {
+      height: 20vh;
+      background-color: #000;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .logo-only img {
-      height: 12rem;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      color: white;
-      margin-top: 5px;
-    }
-
-    section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-    }
-
-    section p + .highlight {
-      margin-top: 1em;
-    }
-
-    .highlight {
-      background: #f0f0f0;
-      padding: 20px;
-      border-left: 5px solid #000;
-      display: inline-block;
-      text-align: left;
-    }
-
-    .highlight ul {
-      padding-left: 20px;
-    }
-
-    #contact {
-      display: flex;
-      flex-direction: column;
       justify-content: center;
+      padding: 10px;
+    }
+
+    .header img {
+      height: 100px;
+      margin-bottom: 1px;
+    }
+
+    .header h1 {
+      font-size: 1.2rem;
+      text-align: center;
+      margin: 5px 0 0;
+      color: #ffffff;
+    }
+
+    .main {
+      height: 80vh;
+      background-color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+
+    .form-area {
+      width: 90%;
+      max-width: 900px;
+      background: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      min-height: 30vh;
-      padding: 40px 20px;
-      text-align: center;
+      gap: 30px;
+      border-radius: 12px;
     }
 
-    #contact h2 {
-      margin-bottom: 20px;
-      font-size: 1.8rem;
+    .form-row {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
     }
 
-    .home-link {
-      background: #000;
-      color: white;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-weight: bold;
-      margin-bottom: 20px;
+    .form-row > div {
+      flex: 1;
+      min-width: 250px;
     }
 
-    .email-text {
+    select {
+      width: 100%;
+      padding: 14px;
       font-size: 1.1rem;
-      line-height: 1.6;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
 
-    footer {
-      background: #000;
-      color: white;
+    .checklist {
+      margin-top: 10px;
+    }
+
+    .checklist-item {
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .email-footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
+      font-size: 14px;
+      color: #555;
+      margin-top: 30px;
+    }
+
+    .email-footer a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .email-footer a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      padding: 14px;
+      font-size: 1rem;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
+
+  <script>
+    const symptomChecklist = {
+      "시동": ["배터리 상태 확인", "연료 잔량 확인", "스타터 소리 확인"],
+      "출력": ["엔진 회전수 확인", "가속 레버 상태 확인"],
+      "조향": ["조향오일량 확인", "유압상태 확인"],
+      "전후진": ["전진/후진 기어 선택 여부", "클러치 상태 확인"],
+      "히치": ["상승 하강 작동 확인", "자동 모드 상태 점검"],
+      "PTO": ["PTO 레버 위치", "PTO 작동음 여부"],
+      "수평자동": ["수평 센서 상태", "작동범위 점검"],
+      "레버": ["기어 위치 정확히 확인", "레버 유격 점검"],
+      "로더": ["유압 작동 확인", "유압 레버 위치 확인"],
+      "로타리": ["로타리 회전 여부", "유압 연결 상태", "기어 맞물림 확인"],
+      "소음": ["이상 소음 위치 확인", "벨트 마모 여부 확인"],
+      "누유": ["오일탱크/호스 점검", "오일량 확인"],
+      "누수": ["냉각수 누수 부위 확인", "호스 연결부 점검"]
+    };
+
+    const seasonAdvice = {
+      "봄": {
+        "시동": ["배터리 방전 여부 확인", "연료 상태 점검"],
+        "출력": ["연료 필터 막힘 여부"]
+      },
+      "여름": {
+        "시동": ["냉각수 부족", "연료 증기화 현상"],
+        "소음": ["팬벨트 이완 여부"]
+      },
+      "가을": {
+        "시동": ["습기 누적으로 인한 접촉 불량"],
+        "PTO": ["수분 혼입 여부"]
+      },
+      "겨울": {
+        "시동": ["예열 부족", "연료 결빙", "배터리 효율 저하"],
+        "출력": ["엔진 오일 점도 저하"]
+      }
+    };
+
+    function showChecklist(type) {
+      const checklistContainer = document.getElementById(type === 'symptom' ? "symptom-checklist" : "season-checklist");
+      checklistContainer.innerHTML = "";
+
+      if (type === 'symptom') {
+        const selected = document.getElementById("symptom").value;
+        const list = symptomChecklist[selected];
+        if (!list) return;
+
+        const title = document.createElement("div");
+        title.className = "section-title";
+        title.innerText = "문제 증상 점검 항목";
+        checklistContainer.appendChild(title);
+
+        list.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "checklist-item";
+          div.innerHTML = `<input type="checkbox" id="symptom-${idx}"><label for="symptom-${idx}">${idx + 1}. ${item}</label>`;
+          checklistContainer.appendChild(div);
+        });
+      }
+
+      if (type === 'season') {
+        const season = document.getElementById("season").value;
+        const symptom = document.getElementById("symptom").value;
+
+        if (!season || !symptom) {
+          checklistContainer.innerHTML = "<div class='section-title'>계절과 문제 증상을 모두 선택해 주세요.</div>";
+          return;
+        }
+
+        const title = document.createElement("div");
+        title.className = "section-title";
+        title.innerText = `기본사항 점검 항목 (${season} / ${symptom})`;
+        checklistContainer.appendChild(title);
+
+        // ✅ 시동이면 고정 항목 먼저 출력
+        if (symptom === "시동") {
+          const basicStartItems = [
+            "전후진 레버가 중립에 있는가?",
+            "PTO 스위치가 해제되어 있는가?",
+            "클러치를 밟았는가?"
+          ];
+          basicStartItems.forEach((item, idx) => {
+            const div = document.createElement("div");
+            div.className = "checklist-item";
+            div.innerHTML = `<input type="checkbox" id="season-basic-${idx}"><label for="season-basic-${idx}">${idx + 1}. ${item}</label>`;
+            checklistContainer.appendChild(div);
+          });
+        }
+
+        // 계절별 추가 항목
+        const extraList = (seasonAdvice[season] && seasonAdvice[season][symptom]) || [];
+        extraList.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "checklist-item";
+          div.innerHTML = `<input type="checkbox" id="season-extra-${idx}"><label for="season-extra-${idx}">+ ${item}</label>`;
+          checklistContainer.appendChild(div);
+        });
+      }
+    }
+  </script>
 </head>
 <body>
 
-  <header>
-    <div class="logo-only">
-      <img src="logo_tb_amm.png" alt="faeing run logo">
-      <p class="subtitle">당신을 위한, 나만의 스마트 페이스메이커</p>
-    </div>
-  </header>
-
-  <section>
-    <h2>제품 소개</h2>
-    <p>
-      faeing run은 초보부터 마라톤 선수까지 누구나 사용할 수 있는 개인 속도 조절 헬퍼입니다.<br>
-      초음파 센서와 디스플레이, 무선 리모컨으로 간편하게 속도를 설정하고 실시간으로 확인하세요.
-    </p>
-    <div class="highlight">
-      <ul>
-        <li>🚶 초보자도 쉽게 사용 가능한 직관적인 설계</li>
-        <li>⚙️ 속도 표시, 경고, 충전 기능 탑재</li>
-        <li>🔋 12V 배터리 기반으로 장시간 사용 가능</li>
-        <li>📦 DIY 키트 및 완제품 출시 예정</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="contact">
-    <p class="email-text">faeing run에 관심이 있으신가요?<br>📧 run@faeing.com</p>
-  <div style="margin-top: 30px; text-align: center;">
-    <a href="index.html" style="
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    ">🏠 홈화면</a>
+  <div class="header">
+    <img src="logo_tb_amm.png" alt="Faeing 로고" />
+    <h1>Faeing AMM<br>농기계 문제, 스스로 진단해보세요!</h1>
   </div>
-</section>
-  <footer>
-    &copy; 2025 faeing. All rights reserved.
-  </footer>
+
+  <div class="main">
+    <div class="form-area">
+
+      <div class="form-row">
+        <div>
+          <label>업체명</label>
+          <select id="company">
+            <option value="">선택하세요</option>
+            <option value="대동">대동</option>
+            <option value="LS">LS</option>
+            <option value="국제">국제</option>
+            <option value="얀마">얀마</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div>
+          <label>기종</label>
+          <select id="machine">
+            <option value="">선택하세요</option>
+            <option value="트랙터">트랙터</option>
+            <option value="콤바인">콤바인</option>
+            <option value="이앙기">이앙기</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>계절</label>
+          <select id="season">
+            <option value="">선택하세요</option>
+            <option value="봄">봄</option>
+            <option value="여름">여름</option>
+            <option value="가을">가을</option>
+            <option value="겨울">겨울</option>
+          </select>
+          <button onclick="showChecklist('season')">기본사항 확인</button>
+          <div class="checklist" id="season-checklist"></div>
+        </div>
+
+        <div>
+          <label>문제 증상</label>
+          <select id="symptom">
+            <option value="">선택하세요</option>
+            <option value="시동">① 시동</option>
+            <option value="출력">② 출력</option>
+            <option value="조향">③ 조향</option>
+            <option value="전후진">④ 전후진</option>
+            <option value="히치">⑤ 히치</option>
+            <option value="PTO">⑥ PTO</option>
+            <option value="수평자동">⑦ 수평</option>
+            <option value="레버">⑧ 레버</option>
+            <option value="로더">⑨ 로더</option>
+            <option value="로타리">⑩ 로타리</option>
+            <option value="소음">⑪ 소음</option>
+            <option value="누유">⑫ 누유</option>
+            <option value="누수">⑬ 누수</option>
+          </select>
+          <button onclick="showChecklist('symptom')">문제 확인</button>
+          <div class="checklist" id="symptom-checklist"></div>
+        </div>
+      </div>
+
+      <div class="email-footer">
+        점검만으로 원인을 확신하기 어렵거나 문제가 복합적인 경우,<br>
+        <strong>가까운 정비소나 대리점에 상담을 요청</strong>해 주세요.<br>
+        이메일 문의: <a href="mailto:amm@faeing.com">amm@faeing.com</a>
+      </div>
+
+      <div style="margin-top: 30px; text-align: center;">
+        <a href="index.html" style="
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #333;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 6px;
+          font-weight: bold;
+        ">🏠 홈화면</a>
+      </div>
+
+    </div>
+  </div>
 
 </body>
 </html>
