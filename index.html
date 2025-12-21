@@ -1,276 +1,341 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Faeing</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing</title>
 
-<!-- 필기체 폰트 -->
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <!-- 필기체 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-<style>
-/* ===== 기본 ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  <style>
+    /* =========================
+       기본 리셋 / 바디
+    ========================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-    font-family: "Times New Roman", serif;
-    background: #f9faf7;
-    color: #222;
-    min-height: 100vh;
-}
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
+      color: #222;
+      min-height: 100vh;
+    }
 
-/* ===== 상단바 ===== */
-.navbar {
-    width: 100%;
-    padding: 20px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #F2F1EE;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-}
+    /* =========================
+       상단바 (Navbar)
+    ========================= */
+    .navbar {
+      width: 100%;
+      height: 56px;                  /* 기준 높이 */
+      padding: 0 32px;               /* 좌우만 패딩 */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
 
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;                  /* 긴 메뉴 때문에 깨지는 것 방지 */
+    }
 
-.nav-logo {
-    width: 32px;
-}
+    /* 상단바 로고 */
+    .nav-logo {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
 
-.nav-brand {
-    font-size: 20px;
-    letter-spacing: 0.08em;
-    margin-right: 16px;
-}
+    /* 브랜드 텍스트 */
+    .nav-brand {
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      margin-right: 16px;
+      white-space: nowrap;
+    }
 
-/* ===== 메뉴 ===== */
-.nav-menu {
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    letter-spacing: 0.08em;
-}
+    /* 메뉴 */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;           /* 줄바꿈 방지 */
+    }
 
-.nav-menu a {
-    text-decoration: none;
-    color: #222;
-    opacity: 0.75;
-}
+    .nav-menu a {
+      text-decoration: none;
+      font-weight: 500;              /* 더 진하게 */
+      color: #111;                   /* 더 진하게 */
+      opacity: 1;
 
-.nav-menu a:hover {
-    opacity: 1;
-}
+      /* 흔들림/정렬 안정화 */
+      display: inline-flex;
+      align-items: center;
+    }
 
-.nav-menu span.separator {
-    margin: 0 12px;
-    opacity: 0.4;
-}
+    .nav-menu a:hover {
+      opacity: 1;
+    }
 
-/* ===== 영문 → 한글 전환 (추가된 부분) ===== */
-.hover-word {
-    position: relative;
-    display: inline-block;
-}
+    .nav-menu .separator {
+      opacity: 0.4;
+      margin: 0 2px;                 /* gap과 조화 */
+    }
 
-.hover-word .ko {
-    display: none;
-}
+    /* =========================
+       메뉴 영문 → 한글 전환
+       (흔들림 방지: grid + opacity)
+    ========================= */
+    .hover-word {
+      display: inline-grid;          /* 두 텍스트 겹침 + 폭 안정 */
+      align-items: center;
+      text-align: center;
+    }
 
-.hover-word:hover .en {
-    display: none;
-}
+    .hover-word .en,
+    .hover-word .ko {
+      grid-area: 1 / 1;              /* 같은 자리에 겹치기 */
+      transition: opacity 0.15s ease;
+    }
 
-.hover-word:hover .ko {
-    display: inline;
-}
+    .hover-word .ko { opacity: 0; }
+    .hover-word:hover .en { opacity: 0; }
+    .hover-word:hover .ko { opacity: 1; }
 
-/* ===== 우측 영역 ===== */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+    /* =========================
+       우측 영역 (검색/버튼)
+    ========================= */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-/* 검색창 */
-.nav-search {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 999px;
-    background: rgba(0,0,0,0.04);
-    font-size: 13px;
-    color: #333;
-    outline: none;
-}
+    /* 검색창 */
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 220px;
+    }
 
-.nav-search::placeholder {
-    color: rgba(0,0,0,0.35);
-}
+    .nav-search::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
 
-/* 버튼 공통 */
-.nav-btn {
-    border: none;
-    border-radius: 999px;
-    padding: 7px 16px;
-    font-size: 13px;
-    cursor: pointer;
-    background: transparent;
-    transition: background 0.2s ease;
-}
+    /* 버튼 공통 */
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
 
-.login-btn {
-    color: rgba(0,0,0,0.6);
-}
+    .login-btn {
+      color: rgba(0,0,0,0.6);
+    }
 
-.login-btn:hover {
-    background: rgba(0,0,0,0.04);
-}
+    .login-btn:hover {
+      background: rgba(0,0,0,0.04);
+    }
 
-.signup-btn {
-    color: rgba(0,0,0,0.65);
-    background: rgba(0,0,0,0.02);
-}
+    .signup-btn {
+      color: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.02);
+    }
 
-.signup-btn:hover {
-    background: rgba(0,0,0,0.06);
-}
+    .signup-btn:hover {
+      background: rgba(0,0,0,0.06);
+    }
 
-/* ===== 메인 영역 ===== */
-.main-area {
-    height: calc(100vh - 90px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    /* =========================
+       메인 영역
+    ========================= */
+    .main-area {
+      min-height: calc(100vh - 56px); /* 상단바 높이만큼 빼기 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px;
+    }
 
-.logo-wrapper {
-    text-align: center;
-}
+    .logo-wrapper {
+      text-align: center;
+    }
 
-.logo-wrapper img {
-    max-width: 60vw;
-    max-height: 60vh;
-    min-width: 180px;
-    width: auto;
-    height: auto;
-    margin-bottom: 32px;
-}
+    /* 메인 로고 (적응형) */
+    .main-logo {
+      max-width: 60vw;
+      max-height: 60vh;
+      min-width: 180px;
+      width: auto;
+      height: auto;
+      margin-bottom: 32px;
+      display: block;
+    }
 
-.title-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-}
+    /* 문구 + 장식 */
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
 
-.title-text {
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: clamp(16px, 2vw, 20px);
-    letter-spacing: 0.08em;
-    opacity: 0.65;
-}
+    /* 속삭임 문구 */
+    .title-text {
+      font-family: "Nanum Pen Script", cursive;
+      font-size: clamp(16px, 2vw, 20px);
+      letter-spacing: 0.08em;
+      opacity: 0.65;
+      white-space: nowrap;
+    }
 
-.ornament {
-    width: 70px;
-    height: 1px;
-    background: #CBBDA5;
-    position: relative;
-}
+    /* 장식선 */
+    .ornament {
+      width: 70px;
+      height: 1px;
+      background: #CBBDA5;
+      position: relative;
+    }
 
-.ornament-left::after,
-.ornament-right::after {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #CBBDA5;
-    position: absolute;
-    top: -3px;
-}
+    .ornament-left::after,
+    .ornament-right::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #CBBDA5;
+      position: absolute;
+      top: -3px;
+    }
 
-.ornament-left::after { right: -3px; }
-.ornament-right::after { left: -3px; }
-</style>
+    .ornament-left::after { right: -3px; }
+    .ornament-right::after { left: -3px; }
+
+    /* =========================
+       반응형 (모바일)
+    ========================= */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 16px;
+      }
+
+      .nav-brand {
+        font-size: 18px;
+        margin-right: 10px;
+      }
+
+      .nav-logo {
+        height: 30px;
+      }
+
+      .nav-search {
+        width: 140px;
+      }
+
+      /* 모바일에선 메뉴 숨김(원하면 햄버거로 바꾸자) */
+      .nav-menu {
+        display: none;
+      }
+
+      .title-text {
+        white-space: normal;
+        text-align: center;
+        padding: 0 8px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<!-- ===== 상단바 ===== -->
-<div class="navbar">
+  <!-- ===== 상단바 ===== -->
+  <div class="navbar">
     <div class="nav-left">
-        <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
-        <span class="nav-brand">Faeing</span>
+      <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
+      <span class="nav-brand">Faeing</span>
 
-        <div class="nav-menu">
-            <a href="#">
-             <span class="hover-word" style="min-width:5.5em;">
-                <span class="en">Communi</span>
-                <span class="ko">소통</span>
-              </span>
-            </a>
-            <span class="separator">/</span>
+      <div class="nav-menu">
+        <a href="#">
+          <span class="hover-word" style="min-width:5.5em;">
+            <span class="en">Communi</span>
+            <span class="ko">소통</span>
+          </span>
+        </a>
+        <span class="separator">/</span>
 
-            <a href="#">
-             <span class="hover-word" style="min-width:4em;">
-                <span class="en">Run</span>
-                <span class="ko">달리기</span>
-              </span>
-            </a>
-            <span class="separator">/</span>
+        <a href="#">
+          <span class="hover-word" style="min-width:4em;">
+            <span class="en">Run</span>
+            <span class="ko">달리기</span>
+          </span>
+        </a>
+        <span class="separator">/</span>
 
-            <a href="#">
-             <span class="hover-word" style="min-width:4em;">
-                <span class="en">Drive</span>
-                <span class="ko">운전</span>
-              </span>
-            </a>
-            <span class="separator">/</span>
+        <a href="#">
+          <span class="hover-word" style="min-width:4em;">
+            <span class="en">Drive</span>
+            <span class="ko">운전</span>
+          </span>
+        </a>
+        <span class="separator">/</span>
 
-            <a href="#">
-             <span class="hover-word" style="min-width:5em;">
-                <span class="en">Parking</span>
-                <span class="ko">주차</span>
-              </span>
-            </a>
-            <span class="separator">/</span>
+        <a href="#">
+          <span class="hover-word" style="min-width:5em;">
+            <span class="en">Parking</span>
+            <span class="ko">주차</span>
+          </span>
+        </a>
+        <span class="separator">/</span>
 
-            <a href="#">
-             <span class="hover-word" style="min-width:4em;">
-                <span class="en">AMM</span>
-                <span class="ko">농기계</span>
-              </span>
-            </a>
-        </div>
+        <a href="#">
+          <span class="hover-word" style="min-width:4em;">
+            <span class="en">AMM</span>
+            <span class="ko">농기계</span>
+          </span>
+        </a>
+      </div>
     </div>
 
     <div class="nav-right">
-        <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
-        <button class="nav-btn login-btn">Login</button>
-        <button class="nav-btn signup-btn">Sign Up</button>
+      <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
+      <button class="nav-btn login-btn">Login</button>
+      <button class="nav-btn signup-btn">Sign Up</button>
     </div>
-</div>
+  </div>
 
-<!-- ===== 메인 영역 ===== -->
-<div class="main-area">
+  <!-- ===== 메인 영역 ===== -->
+  <div class="main-area">
     <div class="logo-wrapper">
-        <img src="assets/images/logo.png" alt="Faeing">
+      <img src="assets/images/logo.png" alt="Faeing" class="main-logo">
 
-        <div class="title-wrap">
-            <div class="ornament ornament-left"></div>
-            <div class="title-text">사람과 시스템을 잇는 따뜻함</div>
-            <div class="ornament ornament-right"></div>
-        </div>
+      <div class="title-wrap">
+        <div class="ornament ornament-left"></div>
+        <div class="title-text">사람과 시스템을 잇는 따뜻함</div>
+        <div class="ornament ornament-right"></div>
+      </div>
     </div>
-</div>
-
+  </div>
 </body>
 </html>
+
+
 
 
 
