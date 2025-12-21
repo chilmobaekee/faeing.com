@@ -1,1 +1,14 @@
+/* ===== Header 기본 규칙 ===== */
+header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+/* ===== 좌측 상단 로고 ===== */
+.header-logo {
+  height: 36px;
+  width: auto;
+}
 
