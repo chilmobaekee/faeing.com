@@ -194,28 +194,33 @@ body {
 /* =========================
    메뉴 영문 → 한글 전환 (흔들림 방지)
 ========================= */
-.hover-word{
-  display: inline-grid;       /* 두 텍스트를 겹치고, 폭은 더 긴 쪽으로 고정 */
+.hover-word {
+  display: inline-grid;
   align-items: center;
+  position: relative;
+
+  /* ✨ 핵심 */
+  min-width: 3.5em;     /* 단어 길이에 맞게 조절 */
+  text-align: center;
 }
 
 .hover-word .en,
-.hover-word .ko{
-  grid-area: 1 / 1;           /* 같은 위치에 겹치기 */
+.hover-word .ko {
+  grid-area: 1 / 1;
+  transition: opacity 0.15s ease;
 }
 
-.hover-word .ko{
+.hover-word .ko {
   opacity: 0;
 }
 
-.hover-word:hover .en{
+.hover-word:hover .en {
   opacity: 0;
 }
 
-.hover-word:hover .ko{
+.hover-word:hover .ko {
   opacity: 1;
 }
-
 
 /* =========================
    반응형 (모바일)
