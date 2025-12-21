@@ -191,36 +191,23 @@ body {
 
 .ornament-left::after { right: -3px; }
 .ornament-right::after { left: -3px; }
-/* =========================
-   메뉴 영문 → 한글 전환 (흔들림 방지)
-========================= */
-.hover-word {
-  display: inline-grid;
-  align-items: center;
-  position: relative;
 
-  /* ✨ 핵심 */
-  min-width: 3.5em;     /* 단어 길이에 맞게 조절 */
+/* ===== 영문 → 한글 전환 (흔들림 방지 완성형) ===== */
+.hover-word{
+  display: inline-grid;      /* 두 텍스트 겹침 + 폭 안정 */
+  align-items: center;
   text-align: center;
 }
 
 .hover-word .en,
-.hover-word .ko {
-  grid-area: 1 / 1;
+.hover-word .ko{
+  grid-area: 1 / 1;          /* 같은 자리에 겹치기 */
   transition: opacity 0.15s ease;
 }
 
-.hover-word .ko {
-  opacity: 0;
-}
-
-.hover-word:hover .en {
-  opacity: 0;
-}
-
-.hover-word:hover .ko {
-  opacity: 1;
-}
+.hover-word .ko{ opacity: 0; }
+.hover-word:hover .en{ opacity: 0; }
+.hover-word:hover .ko{ opacity: 1; }
 
 /* =========================
    반응형 (모바일)
@@ -244,9 +231,10 @@ body {
   }
 
   /* 모바일에선 메뉴 숨김(원하면 햄버거로 바꾸자) */
-  .nav-menu {
-    display: none;
-  }
+  .nav-menu a{
+  display: inline-flex;
+  align-items: center;
+}
 
   .title-text {
     white-space: normal;
