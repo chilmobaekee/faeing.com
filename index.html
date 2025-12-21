@@ -30,7 +30,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #F2F1EE;                 /* 상단바 배경 */
+    background: #F2F1EE;
     border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
@@ -50,7 +50,7 @@ body {
     margin-right: 16px;
 }
 
-/* 메뉴 */
+/* ===== 메뉴 ===== */
 .nav-menu {
     display: flex;
     align-items: center;
@@ -68,9 +68,27 @@ body {
     opacity: 1;
 }
 
-.nav-menu span {
+.nav-menu span.separator {
     margin: 0 12px;
     opacity: 0.4;
+}
+
+/* ===== 영문 → 한글 전환 (추가된 부분) ===== */
+.hover-word {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-word .ko {
+    display: none;
+}
+
+.hover-word:hover .en {
+    display: none;
+}
+
+.hover-word:hover .ko {
+    display: inline;
 }
 
 /* ===== 우측 영역 ===== */
@@ -97,7 +115,7 @@ body {
 
 /* 버튼 공통 */
 .nav-btn {
-    border: none;                       /* 테두리 완전 제거 */
+    border: none;
     border-radius: 999px;
     padding: 7px 16px;
     font-size: 13px;
@@ -106,7 +124,6 @@ body {
     transition: background 0.2s ease;
 }
 
-/* Login 버튼 */
 .login-btn {
     color: rgba(0,0,0,0.6);
 }
@@ -115,10 +132,9 @@ body {
     background: rgba(0,0,0,0.04);
 }
 
-/* Sign Up 버튼 */
 .signup-btn {
     color: rgba(0,0,0,0.65);
-    background: rgba(0,0,0,0.02);       /* 아주 옅은 면 */
+    background: rgba(0,0,0,0.02);
 }
 
 .signup-btn:hover {
@@ -137,7 +153,6 @@ body {
     text-align: center;
 }
 
-/* 메인 로고 (적응형) */
 .logo-wrapper img {
     max-width: 60vw;
     max-height: 60vh;
@@ -147,7 +162,6 @@ body {
     margin-bottom: 32px;
 }
 
-/* 문구 + 장식 */
 .title-wrap {
     display: flex;
     align-items: center;
@@ -155,7 +169,6 @@ body {
     gap: 14px;
 }
 
-/* 속삭임 문구 */
 .title-text {
     font-family: 'Nanum Pen Script', cursive;
     font-size: clamp(16px, 2vw, 20px);
@@ -163,7 +176,6 @@ body {
     opacity: 0.65;
 }
 
-/* 장식선 */
 .ornament {
     width: 70px;
     height: 1px;
@@ -189,18 +201,41 @@ body {
 
 <body>
 
-<!-- 상단바 -->
+<!-- ===== 상단바 ===== -->
 <div class="navbar">
     <div class="nav-left">
         <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
         <span class="nav-brand">Faeing</span>
 
         <div class="nav-menu">
-            <a href="#">Communi</a><span>/</span>
-            <a href="#">Run</a><span>/</span>
-            <a href="#">Drive</a><span>/</span>
-            <a href="#">Parking</a><span>/</span>
-            <a href="#">AMM</a>
+            <a href="#" class="hover-word">
+                <span class="en">Communi</span>
+                <span class="ko">소통</span>
+            </a>
+            <span class="separator">/</span>
+
+            <a href="#" class="hover-word">
+                <span class="en">Run</span>
+                <span class="ko">달리기</span>
+            </a>
+            <span class="separator">/</span>
+
+            <a href="#" class="hover-word">
+                <span class="en">Drive</span>
+                <span class="ko">운전</span>
+            </a>
+            <span class="separator">/</span>
+
+            <a href="#" class="hover-word">
+                <span class="en">Parking</span>
+                <span class="ko">주차</span>
+            </a>
+            <span class="separator">/</span>
+
+            <a href="#" class="hover-word">
+                <span class="en">AMM</span>
+                <span class="ko">농기계</span>
+            </a>
         </div>
     </div>
 
@@ -211,11 +246,10 @@ body {
     </div>
 </div>
 
-<!-- 메인 영역 -->
+<!-- ===== 메인 영역 ===== -->
 <div class="main-area">
     <div class="logo-wrapper">
-        <img src="assets/images/logo.png" alt="Faeing" class="main-logo">
-
+        <img src="assets/images/logo.png" alt="Faeing">
 
         <div class="title-wrap">
             <div class="ornament ornament-left"></div>
@@ -227,6 +261,7 @@ body {
 
 </body>
 </html>
+
 
 
 
