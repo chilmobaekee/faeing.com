@@ -60,17 +60,23 @@ body {
   white-space: nowrap;              /* 줄바꿈 방지 */
 }
 
+/* 메뉴 링크(진하게) */
 .nav-menu a {
   text-decoration: none;
   font-weight: 500;
   color: #111;
   opacity: 1;
+
+  /* 흔들림/정렬 안정화 */
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-menu a:hover {
   opacity: 1;
 }
 
+/* 구분자(/) */
 .nav-menu span {
   opacity: 0.4;
 }
@@ -193,16 +199,18 @@ body {
 .ornament-left::after { right: -3px; }
 .ornament-right::after { left: -3px; }
 
-/* ===== 영문 → 한글 전환 (흔들림 방지 완성형) ===== */
+/* =========================
+   메뉴 영문 → 한글 전환 (흔들림 방지)
+========================= */
 .hover-word{
-  display: inline-grid;      /* 두 텍스트 겹침 + 폭 안정 */
+  display: inline-grid;             /* 두 텍스트 겹침 + 폭 안정 */
   align-items: center;
   text-align: center;
 }
 
 .hover-word .en,
 .hover-word .ko{
-  grid-area: 1 / 1;          /* 같은 자리에 겹치기 */
+  grid-area: 1 / 1;                 /* 같은 자리에 겹치기 */
   transition: opacity 0.15s ease;
 }
 
@@ -232,10 +240,9 @@ body {
   }
 
   /* 모바일에선 메뉴 숨김(원하면 햄버거로 바꾸자) */
-  .nav-menu a{
-  display: inline-flex;
-  align-items: center;
-}
+  .nav-menu {
+    display: none;
+  }
 
   .title-text {
     white-space: normal;
@@ -243,4 +250,5 @@ body {
     padding: 0 8px;
   }
 }
+
 
