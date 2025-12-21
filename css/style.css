@@ -191,6 +191,25 @@ body {
 
 .ornament-left::after { right: -3px; }
 .ornament-right::after { left: -3px; }
+/* =========================
+   메뉴 영문 → 한글 전환
+========================= */
+.hover-word {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-word .ko {
+  display: none;
+}
+
+.hover-word:hover .en {
+  display: none;
+}
+
+.hover-word:hover .ko {
+  display: inline;
+}
 
 /* =========================
    반응형 (모바일)
