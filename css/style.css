@@ -1,20 +1,42 @@
-/* 상단바 전체 */
-.navbar {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
+/* =========================
+   기본 리셋 / 바디
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* 왼쪽 묶음(로고+브랜드+메뉴) */
+body {
+  font-family: "Times New Roman", serif;
+  background: #f9faf7;
+  color: #222;
+  min-height: 100vh;
+}
+
+/* =========================
+   상단바 (Navbar)
+========================= */
+.navbar {
+  width: 100%;
+  height: 56px;                     /* 기준 높이 */
+  padding: 0 32px;                  /* 좌우만 패딩 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F2F1EE;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  min-width: 0;                     /* 긴 메뉴 때문에 깨지는 것 방지 */
 }
 
-/* 로고 사이즈 (지금 class="logo" 이니까 .logo로 잡자) */
-.logo {
+/* 상단바 로고 */
+.nav-logo {
   height: 36px;
   width: auto;
   display: block;
@@ -22,19 +44,184 @@
 
 /* 브랜드 텍스트 */
 .nav-brand {
-  font-weight: 700;
-  font-size: 18px;
-}
-
-/* 메뉴 줄바꿈 방지 + 정렬 */
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  margin-right: 16px;
   white-space: nowrap;
 }
 
-/* 메뉴 링크 기본 */
+/* 메뉴 */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;              /* 줄바꿈 방지 */
+}
+
 .nav-menu a {
   text-decoration: none;
+  color: #222;
+  opacity: 0.75;
 }
+
+.nav-menu a:hover {
+  opacity: 1;
+}
+
+.nav-menu span {
+  opacity: 0.4;
+}
+
+/* =========================
+   우측 영역 (검색/버튼)
+========================= */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 검색창 */
+.nav-search {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.04);
+  font-size: 13px;
+  color: #333;
+  outline: none;
+  width: 220px;
+}
+
+.nav-search::placeholder {
+  color: rgba(0,0,0,0.35);
+}
+
+/* 버튼 공통 */
+.nav-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.login-btn {
+  color: rgba(0,0,0,0.6);
+}
+
+.login-btn:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.signup-btn {
+  color: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.02);
+}
+
+.signup-btn:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+/* =========================
+   메인 영역
+========================= */
+.main-area {
+  min-height: calc(100vh - 56px);   /* 상단바 높이만큼 빼기 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+.logo-wrapper {
+  text-align: center;
+}
+
+/* 메인 로고 (적응형) */
+.main-logo {
+  max-width: 60vw;
+  max-height: 60vh;
+  min-width: 180px;
+  width: auto;
+  height: auto;
+  margin-bottom: 32px;
+  display: block;
+}
+
+/* 문구 + 장식 */
+.title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* 속삭임 문구 */
+.title-text {
+  font-family: "Nanum Pen Script", cursive;
+  font-size: clamp(16px, 2vw, 20px);
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+/* 장식선 */
+.ornament {
+  width: 70px;
+  height: 1px;
+  background: #CBBDA5;
+  position: relative;
+}
+
+.ornament-left::after,
+.ornament-right::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #CBBDA5;
+  position: absolute;
+  top: -3px;
+}
+
+.ornament-left::after { right: -3px; }
+.ornament-right::after { left: -3px; }
+
+/* =========================
+   반응형 (모바일)
+========================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .nav-brand {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .nav-logo {
+    height: 30px;
+  }
+
+  .nav-search {
+    width: 140px;
+  }
+
+  /* 모바일에선 메뉴 숨김(원하면 햄버거로 바꾸자) */
+  .nav-menu {
+    display: none;
+  }
+
+  .title-text {
+    white-space: normal;
+    text-align: center;
+    padding: 0 8px;
+  }
+}
+
