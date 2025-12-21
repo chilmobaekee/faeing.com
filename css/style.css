@@ -1,14 +1,40 @@
-/* ===== Header 기본 규칙 ===== */
-header {
+/* 상단바 전체 */
+.navbar {
   height: 56px;
   display: flex;
   align-items: center;
   padding: 0 16px;
 }
 
-/* ===== 좌측 상단 로고 ===== */
-.header-logo {
-  height: 36px;
-  width: auto;
+/* 왼쪽 묶음(로고+브랜드+메뉴) */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
+/* 로고 사이즈 (지금 class="logo" 이니까 .logo로 잡자) */
+.logo {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+/* 브랜드 텍스트 */
+.nav-brand {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* 메뉴 줄바꿈 방지 + 정렬 */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* 메뉴 링크 기본 */
+.nav-menu a {
+  text-decoration: none;
+}
