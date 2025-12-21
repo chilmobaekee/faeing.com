@@ -62,6 +62,7 @@ body {
 
 .nav-menu a {
   text-decoration: none;
+  font-weight: 500;
   color: #111;
   opacity: 1;
 }
