@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing Communi</title>
+
+  <meta name="description" content="진심이 닿는 말, 마음이 닿는 사람 — Faeing Communi">
+  <meta property="og:title" content="Faeing Communi">
+  <meta property="og:description" content="소통은 기술이 아니라 관계입니다.">
+  <meta property="og:image" content="https://faeing.com/og-image.png">
+  <meta property="og:url" content="https://faeing.com/communi.html">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       기본 리셋 / 바디  (메인과 동일)
+    ========================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    /* =========================
+       상단바 (메인과 동일)
+    ========================= */
+    .navbar {
+      width: 100%;
+      height: 56px;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .nav-logo { height: 36px; width: auto; display: block; }
+
+    .nav-brand {
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      margin-right: 16px;
+      white-space: nowrap;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #111;
+      opacity: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-menu .separator { opacity: 0.4; margin: 0 2px; }
+
+    .hover-word {
+      display: inline-grid;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hover-word .en, .hover-word .ko {
+      grid-area: 1 / 1;
+      transition: opacity 0.15s ease;
+    }
+
+    .hover-word .ko { opacity: 0; }
+    .hover-word:hover .en { opacity: 0; }
+    .hover-word:hover .ko { opacity: 1; }
+
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 220px;
+    }
+
+    .nav-search::placeholder { color: rgba(0,0,0,0.35); }
+
+    /* =========================
+       메인 영역 (Communi용)
+    ========================= */
+    .main-area {
+      min-height: calc(100vh - 56px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 28px 16px 40px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .page-desc {
+      opacity: 0.7;
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+
+    /* 카드 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .comm-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.04);
+      transition: transform 0.15s ease;
+      cursor: pointer;
+    }
+
+    .comm-card:hover { transform: translateY(-3px); }
+
+    .comm-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .comm-card p {
+      font-size: 14px;
+      opacity: 0.65;
+      line-height: 1.55;
+    }
+
+    /* 손글씨 하단 문구 */
+    .soft-quote {
+      margin-top: 46px;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .soft-quote .line {
+      font-family: "Nanum Pen Script", cursive;
+      font-size: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    .ornament {
+      width: 70px;
+      height: 1px;
+      background: #CBBDA5;
+      position: relative;
+      margin: 18px auto 12px;
+    }
+    .ornament::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #CBBDA5;
+      position: absolute;
+      top: -3px;
+      left: calc(50% - 3p
