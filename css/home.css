@@ -1,241 +1,123 @@
-/* =================================================
-   home.css
-   역할:
-   - 메인(index)
-   - RUN(run)
-   - tools 등 "메인급 페이지" 공통 스타일
-   ================================================= */
+/* =====================================================
+   HOME SUB LAYER
+   - 메인(Home) 화면 전용
+   - style.css 위에 덮어쓰는 레이어
+   - 공통 컴포넌트 생성 금지
+===================================================== */
 
-/* ===== Page ===== */
-.page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 28px 20px 64px;
+/* =========================
+   HOME ENTRY
+========================= */
+
+.home-entry {
+  margin-top: 40px;
 }
 
-/* =================================================
-   Hero
-   ================================================= */
-.hero {
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
+/* 메인에서만 질문 문장을 조금 더 강조 */
+.home-entry .amm-question {
+  font-size: 32px;
+  line-height: 1.3;
+}
+
+/* =========================
+   HOME GRID TUNING
+========================= */
+
+/* 메인에서는 카드 간격을 조금 더 여유 있게 */
+.home-entry .amm-grid {
   gap: 18px;
-  align-items: stretch;
-  margin-top: 12px;
 }
 
-.hero-inner {
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 18px;
-  padding: 26px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+/* 메인에서는 카드가 조금 더 커 보이도록 */
+.home-entry .amm-card {
+  padding: 22px 20px;
 }
 
-.kicker {
-  font-size: 14px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.55);
-  margin-bottom: 10px;
+/* =========================
+   HOME CARD ORDER
+========================= */
+
+/* 메인에서만 카드 순서 조정이 필요할 경우 */
+.home-entry .amm-card.is-primary {
+  order: -1;
 }
 
-.hero-title {
-  font-size: 34px;
-  line-height: 1.15;
-  margin-bottom: 12px;
+/* =========================
+   HOME SECTION
+========================= */
+
+.home-section {
+  margin-top: 48px;
 }
 
-.hero-desc {
-  font-size: 16px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.72);
-  margin-bottom: 18px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* 오른쪽 카드 */
-.hero-card {
-  background: #F2F1EE;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.05);
-}
-
-.hero-card-title {
-  font-weight: 700;
+/* 메인 섹션 제목 */
+.home-section-title {
+  font-size: 20px;
   margin-bottom: 14px;
+  letter-spacing: -0.2px;
 }
 
-.hero-card-list .row {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px dashed rgba(0,0,0,0.12);
-}
-.hero-card-list .row:last-child {
-  border-bottom: none;
+/* 메인 섹션 설명 */
+.home-section-desc {
+  font-size: 14px;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 20px;
 }
 
-.mini-link {
-  display: inline-block;
-  margin-top: 12px;
-  color: rgba(0,0,0,0.7);
-  text-decoration: none;
-}
-.mini-link:hover {
-  text-decoration: underline;
-}
+/* =========================
+   HOME SERVICE LIST
+========================= */
 
-/* =================================================
-   Section 공통
-   ================================================= */
-.section {
-  margin-top: 28px;
-}
-
-.section-head {
-  margin-bottom: 12px;
-}
-
-.section-title {
-  font-size: 22px;
-  margin-bottom: 4px;
-}
-
-.section-desc {
-  color: rgba(0,0,0,0.68);
-  line-height: 1.6;
-}
-
-/* =================================================
-   Service Cards (메인 핵심)
-   ================================================= */
-.services-grid {
+/* 메인 서비스 목록 레이아웃 */
+.home-services {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
-.service-card {
-  display: block;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 18px;
-  padding: 18px;
-  text-decoration: none;
-  color: #111;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.04);
-  transition: transform 0.12s ease, box-shadow 0.15s ease;
-}
-
-.service-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.08);
-}
-
-.service-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.service-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: rgba(0,0,0,0.08);
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-}
-
-.service-badge {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.06);
-  color: rgba(0,0,0,0.7);
-}
-
-.service-title {
-  font-size: 18px;
-  margin: 6px 0 8px;
-}
-
-.service-desc {
-  color: rgba(0,0,0,0.72);
-  line-height: 1.65;
-  margin-bottom: 10px;
-}
-
-.service-list {
-  margin: 0;
-  padding-left: 18px;
-  color: rgba(0,0,0,0.74);
-  line-height: 1.7;
-}
-
-.service-link {
-  display: inline-block;
-  margin-top: 12px;
-  color: rgba(0,0,0,0.78);
-}
-
-/* =================================================
-   CTA
-   ================================================= */
-.cta {
-  margin-top: 30px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-}
-
-.cta-title {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.cta-desc {
-  color: rgba(0,0,0,0.7);
-  line-height: 1.6;
-  margin-bottom: 14px;
-}
-
-.cta-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* =================================================
-   Footer 보정
-   ================================================= */
-.footer {
-  margin-top: 40px;
+/* 메인에서 서비스 카드만 살짝 다르게 */
+.home-services .amm-card {
   text-align: center;
+}
+
+/* =========================
+   HOME BADGE / NOTE
+========================= */
+
+.home-note {
+  margin-top: 32px;
+  padding: 14px 16px;
+  border-left: 3px solid rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.02);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================
+   HOME FOOTER TUNING
+========================= */
+
+.home-footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 13px;
   color: rgba(0,0,0,0.55);
 }
 
-/* =================================================
-   Responsive
-   ================================================= */
-@media (max-width: 980px) {
-  .hero {
+/* =========================
+   RESPONSIVE (HOME ONLY)
+========================= */
+
+@media (max-width: 900px) {
+
+  .home-entry .amm-question {
+    font-size: 26px;
+  }
+
+  .home-services {
     grid-template-columns: 1fr;
   }
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
+
 }
+
 
