@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faeing - Drive</title>
+
+  <!-- 메인과 동일한 스타일로 간다면 home.css를 공통으로 사용 -->
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+
+<body>
+
+  <!-- 상단바 (메인과 동일 구조) -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="nav-brand">
+        <img src="images/logo.png" alt="Faeing" class="nav-logo" />
+        <span class="nav-title">Faeing</span>
+      </a>
+    </div>
+
+    <nav class="nav-right">
+      <a class="nav-link" href="amm.html">AMM</a>
+      <a class="nav-link" href="tool.html">Tool</a>
+      <a class="nav-link" href="edu.html">Edu</a>
+      <a class="nav-link" href="run.html">Run</a>
+      <a class="nav-link active" href="drive.html">Drive</a>
+    </nav>
+  </header>
+
+  <!-- 히어로 -->
+  <main class="page">
+    <section class="hero">
+      <div class="hero-text">
+        <h1 class="hero-title">Drive</h1>
+        <p class="hero-desc">
+          차간거리 · 주행 습관을 “한 번 더 확인”하게 만드는<br/>
+          Faeing Drive 페이지의 시작 화면이야.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#start">시작하기</a>
+          <a class="btn ghost" href="#features">기능 보기</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="card badge-card">
+          <div class="badge">Safety</div>
+          <div class="badge">Distance</div>
+          <div class="badge">Habit</div>
+        </div>
+
+        <div class="card mini">
+          <h3 class="card-title">오늘의 체크</h3>
+          <ul class="list">
+            <li>출발 전 안전거리 감각</li>
+            <li>급가속/급제동 줄이기</li>
+            <li>전방주시 + 차간거리 유지</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션: 기능 -->
+    <section class="section" id="features">
+      <div class="section-head">
+        <h2 class="section-title">핵심 기능(초안)</h2>
+        <p class="section-desc">메인 페이지 카드 스타일 그대로.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3 class="card-title">차간거리 안내</h3>
+          <p class="card-desc">
+            속도에 따라 필요한 거리(시간 간격)를 기준으로 “너무 가까움/적정”을 보여주는 방식.
+          </p>
+          <div class="card-foot">
+            <a class="link" href="#start">설정하기 →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">습관 기록</h3>
+          <p class="card-desc">
+            급가속/급제동/급차선변경 같은 이벤트를 간단히 누적해서 “줄어드는 성취감” 제공.
+          </p>
+          <div class="card-foot">
+            <a class="link" href="#start">기록 시작 →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">가벼운 알림</h3>
+          <p class="card-desc">
+            과하지 않게, 중요한 순간에만 “한 번 더 확인”을 알려주는 톤(브랜드 말투 유지).
+          </p>
+          <div class="card-foot">
+            <a class="link" href="#start">알림 예시 →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 섹션: 시작 -->
+    <section class="section" id="start">
+      <div class="section-head">
+        <h2 class="section-title">시작하기</h2>
+        <p class="section-desc">일단 페이지용 UI만 만들어두고, 로직은 다음 단계로 붙이면 돼.</p>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3 class="card-title">기본 설정</h3>
+
+          <div class="form">
+            <label class="field">
+              <span class="label">운전 모드</span>
+              <select class="input">
+                <option>일반</option>
+                <option>고속도로</option>
+                <option>시내</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="label">목표(선호)</span>
+              <select class="input">
+                <option>안전거리 우선</option>
+                <option>부드러운 주행</option>
+                <option>연비 우선</option>
+              </select>
+            </label>
+
+            <button class="btn primary full" type="button">저장</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">문구(브랜드 톤)</h3>
+          <p class="card-desc">
+            “당신의 실수를 줄여드립니다” 계열처럼, Drive도 짧고 따뜻하게.
+          </p>
+
+          <div class="quote">
+            <p class="quote-main">한 번 더 확인하면, 오늘이 더 안전해져.</p>
+            <p class="quote-sub">Faeing Drive</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© Faeing</span>
+        <span class="dot">·</span>
+        <a class="link" href="index.html">Home</a>
+      </div>
+    </footer>
+  </main>
+
+</body>
+</html>
