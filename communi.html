@@ -1,122 +1,185 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Faeing · Communi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 메인 기준 스타일 -->
-  <link rel="stylesheet" href="css/communi.css">
+  <!-- Communi 전용 (공통틀 포함) -->
+  <link rel="stylesheet" href="css/communi.css" />
+
+  <!-- 따뜻한 서체(슬로건용) -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- =========================
-       NAV (공통)
+       TOP BAR (공통 틀)
+       - 서비스 누르면: 로고 + 텍스트 + 서비스탭 + 검색
+       - 아직 안 누른 상태: 로고/탭은 숨기고 검색만 있어도 됨 (옵션)
   ========================== -->
-  <header class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="nav-brand">
-        <img src="images/logo.png" alt="Faeing" class="nav-logo">
-        <span class="nav-title">Faeing</span>
+  <header class="topbar" id="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="brand" id="brand">
+        <img src="images/logo.png" alt="Faeing" class="brand-logo">
+        <span class="brand-text">Faeing</span>
       </a>
+
+      <nav class="services" aria-label="Communi services" id="services">
+        <button class="svc-btn" type="button" data-view="svc1">서비스1</button>
+        <button class="svc-btn" type="button" data-view="svc2">서비스2</button>
+        <button class="svc-btn" type="button" data-view="svc3">서비스3</button>
+      </nav>
     </div>
 
-    <nav class="nav-right">
-      <a class="nav-link" href="amm.html">AMM</a>
-      <a class="nav-link" href="drive.html">Drive</a>
-      <a class="nav-link" href="run.html">Run</a>
-      <a class="nav-link active" href="communi.html">Communi</a>
-    </nav>
+    <div class="topbar-right" role="search">
+      <input class="search" id="search" type="search" placeholder="찾기 (예: 감정, 사실, 요청)" />
+      <button class="search-x" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
+    </div>
   </header>
 
   <!-- =========================
-       COMMUNI ENTRY (AMM STYLE)
+       CENTER: 한 번에 하나의 컨텐츠만
   ========================== -->
-  <main class="page">
+  <main class="stage">
 
-    <section class="amm-entry">
+    <!-- 초기 화면: 슬로건(핵심 키워드) -->
+    <section class="view is-active" data-view="home">
+      <div class="center">
+        <p class="slogan">진심이 닿는 말</p>
+        <p class="slogan sub">마음이 닿는 사람</p>
 
-      <p class="amm-location">Faeing · Communi</p>
-
-      <h1 class="amm-question">
-        지금 어떤 대화를<br>
-        정리하고 싶으신가요?
-      </h1>
-
-      <div class="amm-grid">
-
-        <button class="amm-card">
-          <span class="amm-card-icon">🧠</span>
-          <span class="amm-card-text">내 생각 정리</span>
-        </button>
-
-        <button class="amm-card">
-          <span class="amm-card-icon">💬</span>
-          <span class="amm-card-text">관계 대화</span>
-        </button>
-
-        <button class="amm-card">
-          <span class="amm-card-icon">⚖️</span>
-          <span class="amm-card-text">갈등 상황</span>
-        </button>
-
-        <button class="amm-card">
-          <span class="amm-card-icon">📝</span>
-          <span class="amm-card-text">기록 남기기</span>
-        </button>
-
-      </div>
-    </section>
-
-    <!-- =========================
-         COMMUNI GUIDE (2nd LAYER)
-    ========================== -->
-    <section class="section">
-
-      <div class="section-head">
-        <h2 class="section-title">Communi의 기준</h2>
-        <p class="section-desc">
-          Communi는 말하는 기술이 아니라  
-          <strong>관계를 회복하는 과정</strong>입니다.
+        <p class="hint">
+          위의 <strong>서비스</strong>를 눌러서 대화를 정리해보세요.
         </p>
       </div>
+    </section>
 
-      <div class="grid two">
+    <!-- 서비스 1 -->
+    <section class="view" data-view="svc1">
+      <div class="panel">
+        <h1 class="panel-title">서비스1 · 내 생각 정리</h1>
+        <p class="panel-desc">
+          내 상태를 먼저 확인하고, 감정과 목적을 언어로 정리합니다.
+        </p>
 
-        <article class="card">
-          <h3 class="card-title">듣기부터 시작</h3>
-          <p class="card-desc">
-            대화는 설득이 아니라 이해에서 출발합니다.  
-            말하기 전, 먼저 자신의 상태를 확인합니다.
-          </p>
-        </article>
+        <div class="cards">
+          <article class="card">
+            <h2 class="card-title">지금 내 감정</h2>
+            <p class="card-desc">분노/서운함/불안… 지금 가장 큰 감정은 무엇인가요?</p>
+          </article>
 
-        <article class="card">
-          <h3 class="card-title">감정과 사실 분리</h3>
-          <p class="card-desc">
-            감정은 존중하되, 판단은 사실을 기준으로 합니다.  
-            Communi는 이 둘을 나누는 연습입니다.
-          </p>
-        </article>
-
+          <article class="card">
+            <h2 class="card-title">내가 원하는 것</h2>
+            <p class="card-desc">사과, 설명, 재발 방지, 거리두기… 목적을 먼저 정합니다.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <span>© Faeing</span>
-        <span class="dot">·</span>
-        <span>Communi</span>
+    <!-- 서비스 2 -->
+    <section class="view" data-view="svc2">
+      <div class="panel">
+        <h1 class="panel-title">서비스2 · 상황 정리</h1>
+        <p class="panel-desc">
+          감정은 존중하되, 판단은 사실을 기준으로 합니다. (사실/감정/해석 분리)
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <h2 class="card-title">사실</h2>
+            <p class="card-desc">누가/언제/무엇을 했는지 ‘관찰 가능한 것’만 적습니다.</p>
+          </article>
+
+          <article class="card">
+            <h2 class="card-title">해석</h2>
+            <p class="card-desc">“무시했어” 같은 의미 부여를 따로 분리합니다.</p>
+          </article>
+        </div>
       </div>
-    </footer>
+    </section>
+
+    <!-- 서비스 3 -->
+    <section class="view" data-view="svc3">
+      <div class="panel">
+        <h1 class="panel-title">서비스3 · 관계 대화</h1>
+        <p class="panel-desc">
+          이기기 위한 말이 아니라, 관계를 회복하기 위한 ‘요청’으로 말합니다.
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <h2 class="card-title">대화 문장 틀</h2>
+            <p class="card-desc">“나는 ~해서 ~하게 느꼈어. 그래서 ~를 부탁하고 싶어.”</p>
+          </article>
+
+          <article class="card">
+            <h2 class="card-title">경계선</h2>
+            <p class="card-desc">안 되는 것과 필요한 것을 구분해 분명하게 말합니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
   </main>
 
+  <script>
+    // ====== UI 요소 ======
+    const brand = document.getElementById('brand');
+    const services = document.getElementById('services');
+    const svcBtns = document.querySelectorAll('.svc-btn');
+    const views = document.querySelectorAll('.view');
+
+    const search = document.getElementById('search');
+    const searchClear = document.getElementById('searchClear');
+
+    // ====== 상태: 처음에는 홈(슬로건) ======
+    let currentView = 'home';
+
+    // 초기에는 "로고/서비스탭"을 꼭 숨기고 싶으면 true
+    const HIDE_BRAND_UNTIL_SERVICE = false; // ← 원하면 true로 바꿔
+
+    function setHeaderMode(){
+      const activeService = currentView !== 'home';
+      document.body.classList.toggle('service-mode', activeService);
+
+      if(HIDE_BRAND_UNTIL_SERVICE){
+        brand.style.display = activeService ? 'flex' : 'none';
+        services.style.display = activeService ? 'flex' : 'none';
+      }
+    }
+
+    function showView(key){
+      currentView = key;
+
+      // 중앙 컨텐츠 1개만 표시
+      views.forEach(v => v.classList.toggle('is-active', v.dataset.view === key));
+
+      // 버튼 active 표시
+      svcBtns.forEach(b => b.classList.toggle('active', b.dataset.view === key));
+
+      setHeaderMode();
+    }
+
+    // 서비스 버튼 클릭
+    svcBtns.forEach(btn => {
+      btn.addEventListener('click', () => showView(btn.dataset.view));
+    });
+
+    // 검색창 X 버튼
+    searchClear.addEventListener('click', () => {
+      search.value = '';
+      search.focus();
+    });
+
+    // 첫 렌더
+    showView('home');
+  </script>
+
 </body>
 </html>
+
+
 
 
 
