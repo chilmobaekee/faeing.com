@@ -5,179 +5,282 @@
   <title>Faeing · Communi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Communi 전용 (공통틀 포함) -->
-  <link rel="stylesheet" href="css/communi.css" />
+  <!-- 홈 기준 스타일 -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
 
-  <!-- 따뜻한 서체(슬로건용) -->
+  <!-- 슬로건용 서체 -->
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      height:56px;
+      padding:0 32px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#F2F1EE;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      white-space:nowrap;
+      min-width: 0;
+    }
+
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+      min-width: 0;
+    }
+
+    .nav-logo{ height:30px; width:auto; display:block; }
+    .nav-title{
+      font-size:18px;
+      letter-spacing:.08em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* ===== 흐름 텍스트 (슬래시) ===== */
+    .nav-flow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flow-link{
+      cursor:pointer;
+      opacity:.65;
+      transition:opacity .15s ease;
+      user-select:none;
+    }
+
+    .flow-link:hover{ opacity:1; }
+    .flow-link.active{
+      opacity:1;
+      font-weight:700;
+    }
+
+    .slash{
+      opacity:.35;
+      user-select:none;
+    }
+
+    /* ===== 검색 ===== */
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .search{
+      height:36px;
+      width: 320px;
+      max-width: 42vw;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,0.1);
+      padding:0 36px 0 14px;
+      background:rgba(255,255,255,0.7);
+      font-size:13px;
+      outline: none;
+    }
+    .search:focus{
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .search-clear{
+      position:absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      opacity: .8;
+    }
+    .search-clear:hover{ opacity: 1; }
+
+    /* ===== CENTER ===== */
+    main{
+      min-height:calc(100vh - 56px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 40px 16px 60px;
+    }
+
+    .view{
+      display:none;
+      text-align:center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .view.active{ display:block; }
+
+    .center-logo{
+      width:360px;
+      max-width:70vw;
+      margin: 0 auto 24px;
+      display:block;
+    }
+
+    /* 슬로건 */
+    .slogan{
+      font-family:"Nanum Pen Script", cursive;
+      font-size:38px;
+      line-height:1.15;
+      color: rgba(0,0,0,0.85);
+    }
+    .slogan.sub{
+      margin-top:6px;
+      font-size:34px;
+      opacity:.85;
+    }
+
+    /* 단계 화면(간결하게) */
+    .stage-title{
+      font-size:22px;
+      margin-bottom:14px;
+    }
+    .stage-desc{
+      opacity:.75;
+      line-height:1.6;
+    }
+
+    @media (max-width:768px){
+      .navbar{ padding:0 16px; }
+      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
+      .search{ width: 180px; max-width: 44vw; }
+      .slogan{ font-size:32px; }
+      .slogan.sub{ font-size:28px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- =========================
-       TOP BAR (공통 틀)
-       - 서비스 누르면: 로고 + 텍스트 + 서비스탭 + 검색
-       - 아직 안 누른 상태: 로고/탭은 숨기고 검색만 있어도 됨 (옵션)
-  ========================== -->
-  <header class="topbar" id="topbar">
-    <div class="topbar-left">
-      <a href="index.html" class="brand" id="brand">
-        <img src="images/logo.png" alt="Faeing" class="brand-logo">
-        <span class="brand-text">Faeing</span>
-      </a>
+<header class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-brand">
+      <img src="images/logo.png" class="nav-logo" alt="Faeing">
+      <span class="nav-title">Faeing</span>
+    </a>
 
-      <nav class="services" aria-label="Communi services" id="services">
-        <button class="svc-btn" type="button" data-view="svc1">서비스1</button>
-        <button class="svc-btn" type="button" data-view="svc2">서비스2</button>
-        <button class="svc-btn" type="button" data-view="svc3">서비스3</button>
-      </nav>
-    </div>
+    <!-- ✅ 처음엔 active 없음 -->
+    <nav class="nav-flow" aria-label="Communi flow">
+      <span class="flow-link" data-view="mind">내 생각 정리</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="situation">상황 정리</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="talk">관계 대화</span>
+    </nav>
+  </div>
 
-    <div class="topbar-right" role="search">
-      <input class="search" id="search" type="search" placeholder="찾기 (예: 감정, 사실, 요청)" />
-      <button class="search-x" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
-    </div>
-  </header>
+  <div class="nav-right" role="search">
+    <input class="search" id="searchInput" type="search" placeholder="검색">
+    <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
+  </div>
+</header>
 
-  <!-- =========================
-       CENTER: 한 번에 하나의 컨텐츠만
-  ========================== -->
-  <main class="stage">
+<main>
 
-    <!-- 초기 화면: 슬로건(핵심 키워드) -->
-    <section class="view is-active" data-view="home">
-      <div class="center">
-        <p class="slogan">진심이 닿는 말</p>
-        <p class="slogan sub">마음이 닿는 사람</p>
+  <!-- ✅ Communi 진입 기본 상태: 중앙 로고 + 슬로건 -->
+  <section class="view active" id="home">
+    <img src="images/hero.png" class="center-logo" alt="Faeing"
+         onerror="this.style.display='none'">
+    <p class="slogan">진심이 닿는 말</p>
+    <p class="slogan sub">마음이 닿는 사람</p>
+  </section>
 
-        <p class="hint">
-          위의 <strong>서비스</strong>를 눌러서 대화를 정리해보세요.
-        </p>
-      </div>
-    </section>
+  <!-- 내 생각 정리 -->
+  <section class="view" id="mind">
+    <h1 class="stage-title">내 생각 정리</h1>
+    <p class="stage-desc">
+      지금 내 안에 있는 감정과 목적을<br>
+      말로 꺼내봅니다.
+    </p>
+  </section>
 
-    <!-- 서비스 1 -->
-    <section class="view" data-view="svc1">
-      <div class="panel">
-        <h1 class="panel-title">서비스1 · 내 생각 정리</h1>
-        <p class="panel-desc">
-          내 상태를 먼저 확인하고, 감정과 목적을 언어로 정리합니다.
-        </p>
+  <!-- 상황 정리 -->
+  <section class="view" id="situation">
+    <h1 class="stage-title">상황 정리</h1>
+    <p class="stage-desc">
+      느낀 것과 일어난 일을<br>
+      구분해 봅니다.
+    </p>
+  </section>
 
-        <div class="cards">
-          <article class="card">
-            <h2 class="card-title">지금 내 감정</h2>
-            <p class="card-desc">분노/서운함/불안… 지금 가장 큰 감정은 무엇인가요?</p>
-          </article>
+  <!-- 관계 대화 -->
+  <section class="view" id="talk">
+    <h1 class="stage-title">관계 대화</h1>
+    <p class="stage-desc">
+      이기기 위한 말이 아니라<br>
+      닿기 위한 말을 고릅니다.
+    </p>
+  </section>
 
-          <article class="card">
-            <h2 class="card-title">내가 원하는 것</h2>
-            <p class="card-desc">사과, 설명, 재발 방지, 거리두기… 목적을 먼저 정합니다.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+</main>
 
-    <!-- 서비스 2 -->
-    <section class="view" data-view="svc2">
-      <div class="panel">
-        <h1 class="panel-title">서비스2 · 상황 정리</h1>
-        <p class="panel-desc">
-          감정은 존중하되, 판단은 사실을 기준으로 합니다. (사실/감정/해석 분리)
-        </p>
+<script>
+  const links = document.querySelectorAll('.flow-link');
+  const views = document.querySelectorAll('.view');
 
-        <div class="cards">
-          <article class="card">
-            <h2 class="card-title">사실</h2>
-            <p class="card-desc">누가/언제/무엇을 했는지 ‘관찰 가능한 것’만 적습니다.</p>
-          </article>
+  function show(id){
+    views.forEach(v => v.classList.toggle('active', v.id === id));
+  }
 
-          <article class="card">
-            <h2 class="card-title">해석</h2>
-            <p class="card-desc">“무시했어” 같은 의미 부여를 따로 분리합니다.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+  // ✅ 처음엔 active 표시 없음 + home 화면 유지
+  show('home');
 
-    <!-- 서비스 3 -->
-    <section class="view" data-view="svc3">
-      <div class="panel">
-        <h1 class="panel-title">서비스3 · 관계 대화</h1>
-        <p class="panel-desc">
-          이기기 위한 말이 아니라, 관계를 회복하기 위한 ‘요청’으로 말합니다.
-        </p>
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.view;
 
-        <div class="cards">
-          <article class="card">
-            <h2 class="card-title">대화 문장 틀</h2>
-            <p class="card-desc">“나는 ~해서 ~하게 느꼈어. 그래서 ~를 부탁하고 싶어.”</p>
-          </article>
+      // 클릭한 순간부터 active가 생김
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
 
-          <article class="card">
-            <h2 class="card-title">경계선</h2>
-            <p class="card-desc">안 되는 것과 필요한 것을 구분해 분명하게 말합니다.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    // ====== UI 요소 ======
-    const brand = document.getElementById('brand');
-    const services = document.getElementById('services');
-    const svcBtns = document.querySelectorAll('.svc-btn');
-    const views = document.querySelectorAll('.view');
-
-    const search = document.getElementById('search');
-    const searchClear = document.getElementById('searchClear');
-
-    // ====== 상태: 처음에는 홈(슬로건) ======
-    let currentView = 'home';
-
-    // 초기에는 "로고/서비스탭"을 꼭 숨기고 싶으면 true
-    const HIDE_BRAND_UNTIL_SERVICE = false; // ← 원하면 true로 바꿔
-
-    function setHeaderMode(){
-      const activeService = currentView !== 'home';
-      document.body.classList.toggle('service-mode', activeService);
-
-      if(HIDE_BRAND_UNTIL_SERVICE){
-        brand.style.display = activeService ? 'flex' : 'none';
-        services.style.display = activeService ? 'flex' : 'none';
-      }
-    }
-
-    function showView(key){
-      currentView = key;
-
-      // 중앙 컨텐츠 1개만 표시
-      views.forEach(v => v.classList.toggle('is-active', v.dataset.view === key));
-
-      // 버튼 active 표시
-      svcBtns.forEach(b => b.classList.toggle('active', b.dataset.view === key));
-
-      setHeaderMode();
-    }
-
-    // 서비스 버튼 클릭
-    svcBtns.forEach(btn => {
-      btn.addEventListener('click', () => showView(btn.dataset.view));
+      // 중앙 화면 전환
+      show(target);
     });
+  });
 
-    // 검색창 X 버튼
-    searchClear.addEventListener('click', () => {
-      search.value = '';
-      search.focus();
-    });
-
-    // 첫 렌더
-    showView('home');
-  </script>
+  // 검색 X
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+  });
+</script>
 
 </body>
 </html>
+
+
 
 
 
