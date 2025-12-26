@@ -46,13 +46,22 @@
       min-width: 0;
     }
 
-    .nav-logo{ height:30px; width:auto; display:block; }
-    .nav-title{
-      font-size:18px;
-      letter-spacing:.08em;
-      line-height: 1;
-      white-space: nowrap;
-    }
+    .nav-logo{
+  max-height: 30px;
+  height: auto;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.nav-title{
+  font-size: 18px;
+  letter-spacing: .08em;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 
     /* ===== 흐름 텍스트 (슬래시) ===== */
     .nav-flow{
@@ -279,6 +288,7 @@
 
 </body>
 </html>
+
 
 
 
