@@ -1,163 +1,303 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Faeing · Parking</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 메인 기준 스타일 -->
+  <!-- 홈 기준 스타일 -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+
+  <!-- 슬로건용 서체 -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      height:56px;
+      padding:0 32px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#F2F1EE;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      white-space:nowrap;
+      min-width: 0;
+    }
+
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+      min-width: 0;
+    }
+
+    .nav-logo{
+      max-height: 30px;
+      height: auto;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .nav-title{
+      font-size: 18px;
+      letter-spacing: .08em;
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ===== 흐름 텍스트 ===== */
+    .nav-flow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flow-link{
+      cursor:pointer;
+      opacity:.65;
+      transition:opacity .15s ease;
+      user-select:none;
+    }
+
+    .flow-link:hover{ opacity:1; }
+    .flow-link.active{
+      opacity:1;
+      font-weight:700;
+    }
+
+    .slash{
+      opacity:.35;
+      user-select:none;
+    }
+
+    /* ===== 검색 ===== */
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .search{
+      height:36px;
+      width: 320px;
+      max-width: 42vw;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,0.1);
+      padding:0 36px 0 14px;
+      background:rgba(255,255,255,0.7);
+      font-size:13px;
+      outline: none;
+    }
+
+    .search:focus{
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .search-clear{
+      position:absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      opacity: .8;
+    }
+    .search-clear:hover{ opacity: 1; }
+
+    /* ===== CENTER ===== */
+    main{
+      min-height:calc(100vh - 56px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 40px 16px 60px;
+    }
+
+    .view{
+      display:none;
+      text-align:center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .view.active{ display:block; }
+
+    .center-logo{
+      width:360px;
+      max-width:70vw;
+      margin: 0 auto 24px;
+      display:block;
+    }
+
+    .slogan{
+      font-family:"Nanum Pen Script", cursive;
+      font-size:38px;
+      line-height:1.15;
+      color: rgba(0,0,0,0.85);
+    }
+    .slogan.sub{
+      margin-top:8px;
+      font-size:30px;
+      opacity:.82;
+    }
+
+    .stage-title{
+      font-size:22px;
+      margin-bottom:14px;
+    }
+    .stage-desc{
+      opacity:.78;
+      line-height:1.7;
+    }
+
+    .note{
+      margin-top:14px;
+      font-size:13px;
+      opacity:.65;
+      line-height:1.6;
+    }
+
+    @media (max-width:768px){
+      .navbar{ padding:0 16px; }
+      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
+      .search{ width: 180px; max-width: 44vw; }
+      .slogan{ font-size:32px; }
+      .slogan.sub{ font-size:26px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- =========================
-       NAV (공통)
-  ========================== -->
-  <header class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="nav-brand">
-        <img src="images/logo.png" alt="Faeing" class="nav-logo">
-        <span class="nav-title">Faeing</span>
-      </a>
-    </div>
+<header class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
+      <span class="nav-title">Faeing</span>
+    </a>
 
-    <nav class="nav-right">
-      <a class="nav-link" href="amm.html">AMM</a>
-      <a class="nav-link" href="drive.html">Drive</a>
-      <a class="nav-link" href="run.html">Run</a>
-      <a class="nav-link" href="communi.html">Communi</a>
-      <a class="nav-link active" href="parking.html">Parking</a>
+    <!-- Parking 흐름 -->
+    <nav class="nav-flow" aria-label="Parking flow">
+      <span class="flow-link" data-view="problem">무엇이 문제인가</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="idea">어떤 방향인가</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="status">지금 상태</span>
     </nav>
-  </header>
+  </div>
 
-  <main class="page">
+  <div class="nav-right" role="search">
+    <input class="search" id="searchInput" type="search" placeholder="검색 (준비중)">
+    <button class="search-clear" id="searchClear" type="button">×</button>
+  </div>
+</header>
 
-    <!-- =========================
-         PARKING ENTRY (AMM STYLE)
-    ========================== -->
-    <section class="amm-entry">
+<main>
 
-      <p class="amm-location">Faeing · Parking</p>
+  <!-- 기본 진입 -->
+  <section class="view active" id="home">
+    <img src="assets/images/logo.png" class="center-logo" alt="Faeing"
+         onerror="this.style.display='none'">
 
-      <h1 class="amm-question">
-        지금 어떤 상태를<br>
-        확인하시겠습니까?
-      </h1>
+    <div class="slogan">주차 공간의 스마트한 흐름</div>
 
-      <div class="amm-grid">
+    <p class="note">
+      Parking은 자리를 늘리기보다,<br>
+      이미 있는 공간이 더 잘 쓰이게 만드는 방향을 생각합니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">🅿️</span>
-          <span class="amm-card-text">주차 현황</span>
-        </button>
+  <!-- 문제 -->
+  <section class="view" id="problem">
+    <h1 class="stage-title">무엇이 문제인가</h1>
+    <p class="stage-desc">
+      자리는 비어 있는데 찾지 못하고,<br>
+      서로의 시간을 낭비하게 됩니다.<br>
+      주차 문제는 대부분 “정보의 부재”에서 시작됩니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">📡</span>
-          <span class="amm-card-text">센서 상태</span>
-        </button>
+  <!-- 방향 -->
+  <section class="view" id="idea">
+    <h1 class="stage-title">어떤 방향인가</h1>
+    <p class="stage-desc">
+      지금 비어 있는 공간을 알려주고,<br>
+      회전이 필요한 자리는 자연스럽게 흐르게 합니다.<br>
+      강제가 아니라 “이해되는 안내”를 목표로 합니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">📶</span>
-          <span class="amm-card-text">연결 점검</span>
-        </button>
+  <!-- 상태 -->
+  <section class="view" id="status">
+    <h1 class="stage-title">지금 상태</h1>
+    <p class="stage-desc">
+      개념 정리와 구조 설계 단계에 있습니다.<br>
+      현장에 부담을 주지 않는 방식부터 고민하고 있습니다.
+    </p>
+    <p class="note">
+      (센서 / 표시 / 운영 방식은 정리 후 단계적으로 공개합니다.)
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">🧾</span>
-          <span class="amm-card-text">로그 · 기록</span>
-        </button>
+</main>
 
-      </div>
-    </section>
+<script>
+  const links = document.querySelectorAll('.flow-link');
+  const views = document.querySelectorAll('.view');
 
-    <!-- =========================
-         PARKING GUIDE (2nd LAYER)
-    ========================== -->
-    <section class="section">
+  function show(id){
+    views.forEach(v => v.classList.toggle('active', v.id === id));
+  }
 
-      <div class="section-head">
-        <h2 class="section-title">Parking의 기준</h2>
-        <p class="section-desc">
-          Parking은 “자리 안내”를 넘어서<br>
-          <strong>회전율을 높이고, 운영을 단순하게 만드는 시스템</strong>을 목표로 합니다.
-        </p>
-      </div>
+  show('home');
 
-      <div class="grid two">
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.view;
 
-        <article class="card">
-          <h3 class="card-title">1) 현황이 먼저, 알고리즘은 다음</h3>
-          <p class="card-desc">
-            운영은 ‘정확한 현재 상태’에서 시작합니다.<br>
-            먼저 빈자리/점유를 정확히 보고, 그 다음 최적화를 붙입니다.
-          </p>
-        </article>
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
 
-        <article class="card">
-          <h3 class="card-title">2) 센서는 “고장나지 않게”가 핵심</h3>
-          <p class="card-desc">
-            센서가 한 번 흔들리면 데이터 전체가 흔들립니다.<br>
-            설치/전원/통신/오차를 체크하는 루틴을 단순하게 유지합니다.
-          </p>
-        </article>
+      show(target);
+    });
+  });
 
-      </div>
-    </section>
-
-    <!-- =========================
-         SIMPLE CHECKLIST (OPTION)
-    ========================== -->
-    <section class="section">
-
-      <div class="section-head">
-        <h2 class="section-title">간단 체크</h2>
-        <p class="section-desc">운영자가 빠르게 판단할 수 있도록, 핵심만 묶었습니다.</p>
-      </div>
-
-      <div class="grid">
-
-        <article class="card">
-          <h3 class="card-title">주차 현황</h3>
-          <ul class="list">
-            <li>빈자리/점유 데이터가 갱신되는지 확인</li>
-            <li>특정 구역만 늦거나 멈춘 자리 없는지 확인</li>
-            <li>현장 체감과 데이터가 어긋나는 구간 체크</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">센서 상태</h3>
-          <ul class="list">
-            <li>전원(배터리/어댑터) 안정성 확인</li>
-            <li>오작동(항상 점유/항상 빈자리) 감지</li>
-            <li>설치 위치 흔들림/각도 변화 확인</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">연결 · 기록</h3>
-          <ul class="list">
-            <li>Wi-Fi/셀룰러 연결 상태</li>
-            <li>장애 시간대(특정 시간 반복) 여부</li>
-            <li>로그로 “언제부터 틀어졌는지” 확인</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <span>© Faeing</span>
-        <span class="dot">·</span>
-        <span>Parking</span>
-      </div>
-    </footer>
-
-  </main>
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+  });
+</script>
 
 </body>
 </html>
+
 
