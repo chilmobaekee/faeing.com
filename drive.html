@@ -1,163 +1,309 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Faeing · Drive</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 메인 기준 스타일 -->
+  <!-- 홈 기준 스타일 -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+
+  <!-- 슬로건용 서체 -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      height:56px;
+      padding:0 32px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#F2F1EE;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      white-space:nowrap;
+      min-width: 0;
+    }
+
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+      min-width: 0;
+    }
+
+    .nav-logo{
+      max-height: 30px;
+      height: auto;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .nav-title{
+      font-size: 18px;
+      letter-spacing: .08em;
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ===== 흐름 텍스트 (슬래시) ===== */
+    .nav-flow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flow-link{
+      cursor:pointer;
+      opacity:.65;
+      transition:opacity .15s ease;
+      user-select:none;
+    }
+
+    .flow-link:hover{ opacity:1; }
+    .flow-link.active{
+      opacity:1;
+      font-weight:700;
+    }
+
+    .slash{
+      opacity:.35;
+      user-select:none;
+    }
+
+    /* ===== 검색 ===== */
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .search{
+      height:36px;
+      width: 320px;
+      max-width: 42vw;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,0.1);
+      padding:0 36px 0 14px;
+      background:rgba(255,255,255,0.7);
+      font-size:13px;
+      outline: none;
+    }
+    .search:focus{
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .search-clear{
+      position:absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      opacity: .8;
+    }
+    .search-clear:hover{ opacity: 1; }
+
+    /* ===== CENTER ===== */
+    main{
+      min-height:calc(100vh - 56px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 40px 16px 60px;
+    }
+
+    .view{
+      display:none;
+      text-align:center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .view.active{ display:block; }
+
+    .center-logo{
+      width:360px;
+      max-width:70vw;
+      margin: 0 auto 24px;
+      display:block;
+    }
+
+    /* 제목(슬로건 스타일 활용) */
+    .slogan{
+      font-family:"Nanum Pen Script", cursive;
+      font-size:38px;
+      line-height:1.15;
+      color: rgba(0,0,0,0.85);
+    }
+    .slogan.sub{
+      margin-top:8px;
+      font-size:30px;
+      opacity:.82;
+    }
+
+    /* 단계 화면(간결하게) */
+    .stage-title{
+      font-size:22px;
+      margin-bottom:14px;
+    }
+    .stage-desc{
+      opacity:.78;
+      line-height:1.7;
+    }
+
+    /* 작은 안내문 */
+    .note{
+      margin-top:14px;
+      font-size:13px;
+      opacity:.65;
+      line-height:1.6;
+    }
+
+    @media (max-width:768px){
+      .navbar{ padding:0 16px; }
+      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
+      .search{ width: 180px; max-width: 44vw; }
+      .slogan{ font-size:32px; }
+      .slogan.sub{ font-size:26px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- =========================
-       NAV (공통)
-  ========================== -->
-  <header class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="nav-brand">
-        <img src="images/logo.png" alt="Faeing" class="nav-logo">
-        <span class="nav-title">Faeing</span>
-      </a>
-    </div>
+<header class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
+      <span class="nav-title">Faeing</span>
+    </a>
 
-    <nav class="nav-right">
-      <a class="nav-link" href="amm.html">AMM</a>
-      <a class="nav-link active" href="drive.html">Drive</a>
-      <a class="nav-link" href="run.html">Run</a>
-      <a class="nav-link" href="communi.html">Communi</a>
+    <!-- ✅ Drive 흐름 -->
+    <nav class="nav-flow" aria-label="Drive flow">
+      <span class="flow-link" data-view="why">왜</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="how">어떻게</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="status">지금 상태</span>
     </nav>
-  </header>
+  </div>
 
-  <main class="page">
+  <div class="nav-right" role="search">
+    <input class="search" id="searchInput" type="search" placeholder="검색 (준비중)">
+    <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
+  </div>
+</header>
 
-    <!-- =========================
-         DRIVE ENTRY (AMM STYLE)
-    ========================== -->
-    <section class="amm-entry">
+<main>
 
-      <p class="amm-location">Faeing · Drive</p>
+  <!-- ✅ Drive 진입 기본 상태 -->
+  <section class="view active" id="home">
+    <img src="assets/images/logo.png" class="center-logo" alt="Faeing"
+         onerror="this.style.display='none'">
 
-      <h1 class="amm-question">
-        지금 어떤 상태를<br>
-        확인하시겠습니까?
-      </h1>
+    <div class="slogan">안전거리는 감이 아니라</div>
+    <div class="slogan sub">매일 지킬 수 있는 습관</div>
 
-      <div class="amm-grid">
+    <p class="note">
+      Drive는 운전을 잘하게 만들기보다,<br>
+      “실수할 틈”을 줄이는 방향으로 갑니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">📏</span>
-          <span class="amm-card-text">차간거리</span>
-        </button>
+  <!-- 왜 -->
+  <section class="view" id="why">
+    <h1 class="stage-title">왜 필요한가</h1>
+    <p class="stage-desc">
+      순간의 방심은 누구에게나 오고,<br>
+      그때 가장 먼저 무너지는 게 안전거리입니다.<br>
+      Drive는 “생각하기 전에 지켜지는 거리”를 목표로 합니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">⚠️</span>
-          <span class="amm-card-text">급제동 · 급가속</span>
-        </button>
+  <!-- 어떻게 -->
+  <section class="view" id="how">
+    <h1 class="stage-title">어떻게 돕나</h1>
+    <p class="stage-desc">
+      지금 속도에서 필요한 안전거리를 알려주고,<br>
+      가까워질 때는 부드럽게 경고합니다.<br>
+      운전자의 감각을 “평균”으로 되돌려줍니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">👀</span>
-          <span class="amm-card-text">전방주시</span>
-        </button>
+  <!-- 지금 상태 -->
+  <section class="view" id="status">
+    <h1 class="stage-title">지금 상태</h1>
+    <p class="stage-desc">
+      현재는 개념 정리와 구조 설계 단계입니다.<br>
+      사용자가 부담 없이 쓰는 형태를 먼저 잡고 있습니다.
+    </p>
+    <p class="note">
+      (센서 방식/표시 방식/설치는 정리되면 별도 페이지로 분리합니다.)
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">📝</span>
-          <span class="amm-card-text">오늘 기록</span>
-        </button>
+</main>
 
-      </div>
-    </section>
+<script>
+  const links = document.querySelectorAll('.flow-link');
+  const views = document.querySelectorAll('.view');
 
-    <!-- =========================
-         DRIVE GUIDE (2nd LAYER)
-    ========================== -->
-    <section class="section">
+  function show(id){
+    views.forEach(v => v.classList.toggle('active', v.id === id));
+  }
 
-      <div class="section-head">
-        <h2 class="section-title">Drive의 기준</h2>
-        <p class="section-desc">
-          Drive는 “빨리 가는 방법”이 아니라,<br>
-          <strong>한 번 더 확인해서 실수를 줄이는 습관</strong>을 목표로 합니다.
-        </p>
-      </div>
+  // ✅ 처음엔 active 표시 없음 + home 화면 유지
+  show('home');
 
-      <div class="grid two">
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.view;
 
-        <article class="card">
-          <h3 class="card-title">1) 차간거리는 시간</h3>
-          <p class="card-desc">
-            거리는 “미터”보다 “시간 간격”이 더 현실적입니다.<br>
-            앞차가 지나간 지점을 내가 몇 초 뒤에 지나가는지로 판단합니다.
-          </p>
-        </article>
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
 
-        <article class="card">
-          <h3 class="card-title">2) 급(急)을 줄이면 전체가 부드러워짐</h3>
-          <p class="card-desc">
-            급제동·급가속은 위험과 피로를 동시에 올립니다.<br>
-            하루 한 번만 줄여도 습관이 바뀝니다.
-          </p>
-        </article>
+      show(target);
+    });
+  });
 
-      </div>
-    </section>
-
-    <!-- =========================
-         SIMPLE CHECKLIST (OPTION)
-    ========================== -->
-    <section class="section">
-
-      <div class="section-head">
-        <h2 class="section-title">간단 체크</h2>
-        <p class="section-desc">운전 시작 전에 한 번만 확인해도 충분합니다.</p>
-      </div>
-
-      <div class="grid">
-
-        <article class="card">
-          <h3 class="card-title">차간거리</h3>
-          <ul class="list">
-            <li>속도가 올라갈수록 “거리”가 아니라 “시간”을 늘린다</li>
-            <li>시야가 나쁘면 간격을 더 둔다</li>
-            <li>앞차를 따라가기보다, 여유 공간을 만든다</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">주의</h3>
-          <ul class="list">
-            <li>피곤하면 반응이 늦어진다 → 속도보다 휴식</li>
-            <li>급한 마음이 들면 한 번 더 숨을 고른다</li>
-            <li>핸드폰은 “한 번의 확인”을 없애는 물건이다</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">기록</h3>
-          <ul class="list">
-            <li>오늘 한 번 급한 순간이 있었는지 적는다</li>
-            <li>무리한 끼어들기/추월을 줄였는지 확인</li>
-            <li>목표는 완벽이 아니라 “줄어드는 횟수”</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <span>© Faeing</span>
-        <span class="dot">·</span>
-        <span>Drive</span>
-      </div>
-    </footer>
-
-  </main>
+  // 검색 X
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+  });
+</script>
 
 </body>
 </html>
+
 
 
