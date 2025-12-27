@@ -1,164 +1,311 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Faeing · Run</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 메인 기준 스타일 -->
+  <!-- 홈 기준 스타일 -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+
+  <!-- 슬로건용 서체 -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      height:56px;
+      padding:0 32px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#F2F1EE;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      white-space:nowrap;
+      min-width: 0;
+    }
+
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+      min-width: 0;
+    }
+
+    .nav-logo{
+      max-height: 30px;
+      height: auto;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .nav-title{
+      font-size: 18px;
+      letter-spacing: .08em;
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ===== 흐름 텍스트 (슬래시) ===== */
+    .nav-flow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flow-link{
+      cursor:pointer;
+      opacity:.65;
+      transition:opacity .15s ease;
+      user-select:none;
+    }
+
+    .flow-link:hover{ opacity:1; }
+    .flow-link.active{
+      opacity:1;
+      font-weight:700;
+    }
+
+    .slash{
+      opacity:.35;
+      user-select:none;
+    }
+
+    /* ===== 검색 ===== */
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .search{
+      height:36px;
+      width: 320px;
+      max-width: 42vw;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,0.1);
+      padding:0 36px 0 14px;
+      background:rgba(255,255,255,0.7);
+      font-size:13px;
+      outline: none;
+    }
+    .search:focus{
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .search-clear{
+      position:absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      opacity: .8;
+    }
+    .search-clear:hover{ opacity: 1; }
+
+    /* ===== CENTER ===== */
+    main{
+      min-height:calc(100vh - 56px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 40px 16px 60px;
+    }
+
+    .view{
+      display:none;
+      text-align:center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .view.active{ display:block; }
+
+    .center-logo{
+      width:360px;
+      max-width:70vw;
+      margin: 0 auto 24px;
+      display:block;
+    }
+
+    /* 제목(슬로건 스타일 활용) */
+    .slogan{
+      font-family:"Nanum Pen Script", cursive;
+      font-size:38px;
+      line-height:1.15;
+      color: rgba(0,0,0,0.85);
+    }
+    .slogan.sub{
+      margin-top:8px;
+      font-size:30px;
+      opacity:.82;
+    }
+
+    /* 단계 화면(간결하게) */
+    .stage-title{
+      font-size:22px;
+      margin-bottom:14px;
+    }
+    .stage-desc{
+      opacity:.78;
+      line-height:1.7;
+    }
+
+    /* 작은 안내문 */
+    .note{
+      margin-top:14px;
+      font-size:13px;
+      opacity:.65;
+      line-height:1.6;
+    }
+
+    @media (max-width:768px){
+      .navbar{ padding:0 16px; }
+      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
+      .search{ width: 180px; max-width: 44vw; }
+      .slogan{ font-size:32px; }
+      .slogan.sub{ font-size:26px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- =========================
-       NAV (공통)
-  ========================== -->
-  <header class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="nav-brand">
-        <img src="images/logo.png" alt="Faeing" class="nav-logo">
-        <span class="nav-title">Faeing</span>
-      </a>
-    </div>
+<header class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
+      <span class="nav-title">Faeing</span>
+    </a>
 
-    <nav class="nav-right">
-      <a class="nav-link" href="amm.html">AMM</a>
-      <a class="nav-link" href="drive.html">Drive</a>
-      <a class="nav-link active" href="run.html">Run</a>
-      <a class="nav-link" href="communi.html">Communi</a>
+    <!-- ✅ Run 흐름 -->
+    <nav class="nav-flow" aria-label="Run flow">
+      <span class="flow-link" data-view="what">무엇을</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="who">누구에게</span>
+      <span class="slash">/</span>
+      <span class="flow-link" data-view="status">지금 상태</span>
     </nav>
-  </header>
+  </div>
 
-  <main class="page">
+  <div class="nav-right" role="search">
+    <input class="search" id="searchInput" type="search" placeholder="검색 (준비중)">
+    <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
+  </div>
+</header>
 
-    <!-- =========================
-         RUN ENTRY (AMM STYLE)
-    ========================== -->
-    <section class="amm-entry">
+<main>
 
-      <p class="amm-location">Faeing · Run</p>
+  <!-- ✅ Run 진입 기본 상태: 중앙 로고 + 한문장 -->
+  <section class="view active" id="home">
+    <img src="assets/images/logo.png" class="center-logo" alt="Faeing"
+         onerror="this.style.display='none'">
 
-      <h1 class="amm-question">
-        지금 어떤 상태를<br>
-        확인하시겠습니까?
-      </h1>
+    <div class="slogan">혼자 달리지 않게</div>
+    <div class="slogan sub">리듬을 지켜주는 작은 장치</div>
 
-      <div class="amm-grid">
+    <p class="note">
+      Run은 기록보다 지속을 돕습니다.<br>
+      숫자가 아니라, 숨과 발걸음의 흐름을 지키는 방향으로 갑니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">⏱️</span>
-          <span class="amm-card-text">현재 페이스</span>
-        </button>
+  <!-- 무엇을 -->
+  <section class="view" id="what">
+    <h1 class="stage-title">무엇을 해주나</h1>
+    <p class="stage-desc">
+      일정한 속도를 유지하도록 돕고,<br>
+      혼자서도 훈련이 끊기지 않게 해줍니다.<br>
+      “빨리”가 아니라 “꾸준히”에 초점이 있습니다.
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">🎯</span>
-          <span class="amm-card-text">목표 설정</span>
-        </button>
+  <!-- 누구에게 -->
+  <section class="view" id="who">
+    <h1 class="stage-title">어떤 사람에게</h1>
+    <p class="stage-desc">
+      ✔ 페이스 조절이 어려운 사람<br>
+      ✔ 혼자 뛰면 금방 흐트러지는 사람<br>
+      ✔ 기록보다 지속을 원하는 사람
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">📈</span>
-          <span class="amm-card-text">오늘 기록</span>
-        </button>
+  <!-- 지금 상태 -->
+  <section class="view" id="status">
+    <h1 class="stage-title">지금 상태</h1>
+    <p class="stage-desc">
+      현재는 개념 정리와 구조 설계 단계입니다.<br>
+      완성보다 방향을 먼저 잡고 있습니다.
+    </p>
+    <p class="note">
+      (기술/부품/세부 기능은 정리되면 별도 페이지로 분리합니다.)
+    </p>
+  </section>
 
-        <button class="amm-card" type="button">
-          <span class="amm-card-icon">🧰</span>
-          <span class="amm-card-text">장비 점검</span>
-        </button>
+</main>
 
-      </div>
-    </section>
+<script>
+  const links = document.querySelectorAll('.flow-link');
+  const views = document.querySelectorAll('.view');
 
-    <!-- =========================
-         RUN GUIDE (2nd LAYER)
-    ========================== -->
-    <section class="section">
+  function show(id){
+    views.forEach(v => v.classList.toggle('active', v.id === id));
+  }
 
-      <div class="section-head">
-        <h2 class="section-title">Run의 기준</h2>
-        <p class="section-desc">
-          Run은 “빨리”가 아니라 “일정한 흐름”을 목표로 합니다.<br>
-          오늘의 상태를 확인하고, 무리하지 않는 방향을 선택합니다.
-        </p>
-      </div>
+  // ✅ 처음엔 active 표시 없음 + home 화면 유지
+  show('home');
 
-      <div class="grid two">
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.view;
 
-        <article class="card">
-          <h3 class="card-title">1) 시작 전 30초</h3>
-          <p class="card-desc">
-            숨이 편한지, 다리가 무겁지 않은지 먼저 확인합니다.<br>
-            오늘의 상태가 기준입니다.
-          </p>
-        </article>
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
 
-        <article class="card">
-          <h3 class="card-title">2) 페이스는 “유지”가 핵심</h3>
-          <p class="card-desc">
-            처음부터 올리기보다, 안정적으로 유지하는 것이 더 멉니다.<br>
-            기록은 결과가 아니라 방향을 잡기 위한 자료입니다.
-          </p>
-        </article>
+      show(target);
+    });
+  });
 
-      </div>
-    </section>
-
-    <!-- =========================
-         SIMPLE CHECKLIST (OPTION)
-    ========================== -->
-    <section class="section">
-
-      <div class="section-head">
-        <h2 class="section-title">간단 체크</h2>
-        <p class="section-desc">오늘 한 번만 확인해도 충분합니다.</p>
-      </div>
-
-      <div class="grid">
-
-        <article class="card">
-          <h3 class="card-title">컨디션</h3>
-          <ul class="list">
-            <li>수면이 부족하면 강도를 낮춘다</li>
-            <li>무릎/발목 통증이 있으면 중단한다</li>
-            <li>호흡이 가쁘면 속도를 내리지 않는다</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">환경</h3>
-          <ul class="list">
-            <li>바람/추위가 강하면 보온을 우선한다</li>
-            <li>노면이 미끄러우면 페이스보다 안전</li>
-            <li>야간은 시인성(반사/라이트) 확보</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3 class="card-title">장비</h3>
-          <ul class="list">
-            <li>신발 끈 재확인</li>
-            <li>배터리/리모컨(있다면) 상태</li>
-            <li>휴대폰/응급 연락수단</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <span>© Faeing</span>
-        <span class="dot">·</span>
-        <span>Run</span>
-      </div>
-    </footer>
-
-  </main>
+  // 검색 X
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+  });
+</script>
 
 </body>
 </html>
+
+
 
 
 
