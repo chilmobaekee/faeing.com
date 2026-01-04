@@ -323,12 +323,13 @@
   <header class="navbar">
     <div class="nav-left">
       <!-- 로고는 파일이 있으면 src 교체 -->
-      <img class="nav-logo" src="img/logo.png" alt="FAEING logo" onerror="this.style.display='none'">
-      <div class="nav-brand">FAEING · AMM</div>
-
+      <img class="nav-logo" src="assets/images/logo.png" alt="FAEING logo">
+      
+      <div class="nav-brand" id="brandHome">FAEING · AMM</div>
+      
       <!-- ✅ 상태점검/구조원리/정기관리/도구를 상단바 왼쪽으로 -->
       <nav class="nav-menu" aria-label="AMM 메뉴">
-       
+
         <a data-view="check">
           <span class="hover-word"><span class="en">CHECK</span><span class="ko">상태점검</span></span>
         </a>
@@ -872,8 +873,14 @@
       showView(target);
     });
   </script>
+  <script>
+    document
+      .getElementById("brandHome")
+      .addEventListener("click", () => showView("home"));
+  </script>
 </body>
 </html>
+
 
 
 
