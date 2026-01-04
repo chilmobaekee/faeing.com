@@ -51,7 +51,10 @@ body{
   width: auto;
   display: block;
 }
-
+/* ✅ 로고도 클릭 가능하게 */
+#logoHome{
+  cursor: pointer;
+}
 /* 브랜드 = 홈 */
 .nav-brand{
   font-size: 18px;
