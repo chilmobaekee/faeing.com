@@ -320,40 +320,40 @@
   <!-- =========================
        NAVBAR
   ========================= -->
-  <header class="navbar">
-    <div class="nav-left">
-      <!-- 상단바 로고 -->
-      <a class="home-link" href="#" aria-label="홈으로">
+<header class="navbar">
+  <div class="nav-left">
+    <!-- ✅ 홈 링크: 로고 + AMM만 감싸기 -->
+    <a class="home-link" href="#" aria-label="홈으로">
       <img class="nav-logo" id="logoHome" src="assets/images/logo.png" alt="FAEING logo">
-      
-      <div class="nav-brand" id="brandHome"> AMM</div>
-      
-      <!-- ✅ 상태점검/구조원리/정기관리/도구를 상단바 왼쪽으로 -->
-      <nav class="nav-menu" aria-label="AMM 메뉴">
+      <div class="nav-brand" id="brandHome">AMM</div>
+    </a>
 
-        <a data-view="check">
-          <span class="hover-word"><span class="en">CHECK</span><span class="ko">상태점검</span></span>
-        </a>
-        <span>/</span>
-        <a data-view="principle">
-          <span class="hover-word"><span class="en">PRINCIPLE</span><span class="ko">구조원리</span></span>
-        </a>
-        <span>/</span>
-        <a data-view="routine">
-          <span class="hover-word"><span class="en">ROUTINE</span><span class="ko">정기관리</span></span>
-        </a>
-        <span>/</span>
-        <a data-view="tools">
-          <span class="hover-word"><span class="en">TOOLS</span><span class="ko">도구</span></span>
-        </a>
-      </nav>
-    </div>
+    <!-- ✅ 메뉴는 링크 밖 -->
+    <nav class="nav-menu" aria-label="AMM 메뉴">
+      <a data-view="check">
+        <span class="hover-word"><span class="en">CHECK</span><span class="ko">상태점검</span></span>
+      </a>
+      <span>/</span>
+      <a data-view="principle">
+        <span class="hover-word"><span class="en">PRINCIPLE</span><span class="ko">구조원리</span></span>
+      </a>
+      <span>/</span>
+      <a data-view="routine">
+        <span class="hover-word"><span class="en">ROUTINE</span><span class="ko">정기관리</span></span>
+      </a>
+      <span>/</span>
+      <a data-view="tools">
+        <span class="hover-word"><span class="en">TOOLS</span><span class="ko">도구</span></span>
+      </a>
+    </nav>
+  </div>
 
-    <div class="nav-right">
-      <input id="search" class="nav-search" placeholder="검색 (예: 시동, 예취, 누유)" />
-      <button class="nav-btn" type="button" id="goCheckBtn">상태점검</button>
-    </div>
-  </header>
+  <div class="nav-right">
+    <input id="search" class="nav-search" placeholder="검색 (예: 시동, 예취, 누유)" />
+    <button class="nav-btn" type="button" id="goCheckBtn">상태점검</button>
+  </div>
+</header>
+
 
   <!-- =========================
        MAIN
@@ -881,6 +881,7 @@
   </script>
 </body>
 </html>
+
 
 
 
