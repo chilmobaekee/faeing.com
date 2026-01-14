@@ -1,1 +1,215 @@
+/* =========================
+   FAEING AMM CSS
+   ========================= */
+
+/* ----- Reset (AMM 범위용) ----- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #222;
+}
+
+/* =========================
+   Navbar
+   ========================= */
+
+.navbar {
+  height: 56px;
+  padding: 0 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+/* 홈 링크 (로고 + AMM) */
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 로고 */
+.nav-logo {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+/* AMM 텍스트 */
+.nav-brand {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+/* =========================
+   Main Layout
+   ========================= */
+
+.main {
+  padding: 20px 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* 카드 공통 */
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================
+   Titles & Text
+   ========================= */
+
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.text-muted {
+  color: #666;
+  font-size: 14px;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #222;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #e9ecef;
+  color: #222;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* =========================
+   Form Elements
+   ========================= */
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+
+  border-radius: 8px;
+  border: 1px solid #ccc;
+
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #222;
+}
+
+/* =========================
+   List (Checklist / Result)
+   ========================= */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* =========================
+   Footer (optional)
+   ========================= */
+
+.footer {
+  margin-top: 40px;
+  padding: 20px 16px;
+
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+}
+
+/* =========================
+   Responsive (Mobile)
+   ========================= */
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 52px;
+  }
+
+  .nav-brand {
+    font-size: 16px;
+  }
+
+  .main {
+    padding: 16px 12px;
+  }
+}
 
