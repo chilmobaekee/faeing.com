@@ -1,4 +1,5 @@
 /* =========================
+   FAEING AMM
    Reset & Base
    ========================= */
 * {
@@ -8,31 +9,17 @@
 }
 
 body {
-  font-family: "Times New Roman", serif;
-  background: #f9faf7;
-  color: #222;
-  min-height: 100vh;
-}
-/* =========================
-   FAEING AMM CSS
-   ========================= */
-
-/* ----- Reset (AMM 범위용) ----- */
-* {
-  box-sizing: border-box;
-}
-
-body {
   margin: 0;
   font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
   background-color: #f8f9fa;
   color: #222;
+  min-height: 100vh;
 }
+
 
 /* =========================
    Navbar
    ========================= */
-
 .navbar {
   height: 56px;
   padding: 0 16px;
@@ -76,19 +63,25 @@ body {
   font-weight: 700;
   letter-spacing: 0.5px;
   line-height: 1;
+
+  /* 손글씨 포인트를 쓰고 싶을 때 ↓ */
+  /* font-family: 'Nanum Pen Script', cursive; */
 }
+
 
 /* =========================
    Main Layout
    ========================= */
-
 .main {
-  padding: 20px 16px;
   max-width: 720px;
   margin: 0 auto;
+  padding: 20px 16px;
 }
 
-/* 카드 공통 */
+
+/* =========================
+   Card (공통)
+   ========================= */
 .card {
   background-color: #ffffff;
   border-radius: 12px;
@@ -98,10 +91,10 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
+
 /* =========================
    Titles & Text
    ========================= */
-
 .page-title {
   font-size: 20px;
   font-weight: 700;
@@ -115,14 +108,14 @@ body {
 }
 
 .text-muted {
-  color: #666;
   font-size: 14px;
+  color: #666;
 }
+
 
 /* =========================
    Buttons
    ========================= */
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -139,7 +132,7 @@ body {
 
 .btn-primary {
   background-color: #222;
-  color: #fff;
+  color: #ffffff;
 }
 
 .btn-secondary {
@@ -151,10 +144,10 @@ body {
   transform: scale(0.97);
 }
 
+
 /* =========================
    Form Elements
    ========================= */
-
 input,
 select,
 textarea {
@@ -174,14 +167,12 @@ textarea:focus {
   border-color: #222;
 }
 
-/* =========================
-   List (Checklist / Result)
-   ========================= */
 
+/* =========================
+   List / Checklist
+   ========================= */
 .list {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .list-item {
@@ -197,10 +188,10 @@ textarea:focus {
   border-bottom: none;
 }
 
-/* =========================
-   Footer (optional)
-   ========================= */
 
+/* =========================
+   Footer (선택)
+   ========================= */
 .footer {
   margin-top: 40px;
   padding: 20px 16px;
@@ -210,10 +201,10 @@ textarea:focus {
   color: #777;
 }
 
+
 /* =========================
    Responsive (Mobile)
    ========================= */
-
 @media (max-width: 480px) {
   .navbar {
     height: 52px;
