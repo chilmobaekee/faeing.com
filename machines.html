@@ -2,876 +2,510 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Faeing · AMM</title>
-
-  <!-- 슬로건용 서체 -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-  
-  <!-- AMM 전용 CSS -->
-  <link rel="stylesheet" href="assets/css/amm.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>구조원리 | Faeing</title>
+  <meta name="description" content="Faeing 구조원리 페이지 - 전기, 동력, 유압, 조향 시스템을 생성, 전달, 사용의 흐름으로 정리합니다." />
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    /* =========================
-       상단바 (Navbar)
-    ========================= */
-    .navbar{
-      width:100%;
-      height:56px;
-      padding:0 32px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#F2F1EE;
-      border-bottom:1px solid rgba(0,0,0,0.04);
+    :root {
+      --bg: #f7f8f4;
+      --panel: #ffffff;
+      --line: #d9ddd4;
+      --text: #1f1f1f;
+      --muted: #5d665f;
+      --accent: #6db8b3;
+      --accent-soft: #e8f5f3;
+    }
+
+    body {
+      font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 64px;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f2f1ee;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
     }
 
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    .nav-logo{ height:36px; width:auto; display:block; }
-
-    .nav-brand{
-      font-size:18px;
-      letter-spacing:0.08em;
-      white-space:nowrap;
-      margin-right: 8px;
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
     }
 
-    /* ✅ 메뉴를 상단바 "왼쪽"에 고정 */
-    .nav-menu{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-size:15px;
-      letter-spacing:0.08em;
-      white-space:nowrap;
-    }
-    .nav-menu a{
-      text-decoration:none;
-      font-weight:500;
-      color:#111;
-      opacity:1;
-      display:inline-flex;
-      align-items:center;
-      cursor:pointer;
-      padding: 4px 2px;
-      border-radius: 6px;
-    }
-    .nav-menu a:hover{
-      background: rgba(0,0,0,0.03);
-    }
-    .nav-menu a.active{
-      background: rgba(0,0,0,0.05);
-    }
-    .nav-menu span{ opacity:0.4; }
-
-    .nav-right{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .nav-search{
-      padding:8px 14px;
-      border:none;
-      border-radius:999px;
-      background:rgba(0,0,0,0.04);
-      font-size:13px;
-      color:#333;
-      outline:none;
-      width:220px;
-    }
-    .nav-search::placeholder{ color:rgba(0,0,0,0.35); }
-
-    .nav-btn{
-      border:none;
-      border-radius:999px;
-      padding:7px 16px;
-      font-size:13px;
-      cursor:pointer;
-      background:transparent;
-      transition: background 0.2s ease;
-      color: rgba(0,0,0,0.65);
-    }
-    .nav-btn:hover{ background: rgba(0,0,0,0.04); }
-
-    /* =========================
-       메뉴 영문 → 한글 전환 (흔들림 방지)
-    ========================= */
-    .hover-word{
-      display:inline-grid;
-      align-items:center;
-      text-align:center;
-    }
-    .hover-word .en,
-    .hover-word .ko{
-      grid-area:1 / 1;
-      transition:opacity 0.15s ease;
-    }
-    .hover-word .ko{ opacity:0; }
-    .hover-word:hover .en{ opacity:0; }
-    .hover-word:hover .ko{ opacity:1; }
-
-    /* =========================
-       메인 영역
-    ========================= */
-    .main-area{
-      min-height: calc(100vh - 56px);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding: 24px 16px 56px;
+    .brand {
+      font-family: "Times New Roman", serif;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      color: var(--text);
     }
 
-    /* ✅ 홈(메인) 로고/문구 - 메인페이지 느낌 유지 */
-    .logo-wrapper{
-      text-align:center;
+    .nav-menu {
+      display: flex;
+      gap: 22px;
+      align-items: center;
     }
-    .main-logo{
-      max-width: 60vw;
-      max-height: 55vh;
-      min-width: 180px;
-      width:auto;
-      height:auto;
-      margin: 0 auto 26px;
-      display:block;
-    }
-    .title-wrap{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
-    }
-    .title-text{
-      font-family:"Nanum Pen Script", cursive;
-      font-size: clamp(16px, 2vw, 20px);
-      letter-spacing:0.08em;
-      opacity:0.65;
-      white-space:nowrap;
-    }
-    .ornament{
-      width:70px;
-      height:1px;
-      background:#CBBDA5;
-      position:relative;
-    }
-    .ornament-left::after,
-    .ornament-right::after{
-      content:"";
-      width:7px; height:7px;
-      border-radius:50%;
-      background:#CBBDA5;
-      position:absolute;
-      top:-3px;
-    }
-    .ornament-left::after{ right:-3px; }
-    .ornament-right::after{ left:-3px; }
 
-    /* =========================
-       컨텐츠(서비스) 영역: 탭을 눌렀을 때만 보이게
-    ========================= */
-    .container{
-      width: min(980px, 92vw);
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .nav-menu a.active {
+      color: #0f5f5a;
+      font-weight: 700;
+    }
+
+    .page {
+      max-width: 1080px;
       margin: 0 auto;
+      padding: 48px 20px 80px;
     }
 
-    .card{
-      background: rgba(255,255,255,0.86);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 16px;
-      padding: 16px;
+    .hero-full {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px 20px;
+      margin-bottom: 34px;
+      background: linear-gradient(180deg, #f7f8f4 0%, #f3f5f0 100%);
     }
 
-    .section-title{
-      font-size: 18px;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-    .section-sub{
-      font-size: 13px;
-      opacity: 0.72;
-      line-height: 1.65;
-      margin-bottom: 14px;
-    }
-
-    .fields{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-    .field label{
-      font-size: 12px;
-      opacity: 0.75;
-      letter-spacing: 0.06em;
-      display:block;
-      margin-bottom: 6px;
-    }
-    select, input[type="text"]{
-      width:100%;
-      border:1px solid rgba(0,0,0,0.08);
-      background: rgba(0,0,0,0.02);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 13px;
-      outline: none;
+    .hero-full::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/images/tractor-silhouette.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: min(78vw, 980px);
+      opacity: 0.08;
+      filter: grayscale(100%);
+      pointer-events: none;
     }
 
-    .actions{
-      display:flex;
-      gap: 8px;
-      align-items:center;
-      margin-top: 12px;
-      flex-wrap: wrap;
+    .hero-center {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
     }
-    .btn{
-      border:none;
-      border-radius: 999px;
-      padding: 9px 14px;
-      font-size: 13px;
+
+    .hero-center h1 {
+      font-size: clamp(44px, 8vw, 88px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      font-size: clamp(20px, 2.2vw, 28px);
+      color: #315b59;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: clamp(16px, 1.7vw, 20px);
+      line-height: 1.9;
+    }
+
+    .flow-note {
+      margin-top: 18px;
+      padding: 14px 18px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      color: #284746;
+      font-weight: 600;
+    }
+
+    .tree-wrap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .tree-title {
+      font-size: 22px;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    details {
+      border-top: 1px solid var(--line);
+      padding: 12px 0;
+    }
+
+    details:first-of-type {
+      border-top: none;
+    }
+
+    summary {
+      list-style: none;
       cursor: pointer;
-      background: rgba(0,0,0,0.04);
-    }
-    .btn:hover{ background: rgba(0,0,0,0.07); }
-
-    .result{
-      margin-top: 12px;
-      border-top: 1px dashed rgba(0,0,0,0.14);
-      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 6px 0;
     }
 
-    .step{
-      padding: 12px;
-      border: 1px solid rgba(0,0,0,0.06);
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .marker {
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(-45deg);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+      margin-top: -2px;
+    }
+
+    details[open] > summary .marker {
+      transform: rotate(45deg);
+      margin-top: -6px;
+    }
+
+    .section-desc {
+      margin: 8px 0 18px 24px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .node-block {
+      margin-left: 24px;
+      padding-left: 18px;
+      border-left: 2px solid #e6e9e1;
+      display: grid;
+      gap: 14px;
+    }
+
+    .node {
+      background: #fbfbf9;
+      border: 1px solid #e6e9e1;
       border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .node h3 {
+      font-size: 18px;
       margin-bottom: 10px;
-      background: rgba(255,255,255,0.72);
+      color: #1d403f;
     }
-    .step-title{
+
+    .items {
+      display: grid;
+      gap: 8px;
+    }
+
+    .item {
+      padding-left: 12px;
+      position: relative;
+      color: #333;
+    }
+
+    .item::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    .subtree {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #d9ddd4;
+    }
+
+    .subtree-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #305755;
+    }
+
+    .print-note {
+      margin-top: 28px;
+      color: var(--muted);
       font-size: 14px;
-      letter-spacing: 0.04em;
-      margin-bottom: 6px;
     }
-    .meta{
-      font-size: 12px;
-      opacity: 0.74;
-      line-height: 1.55;
-    }
-    .badge{
-      display:inline-block;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.10);
-      background: rgba(0,0,0,0.03);
-      margin-right: 6px;
-    }
-    .small{
-      font-size: 12px;
-      opacity: 0.78;
-      line-height: 1.65;
-    }
-    .muted{ opacity: 0.68; }
 
-    /* ✅ 뷰(화면) 토글 */
-    .view{ display:none; width:100%; }
-    .view.active{ display:block; }
-
-    /* =========================
-       반응형 (모바일)
-    ========================= */
-    @media (max-width: 768px){
-      .navbar{ padding: 0 16px; }
-      .nav-brand{ font-size: 16px; }
-      .nav-logo{ height: 30px; }
-      .nav-search{ width: 140px; }
-
-      /* 모바일에선 메뉴 숨김(원하면 햄버거로 확장) */
-      .nav-menu{ display:none; }
-
-      .title-text{
-        white-space: normal;
-        text-align: center;
-        padding: 0 8px;
+    @media (max-width: 760px) {
+      .navbar {
+        padding: 0 16px;
+        height: auto;
+        min-height: 60px;
       }
 
-      .fields{ grid-template-columns: 1fr; }
+      .nav-menu {
+        display: none;
+      }
+
+      .page {
+        padding: 0 16px 56px;
+      }
+
+      .hero-full {
+        min-height: calc(100vh - 60px);
+        padding: 32px 16px;
+        margin: 0 -16px 28px;
+      }
+
+      .hero-full::before {
+        background-size: 110vw;
+        opacity: 0.07;
+      }
+
+      .hero-center h1 {
+        font-size: 42px;
+      }
+
+      summary {
+        font-size: 20px;
+      }
+
+      .tree-wrap {
+        padding: 18px;
+      }
+
+      .node-block {
+        margin-left: 14px;
+        padding-left: 12px;
+      }
+    }
+
+    @media print {
+      .navbar {
+        position: static;
+      }
+
+      .page {
+        max-width: none;
+        padding: 20px 0;
+      }
+
+      .tree-wrap {
+        border: none;
+        padding: 0;
+      }
+
+      details {
+        break-inside: avoid;
+      }
+
+      details[open] summary .marker,
+      summary .marker {
+        transform: rotate(45deg);
+      }
     }
   </style>
 </head>
-
 <body>
-  <!-- =========================
-       NAVBAR
-  ========================= -->
-<header class="navbar">
-  <div class="nav-left">
-    <!-- ✅ 홈 링크: 로고 + AMM만 -->
-    <a class="home-link" href="/index.html" aria-label="홈으로">
-      <img class="nav-logo" id="logoHome" src="assets/images/logo.png" alt="FAEING logo">
-      <div class="nav-brand" id="brandHome">AMM</div>
-    </a>
-
-    <!-- ✅ 메뉴는 링크 밖 -->
-    <nav class="nav-menu" aria-label="AMM 메뉴">
-      <a data-view="check">
-        <span class="hover-word"><span class="en">CHECK</span><span class="ko">상태점검</span></span>
-      </a>
-      <span>/</span>
-      <a data-view="principle">
-        <span class="hover-word"><span class="en">PRINCIPLE</span><span class="ko">구조원리</span></span>
-      </a>
-      <span>/</span>
-      <a data-view="routine">
-        <span class="hover-word"><span class="en">ROUTINE</span><span class="ko">정기관리</span></span>
-      </a>
-      <span>/</span>
-      <a data-view="tools">
-        <span class="hover-word"><span class="en">TOOLS</span><span class="ko">도구</span></span>
-      </a>
+  <header class="navbar">
+    <div class="nav-left">
+      <img src="assets/images/logo.png" alt="Faeing" class="nav-logo" />
+      <a href="index.html" class="brand">Faeing</a>
+    </div>
+    <nav class="nav-menu">
+      <a href="machines.html" class="active">구조원리</a>
+      <a href="diagnostics.html">고장진단</a>
+      <a href="maintenance.html">기계관리</a>
+      <a href="support.html">도움요청</a>
+      <a href="auth.html">계정</a>
     </nav>
-  </div>
+  </header>
 
-  <div class="nav-right">
-    <input id="search" class="nav-search" placeholder="검색 (예: 시동, 예취, 누유)" />
-    <button class="nav-btn" type="button" id="goCheckBtn">상태점검</button>
-  </div>
-</header>
-
-
-  <!-- =========================
-       MAIN
-  ========================= -->
-  <main class="main-area">
-
-    <!-- ✅ HOME: 메인 페이지(가운데 요정로고 + 속삭임 문구) -->
-    <section id="view-home" class="view active">
-      <div class="logo-wrapper">
-        <!-- ✅ 가운데 요정로고(메인) -->
-        <img class="main-logo" src="assets/images/logo.png" alt="Faeing Fairy Logo">
-
-
-
-        <!-- ✅ 속삭이듯 문구 + 좌우무늬 -->
-        <div class="title-wrap">
-          <div class="ornament ornament-left"></div>
-          <div class="title-text">닦고, 조이고, 기름치자</div>
-          <div class="ornament ornament-right"></div>
-        </div>
+  <main class="page">
+    <section class="hero-full">
+      <div class="hero-center">
+        <h1>구조원리</h1>
+        <p class="hero-sub">농기계와 소통하는 사람들</p>
+        <p class="hero-desc">농기계는 여러 시스템이 함께 작동하여 움직입니다.<br>전기 → 동력 → 유압 → 조향의 흐름으로 이해합니다.</p>
       </div>
     </section>
 
-    <!-- ✅ 상태점검: 눌렀을 때만 “이 서비스 내용만” 보이게 -->
-    <section id="view-check" class="view">
-      <div class="container">
-        <div class="card">
-          <div class="section-title">상태점검</div>
-          <div class="section-sub">
-            <b>발생시점</b>을 먼저 확인하고, <b>기종 → 프레임(엔진/이동/작업)</b>으로 좁혀갑니다.
-            (여기서는 원인 해설이 아니라 “확인 순서”만 제공합니다.)
-          </div>
+    <section class="tree-wrap">
+      <div class="tree-title">구조원리 노드</div>
 
-          <div class="fields">
-            <div class="field">
-              <label for="occasion">발생 시점</label>
-              <select id="occasion">
-                <option value="">선택</option>
-                <option value="start">처음 시동 시</option>
-                <option value="during">작업 중</option>
-                <option value="after">작업 후(재시동)</option>
-                <option value="move">이동 중</option>
-                <option value="always">항상 발생</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="machine">기종</label>
-              <select id="machine">
-                <option value="">선택</option>
-                <option value="tractor">트랙터</option>
-                <option value="combine">콤바인</option>
-                <option value="riceTransplanter">이앙기</option>
-                <option value="etc">기타</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="frame">프레임</label>
-              <select id="frame" disabled>
-                <option value="">기종 선택 후</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="subWork">작업 분류 (작업 선택 시)</label>
-              <select id="subWork" disabled>
-                <option value="">작업 프레임에서 선택</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="symptom">증상</label>
-              <select id="symptom" disabled>
-                <option value="">프레임 선택 후</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="note">메모 (선택)</label>
-              <input id="note" type="text" placeholder="예: 작업 인가 순간 꺼짐 / 소음 증가 / 누유 흔적" />
+      <details open>
+        <summary><span class="marker"></span>전기</summary>
+        <p class="section-desc">기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.</p>
+        <div class="node-block">
+          <div class="node">
+            <h3>생성</h3>
+            <div class="items">
+              <div class="item">배터리</div>
+              <div class="item">알터네이터</div>
             </div>
           </div>
-
-          <div class="actions">
-            <button class="btn" id="btnGenerate" type="button">체크리스트 생성</button>
-            <button class="btn" id="btnReset" type="button">초기화</button>
-            <span class="small muted">※ 상태점검은 ‘정답’이 아니라 ‘순서’입니다.</span>
+          <div class="node">
+            <h3>전달</h3>
+            <div class="items">
+              <div class="item">배선</div>
+              <div class="item">퓨즈</div>
+              <div class="item">릴레이</div>
+              <div class="item">스위치</div>
+            </div>
           </div>
-
-          <div class="result" id="result"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 구조원리 -->
-    <section id="view-principle" class="view">
-      <div class="container">
-        <div class="card">
-          <div class="section-title">구조원리</div>
-          <div class="section-sub">
-            구조원리는 “부품 설명”이 아니라 <b>시스템을 보는 눈</b>입니다.<br/>
-            모든 시스템은 <b>폐회로</b>이며, 움직임은 <b>연결과 끊김</b>으로 만들어집니다.
-          </div>
-
-          <div class="small">
-            <span class="badge">유압</span>
-            펌프에서 탱크로 계속 흐르는 와중에, 탱크로 가는 길 중간에서 길을 끊어 빼서 쓰고 다시 탱크로 돌아갑니다.
-          </div>
-          <div class="small" style="margin-top:10px;">
-            <span class="badge">전기</span>
-            전기는 배터리에서 나와 다시 배터리로 돌아가야 흐릅니다. 접지는 귀환 경로이면서 동시에 기준입니다.
+          <div class="node">
+            <h3>사용</h3>
+            <div class="items">
+              <div class="item">스타트모터</div>
+              <div class="item">ECU</div>
+              <div class="item">센서</div>
+              <div class="item">조명</div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <!-- 정기관리 -->
-    <section id="view-routine" class="view">
-      <div class="container">
-        <div class="card">
-          <div class="section-title">정기관리</div>
-          <div class="section-sub">
-            상태점검과 같은 프레임(엔진/이동/작업)으로 <b>변화</b>를 감지합니다.<br/>
-            포인트는 <b>오일의 증감·탁도·누유·소음·흔들림 변화</b>입니다.
+      <details open>
+        <summary><span class="marker"></span>동력</summary>
+        <p class="section-desc">엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어지는 중심 시스템입니다.</p>
+        <div class="node-block">
+          <div class="node">
+            <h3>생성</h3>
+            <div class="items">
+              <div class="item">엔진</div>
+            </div>
+            <div class="subtree">
+              <div class="subtree-title">보조시스템</div>
+              <div class="items">
+                <div class="item">연료</div>
+                <div class="item">흡기</div>
+                <div class="item">냉각</div>
+                <div class="item">윤활</div>
+                <div class="item">배기</div>
+              </div>
+            </div>
           </div>
-
-          <div class="small">
-            <span class="badge">핵심</span>
-            닦고, 조이고, 기름치자.
+          <div class="node">
+            <h3>전달</h3>
+            <div class="items">
+              <div class="item">클러치</div>
+              <div class="item">변속기</div>
+              <div class="item">차동장치</div>
+              <div class="item">구동축</div>
+              <div class="item">PTO</div>
+            </div>
+          </div>
+          <div class="node">
+            <h3>사용</h3>
+            <div class="items">
+              <div class="item">주행</div>
+              <div class="item">작업기</div>
+            </div>
+            <div class="subtree">
+              <div class="subtree-title">주행 하위 구성</div>
+              <div class="items">
+                <div class="item">차축</div>
+                <div class="item">타이어</div>
+                <div class="item">브레이크</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <!-- 도구 -->
-    <section id="view-tools" class="view">
-      <div class="container">
-        <div class="card">
-          <div class="section-title">도구</div>
-          <div class="section-sub">
-            도구는 진단을 대신하지 않습니다. 대신 <b>기계가 하는 말</b>이 들리게 합니다.
+      <details open>
+        <summary><span class="marker"></span>유압</summary>
+        <p class="section-desc">오일의 흐름과 압력을 이용해 장치를 움직이고 힘을 제어하는 시스템입니다.</p>
+        <div class="node-block">
+          <div class="node">
+            <h3>생성</h3>
+            <div class="items">
+              <div class="item">유압펌프</div>
+              <div class="item">오일탱크</div>
+              <div class="item">필터</div>
+            </div>
           </div>
-
-          <div class="small">
-            <span class="badge">3원칙</span>
-            닦고 · 조이고 · 기름치기
+          <div class="node">
+            <h3>전달</h3>
+            <div class="items">
+              <div class="item">배관</div>
+              <div class="item">밸브</div>
+            </div>
           </div>
-
-          <div class="small" style="margin-top:10px;">
-            <span class="badge">+ 기준</span>
-            <b>작업기 레이져 정렬기 · 한방에 착</b> — 정중앙·높이·평행을 눈으로 확인
+          <div class="node">
+            <h3>사용</h3>
+            <div class="items">
+              <div class="item">유압실린더</div>
+              <div class="item">유압모터</div>
+            </div>
           </div>
         </div>
-      </div>
+      </details>
+
+      <details open>
+        <summary><span class="marker"></span>조향</summary>
+        <p class="section-desc">운전자의 입력을 받아 방향을 전달하고 실제 차축 방향을 바꾸는 시스템입니다.</p>
+        <div class="node-block">
+          <div class="node">
+            <h3>생성</h3>
+            <div class="items">
+              <div class="item">핸들 입력</div>
+            </div>
+          </div>
+          <div class="node">
+            <h3>전달</h3>
+            <div class="items">
+              <div class="item">조향축</div>
+              <div class="item">오비트롤</div>
+              <div class="item">조향라인</div>
+            </div>
+          </div>
+          <div class="node">
+            <h3>사용</h3>
+            <div class="items">
+              <div class="item">조향실린더</div>
+              <div class="item">차축 방향전환</div>
+            </div>
+          </div>
+        </div>
+      </details>
     </section>
 
+    <p class="print-note">배경 실루엣을 사용하려면 <code>assets/images/tractor-silhouette.png</code> 파일을 준비해 넣으면 됩니다. 프린트할 때는 브라우저의 인쇄 기능을 사용하면 됩니다.</p>
   </main>
-
-  <script>
-    // ---------------------------
-    // 뷰(화면) 전환
-    // ---------------------------
-    const MENU = document.querySelectorAll(".nav-menu a[data-view]");
-    const VIEWS = {
-      home: document.getElementById("view-home"),
-      check: document.getElementById("view-check"),
-      principle: document.getElementById("view-principle"),
-      routine: document.getElementById("view-routine"),
-      tools: document.getElementById("view-tools"),
-    };
-
-    function setActiveMenu(viewKey){
-      MENU.forEach(a => a.classList.toggle("active", a.dataset.view === viewKey));
-    }
-
-    function showView(viewKey){
-      Object.entries(VIEWS).forEach(([k, el])=>{
-        el.classList.toggle("active", k === viewKey);
-      });
-      setActiveMenu(viewKey);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    MENU.forEach(a=>{
-      a.addEventListener("click", ()=> showView(a.dataset.view));
-    });
-
-    document.getElementById("goCheckBtn").addEventListener("click", ()=> showView("check"));
-
-    // ---------------------------
-    // 상태점검 로직(이전 코드 유지/축약)
-    // ---------------------------
-    function escapeHtml(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-    function renderHow(how){
-      if(Array.isArray(how)){
-        return `<ul style="margin:0; padding-left:18px;">${how.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`;
-      }
-      return `<div>${escapeHtml(how)}</div>`;
-    }
-
-    const FRAMES = [
-      { key:"engine", label:"엔진" },
-      { key:"move",   label:"이동" },
-      { key:"work",   label:"작업" },
-    ];
-
-    const WORK_GROUPS = {
-      tractor: [{ key:"general", label:"작업(일반)" }],
-      combine: [
-        { key:"cut", label:"예취부" },
-        { key:"thresh", label:"탈곡부" },
-        { key:"discharge", label:"배출" }
-      ],
-      riceTransplanter: [
-        { key:"plant", label:"이앙" },
-        { key:"fert", label:"시비" }
-      ],
-      etc: [{ key:"general", label:"작업(기타)" }],
-    };
-
-    const MACHINE_SYMPTOMS = {
-      tractor: {
-        engine: ["시동불량", "작업 인가 시 시동 꺼짐", "출력저하", "과열 의심"],
-        move: ["주행 이상", "조향이 무거움", "변속 충격/지연"],
-        work: { general: ["PTO 이상", "유압 작동불량", "작업 품질 저하"] }
-      },
-      combine: {
-        engine: ["시동불량", "작업 인가 시 시동 꺼짐", "출력저하"],
-        move: ["주행 이상", "조향 불안정"],
-        work: {
-          cut: ["예취 불량", "막힘/걸림", "소음/진동 증가"],
-          thresh: ["탈곡 불량", "손실 증가", "소음/진동 증가"],
-          discharge: ["배출 불량", "배출 막힘", "배출 손실"]
-        }
-      },
-      riceTransplanter: {
-        engine: ["시동불량", "작업 인가 시 시동 꺼짐", "출력저하"],
-        move: ["주행 이상", "조향이 무거움"],
-        work: {
-          plant: ["모심기 불량", "결주/간격 불량", "깊이 불량"],
-          fert: ["시비 불량", "시비량 불균형", "막힘"]
-        }
-      },
-      etc: {
-        engine: ["시동불량", "출력저하"],
-        move: ["주행 이상"],
-        work: { general: ["작업 이상"] }
-      }
-    };
-
-    const OCCASION_PRECHECK = {
-      start: [{
-        title: "시동 조건 확인(인터록)",
-        why: "고장 진단 전에 조건부터 확인합니다.",
-        how: [
-          "PTO 레버 OFF(해제) 확인",
-          "전/후진 레버(셔틀) 중립 확인",
-          "변속 레인지(기어) 중립 확인(해당 시)",
-          "클러치 페달 밟힘/클러치 스위치 정상 확인(해당 시)",
-          "외부유압(리모트) 레버 중립 확인",
-          "응급정지(E-STOP) 버튼 완전 복귀/고착 여부 확인"
-        ],
-        severity: "high",
-        quickDecision: "조건을 바로잡고 재시동"
-      }]
-    };
-
-    const CONDITIONAL_PRECHECK = [
-      {
-        when: ({ occasion, symptom }) =>
-          occasion === "during" && symptom.includes("꺼짐"),
-        block: {
-          title: "작업 중 꺼짐 – 우선 확인",
-          why: "작업 중 꺼짐은 ‘부하/차단/센서’ 쪽 확인이 빠릅니다.",
-          how: [
-            "부하 제거 후 엔진 단독 재시험",
-            "작업부 막힘·걸림 여부 확인",
-            "유압 과부하(리리프 지속) 느낌 확인",
-            "PTO/RPM 관련 커넥터·배선 흔들림 확인",
-            "응급정지(E-STOP) 버튼 복귀/고착 및 배선 흔들림 재현 확인"
-          ],
-          severity: "high",
-          quickDecision: "부하 제거 시 정상 → 엔진 절대고장 가능성 낮음"
-        }
-      }
-    ];
-
-    const CHECK_DB = {
-      combine: {
-        work: {
-          cut: {
-            "예취 불량": [
-              { title:"커터날 상태 확인", why:"첫 절단 품질이 이후 부하 흐름을 결정", how:["절단면 관찰","소리 변화(둔탁/거침) 확인"], severity:"high" }
-            ]
-          }
-        }
-      }
-    };
-
-    function applyConditionalBlocks(context, steps){
-      const blocks = [];
-      CONDITIONAL_PRECHECK.forEach(rule=>{
-        if(rule.when(context)) blocks.push(rule.block);
-      });
-      return [...blocks, ...steps];
-    }
-
-    function buildChecklist({ occasion, machine, frame, subWork, symptom }){
-      const pre = (OCCASION_PRECHECK[occasion] || []);
-      let base = [];
-      const dbM = CHECK_DB[machine] || {};
-
-      if(frame === "work"){
-        base = (dbM.work && dbM.work[subWork] && dbM.work[subWork][symptom]) ? dbM.work[subWork][symptom] : [];
-      } else {
-        base = (dbM[frame] && dbM[frame][symptom]) ? dbM[frame][symptom] : [];
-      }
-
-      const combined = [...pre, ...base];
-      return applyConditionalBlocks({ occasion, machine, frame, symptom }, combined);
-    }
-
-    const occasionEl = document.getElementById("occasion");
-    const machineEl  = document.getElementById("machine");
-    const frameEl    = document.getElementById("frame");
-    const subWorkEl  = document.getElementById("subWork");
-    const symptomEl  = document.getElementById("symptom");
-    const noteEl     = document.getElementById("note");
-    const resultEl   = document.getElementById("result");
-
-    const btnGenerate = document.getElementById("btnGenerate");
-    const btnReset = document.getElementById("btnReset");
-
-    function fillFrames(){
-      frameEl.innerHTML = `<option value="">선택</option>`;
-      FRAMES.forEach(f => frameEl.appendChild(new Option(f.label, f.key)));
-      frameEl.disabled = false;
-    }
-
-    function fillWorkGroups(machineKey){
-      const groups = WORK_GROUPS[machineKey] || WORK_GROUPS.etc;
-      subWorkEl.innerHTML = "";
-      subWorkEl.appendChild(new Option("선택", ""));
-      groups.forEach(g => subWorkEl.appendChild(new Option(g.label, g.key)));
-      subWorkEl.disabled = false;
-    }
-
-    function resetSymptom(){
-      symptomEl.disabled = true;
-      symptomEl.innerHTML = `<option value="">프레임 선택 후</option>`;
-    }
-
-    function resetSubWork(){
-      subWorkEl.disabled = true;
-      subWorkEl.innerHTML = `<option value="">작업 프레임에서 선택</option>`;
-    }
-
-    function fillSymptomsFor(machineKey, frameKey, subWorkKey){
-      symptomEl.innerHTML = "";
-      symptomEl.appendChild(new Option("선택",""));
-
-      let list = [];
-      const m = MACHINE_SYMPTOMS[machineKey];
-      if(!m) list = [];
-      else if(frameKey === "work"){
-        const w = m.work || {};
-        list = (w[subWorkKey] || []);
-      } else {
-        list = (m[frameKey] || []);
-      }
-
-      list.forEach(s => symptomEl.appendChild(new Option(s, s)));
-      symptomEl.disabled = false;
-    }
-
-    function renderResult(context, steps){
-      const occLabel = occasionEl.options[occasionEl.selectedIndex]?.text || "";
-      const machineLabel = machineEl.options[machineEl.selectedIndex]?.text || "";
-      const frameLabel = frameEl.options[frameEl.selectedIndex]?.text || "";
-      const subWorkLabel = subWorkEl.options[subWorkEl.selectedIndex]?.text || "";
-      const note = noteEl.value.trim();
-
-      const head = `
-        <div class="small">
-          <span class="badge">발생시점</span>${escapeHtml(occLabel)}
-          &nbsp;&nbsp;<span class="badge">기종</span>${escapeHtml(machineLabel)}
-          &nbsp;&nbsp;<span class="badge">프레임</span>${escapeHtml(frameLabel)}
-          ${context.frame === "work" ? `&nbsp;&nbsp;<span class="badge">작업</span>${escapeHtml(subWorkLabel)}` : ``}
-          &nbsp;&nbsp;<span class="badge">증상</span>${escapeHtml(context.symptom)}
-          ${note ? `<div class="muted" style="margin-top:6px;">메모: ${escapeHtml(note)}</div>` : ``}
-        </div>
-        <div style="height:1px;background:rgba(0,0,0,0.06);margin:12px 0;"></div>
-      `;
-
-      if(!steps.length){
-        resultEl.innerHTML = head + `<div class="small muted">등록된 체크리스트가 없습니다. (DB를 확장해 나가면 됩니다.)</div>`;
-        return;
-      }
-
-      const htmlSteps = steps.map((s, idx)=>{
-        const sev = s.severity ? `<span class="badge">중요</span>${escapeHtml(s.severity)}` : "";
-        const quick = s.quickDecision ? `<div class="meta" style="margin-top:8px;"><span class="badge">빠른 판단</span>${escapeHtml(s.quickDecision)}</div>` : "";
-        return `
-          <div class="step">
-            <div class="step-title">${idx+1}. ${escapeHtml(s.title || "점검")}</div>
-            <div class="meta">${sev}</div>
-            ${s.why ? `<div class="meta" style="margin-top:6px;"><span class="badge">왜</span>${escapeHtml(s.why)}</div>` : ``}
-            ${s.how ? `<div class="meta" style="margin-top:6px;"><span class="badge">어떻게</span>${renderHow(s.how)}</div>` : ``}
-            ${quick}
-          </div>
-        `;
-      }).join("");
-
-      resultEl.innerHTML = head + htmlSteps;
-    }
-
-    machineEl.addEventListener("change", ()=>{
-      resultEl.innerHTML = "";
-      noteEl.value = "";
-      resetSubWork();
-      resetSymptom();
-
-      if(!machineEl.value){
-        frameEl.disabled = true;
-        frameEl.innerHTML = `<option value="">기종 선택 후</option>`;
-        return;
-      }
-      fillFrames();
-    });
-
-    frameEl.addEventListener("change", ()=>{
-      resultEl.innerHTML = "";
-      resetSymptom();
-      resetSubWork();
-
-      const m = machineEl.value;
-      const f = frameEl.value;
-      if(!m || !f) return;
-
-      if(f === "work"){
-        fillWorkGroups(m);
-        return;
-      }
-      fillSymptomsFor(m, f, "");
-    });
-
-    subWorkEl.addEventListener("change", ()=>{
-      resultEl.innerHTML = "";
-      resetSymptom();
-
-      const m = machineEl.value;
-      const f = frameEl.value;
-      const sw = subWorkEl.value;
-      if(!m || f !== "work" || !sw) return;
-
-      fillSymptomsFor(m, f, sw);
-    });
-
-    btnGenerate.addEventListener("click", ()=>{
-      const occasion = occasionEl.value;
-      const machine = machineEl.value;
-      const frame = frameEl.value;
-      const subWork = subWorkEl.value;
-      const symptom = symptomEl.value;
-
-      if(!occasion) return alert("발생 시점을 먼저 선택해 주세요!");
-      if(!machine) return alert("기종을 선택해 주세요!");
-      if(!frame) return alert("프레임(엔진/이동/작업)을 선택해 주세요!");
-      if(frame === "work" && !subWork) return alert("작업 분류를 선택해 주세요!");
-      if(!symptom) return alert("증상을 선택해 주세요!");
-
-      const steps = buildChecklist({ occasion, machine, frame, subWork, symptom });
-      renderResult({ occasion, machine, frame, subWork, symptom }, steps);
-    });
-
-    btnReset.addEventListener("click", ()=>{
-      occasionEl.value = "";
-      machineEl.value = "";
-      frameEl.disabled = true;
-      frameEl.innerHTML = `<option value="">기종 선택 후</option>`;
-      resetSubWork();
-      resetSymptom();
-      noteEl.value = "";
-      resultEl.innerHTML = "";
-    });
-
-    // ---------------------------
-    // 검색: Enter 누르면 해당 뷰로 이동(간단)
-    // ---------------------------
-    document.getElementById("search").addEventListener("keydown", (e)=>{
-      if(e.key !== "Enter") return;
-      const q = e.target.value.trim();
-      if(!q) return;
-
-      // 최소 규칙: 키워드가 들어가면 그 뷰를 보여줌
-      const map = [
-        { view:"check", keys:["시동","점검","증상","누유","꺼짐","예취","식부","간격"] },
-        { view:"principle", keys:["구조","폐회로","접지","기준","유압"] },
-        { view:"routine", keys:["정기","관리","닦고","조이고","기름"] },
-        { view:"tools", keys:["도구","정렬기","레이져","한방에 착"] },
-      ];
-
-      let target = "check";
-      for(const row of map){
-        if(row.keys.some(k => q.includes(k))){
-          target = row.view;
-          break;
-        }
-      }
-      showView(target);
-    });
-  </script>
-  <script>
-    document
-      .getElementById("brandHome")
-      .addEventListener("click", () => showView("home"));
-  </script>
 </body>
 </html>
+
 
 
 
