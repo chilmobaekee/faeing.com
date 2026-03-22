@@ -116,15 +116,15 @@
       text-align: center;
     }
 
-    .hover-word .en,
-    .hover-word .ko {
+    .hover-word .ko,
+    .hover-word .en {
       grid-area: 1 / 1;              /* 같은 자리에 겹치기 */
       transition: opacity 0.15s ease;
     }
 
-    .hover-word .ko { opacity: 0; }
-    .hover-word:hover .en { opacity: 0; }
-    .hover-word:hover .ko { opacity: 1; }
+    .hover-word .en { opacity: 0; }
+    .hover-word:hover .ko { opacity: 0; }
+    .hover-word:hover .en { opacity: 1; }
 
     /* =========================
        우측 영역 (검색/버튼)
