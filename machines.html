@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>구조원리 | Faeing</title>
-  <meta name="description" content="Faeing 구조원리 페이지 - 전기, 동력, 유압, 조향 시스템을 생성, 전달, 사용의 흐름으로 정리합니다." />
+  <meta
+    name="description"
+    content="Faeing 구조원리 페이지 - 전기, 동력, 유압, 조향 시스템을 생성, 전달, 사용의 흐름으로 이해합니다."
+  />
   <style>
     * {
       box-sizing: border-box;
@@ -13,264 +16,538 @@
     }
 
     :root {
-      --bg: #f7f8f4;
-      --panel: #ffffff;
-      --line: #d9ddd4;
-      --text: #1f1f1f;
-      --muted: #5d665f;
+      --bg: #f6f6f2;
+      --paper: #fffdf8;
+      --paper-2: #fcfbf7;
+      --line: #d8ddd3;
+      --text: #1f1f1b;
+      --muted: #5d645d;
       --accent: #6db8b3;
-      --accent-soft: #e8f5f3;
+      --accent-deep: #2f6b67;
+      --accent-soft: #e8f3f1;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max: 1180px;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
-      background: var(--bg);
+      background: linear-gradient(180deg, #f4f5f0 0%, #f7f7f3 100%);
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .navbar {
-      width: 100%;
-      height: 64px;
-      padding: 0 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f2f1ee;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(246, 246, 242, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 32px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .nav-logo {
       width: 34px;
       height: 34px;
       object-fit: contain;
+      border-radius: 50%;
     }
 
     .brand {
       font-family: "Times New Roman", serif;
-      font-size: 22px;
+      font-size: 24px;
       letter-spacing: 0.08em;
-      text-decoration: none;
-      color: var(--text);
     }
 
     .nav-menu {
       display: flex;
       gap: 22px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .nav-menu a {
-      text-decoration: none;
-      color: var(--text);
       font-size: 15px;
-      font-weight: 500;
+      color: #2a2a26;
+      padding: 6px 0;
+      position: relative;
+      transition: color 0.25s ease;
     }
 
+    .nav-menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent-deep);
+      transition: width 0.25s ease;
+    }
+
+    .nav-menu a:hover,
     .nav-menu a.active {
-      color: #0f5f5a;
-      font-weight: 700;
+      color: var(--accent-deep);
+    }
+
+    .nav-menu a:hover::after,
+    .nav-menu a.active::after {
+      width: 100%;
     }
 
     .page {
-      max-width: 1080px;
+      width: min(var(--max), calc(100% - 36px));
       margin: 0 auto;
-      padding: 48px 20px 80px;
+      padding: 28px 0 100px;
     }
 
-    .hero-full {
-      min-height: calc(100vh - 64px);
+    .hero {
+      min-height: calc(100vh - 100px);
+      display: grid;
+      align-items: center;
+      padding: 40px 0 52px;
+    }
+
+    .hero-paper {
+      background: radial-gradient(circle at top, rgba(109, 184, 179, 0.08) 0%, rgba(255,255,255,0) 38%),
+                  linear-gradient(180deg, #fffef9 0%, #fcfbf7 100%);
+      border: 1px solid #e1e5db;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: clamp(34px, 5vw, 72px);
+      position: relative;
+      overflow: hidden;
+      min-height: 82vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      position: relative;
-      overflow: hidden;
-      padding: 40px 20px;
-      margin-bottom: 34px;
-      background: linear-gradient(180deg, #f7f8f4 0%, #f3f5f0 100%);
     }
 
-    .hero-full::before {
+    .hero-paper::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url('assets/images/tractor-silhouette.png');
+      background-image: url("assets/images/tractor-silhouette.png");
       background-repeat: no-repeat;
-      background-position: center center;
-      background-size: min(78vw, 980px);
-      opacity: 0.08;
+      background-position: center;
+      background-size: min(76vw, 960px);
+      opacity: 0.06;
       filter: grayscale(100%);
       pointer-events: none;
     }
 
-    .hero-center {
+    .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 860px;
+      max-width: 900px;
     }
 
-    .hero-center h1 {
-      font-size: clamp(44px, 8vw, 88px);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      margin-bottom: 16px;
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid #dbe4de;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.8);
+      color: var(--accent-deep);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(46px, 8vw, 94px);
+      line-height: 1.03;
+      letter-spacing: -0.05em;
+      margin-bottom: 18px;
     }
 
     .hero-sub {
-      font-size: clamp(20px, 2.2vw, 28px);
-      color: #315b59;
-      margin-bottom: 18px;
-      font-weight: 600;
+      font-size: clamp(20px, 2.4vw, 30px);
+      color: var(--accent-deep);
+      font-weight: 700;
+      margin-bottom: 20px;
     }
 
     .hero-desc {
+      font-size: clamp(16px, 1.7vw, 21px);
       color: var(--muted);
-      font-size: clamp(16px, 1.7vw, 20px);
-      line-height: 1.9;
+      line-height: 1.95;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    .flow-note {
-      margin-top: 18px;
-      padding: 14px 18px;
+    .hero-note {
+      margin: 28px auto 0;
+      max-width: 700px;
       background: var(--accent-soft);
+      color: #264a48;
       border-left: 4px solid var(--accent);
-      border-radius: 10px;
-      color: #284746;
+      border-radius: 14px;
+      padding: 14px 18px;
       font-weight: 600;
-    }
-
-    .tree-wrap {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 24px;
-    }
-
-    .tree-title {
-      font-size: 22px;
-      margin-bottom: 18px;
-      font-weight: 700;
-    }
-
-    details {
-      border-top: 1px solid var(--line);
-      padding: 12px 0;
-    }
-
-    details:first-of-type {
-      border-top: none;
-    }
-
-    summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 22px;
-      font-weight: 700;
-      padding: 6px 0;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .marker {
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid var(--muted);
-      border-bottom: 2px solid var(--muted);
-      transform: rotate(-45deg);
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-      margin-top: -2px;
-    }
-
-    details[open] > summary .marker {
-      transform: rotate(45deg);
-      margin-top: -6px;
-    }
-
-    .section-desc {
-      margin: 8px 0 18px 24px;
-      color: var(--muted);
       font-size: 15px;
     }
 
-    .node-block {
-      margin-left: 24px;
-      padding-left: 18px;
-      border-left: 2px solid #e6e9e1;
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--accent-deep);
+      color: #fff;
+      border: 1px solid var(--accent-deep);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--text);
+      border: 1px solid #d9dfd8;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .section-paper {
+      background: var(--paper);
+      border: 1px solid #e0e5dc;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 3vw, 34px);
+    }
+
+    .section-head {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.2;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .system-grid {
       display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
     }
 
-    .node {
-      background: #fbfbf9;
-      border: 1px solid #e6e9e1;
-      border-radius: 14px;
-      padding: 14px 16px;
+    .system-card {
+      background: linear-gradient(180deg, #fffefb 0%, #faf9f5 100%);
+      border: 1px solid #e2e6dd;
+      border-radius: 20px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
     }
 
-    .node h3 {
-      font-size: 18px;
+    .system-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.06);
+      border-color: #c7d5cf;
+    }
+
+    .system-card.active {
+      border: 2px solid var(--accent);
+      background: linear-gradient(180deg, #ffffff 0%, #f6fcfb 100%);
+      transform: translateY(-6px);
+      box-shadow: 0 18px 32px rgba(70, 128, 122, 0.13);
+    }
+
+    .system-card.dimmed {
+      opacity: 0.45;
+    }
+
+    .system-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .system-name {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .system-index {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .system-summary {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .flow-strip {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed #dde2d8;
+      color: #315653;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .focus-panel {
+      margin-top: 24px;
+      border-top: 1px solid #e5e9e0;
+      padding-top: 24px;
+      display: grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .focus-left {
+      position: sticky;
+      top: 92px;
+    }
+
+    .focus-card {
+      background: linear-gradient(180deg, #fffefb 0%, #fbfaf7 100%);
+      border: 1px solid #e2e6dd;
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 100%;
+    }
+
+    .focus-label {
+      display: inline-block;
+      padding: 6px 10px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .focus-title {
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      letter-spacing: -0.04em;
+    }
+
+    .focus-description {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .focus-path {
+      border-top: 1px dashed #dde2d8;
+      padding-top: 16px;
+      color: #355b58;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .stage-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .stage-card {
+      background: #fbfbf8;
+      border: 1px solid #e1e6dd;
+      border-radius: 18px;
+      padding: 20px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .stage-card:hover {
+      transform: translateY(-2px);
+      border-color: #cdd8d3;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.05);
+    }
+
+    .stage-card.active {
+      border: 2px solid var(--accent);
+      background: #ffffff;
+      box-shadow: 0 12px 26px rgba(109, 184, 179, 0.12);
+    }
+
+    .stage-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 10px;
-      color: #1d403f;
     }
 
-    .items {
+    .stage-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #214746;
+      letter-spacing: -0.03em;
+    }
+
+    .stage-kor {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-deep);
+      background: var(--accent-soft);
+      padding: 5px 9px;
+      border-radius: 999px;
+    }
+
+    .stage-desc {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .item-list {
       display: grid;
       gap: 8px;
     }
 
     .item {
-      padding-left: 12px;
       position: relative;
-      color: #333;
+      padding-left: 14px;
+      color: #2b2f2b;
+      font-size: 15px;
     }
 
     .item::before {
-      content: "-";
+      content: "–";
       position: absolute;
       left: 0;
       color: var(--muted);
     }
 
-    .subtree {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed #d9ddd4;
+    .detail-panel {
+      margin-top: 18px;
+      padding: 18px;
+      background: #f8faf8;
+      border: 1px dashed #d6ddd4;
+      border-radius: 16px;
     }
 
-    .subtree-title {
-      font-size: 15px;
-      font-weight: 700;
+    .detail-title {
+      font-size: 16px;
+      font-weight: 800;
       margin-bottom: 8px;
-      color: #305755;
+      color: #2f5955;
     }
 
-    .print-note {
-      margin-top: 28px;
+    .detail-text {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    .bottom-note {
+      margin-top: 26px;
       color: var(--muted);
       font-size: 14px;
     }
 
+    .footer-space {
+      height: 40px;
+    }
+
+    @media (max-width: 1100px) {
+      .system-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .focus-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .focus-left {
+        position: static;
+      }
+    }
+
     @media (max-width: 760px) {
       .navbar {
-        padding: 0 16px;
         height: auto;
         min-height: 60px;
+        padding: 10px 0;
+      }
+
+      .nav-inner {
+        width: calc(100% - 24px);
       }
 
       .nav-menu {
@@ -278,231 +555,431 @@
       }
 
       .page {
-        padding: 0 16px 56px;
+        width: calc(100% - 24px);
+        padding: 18px 0 70px;
       }
 
-      .hero-full {
-        min-height: calc(100vh - 60px);
-        padding: 32px 16px;
-        margin: 0 -16px 28px;
+      .hero-paper {
+        min-height: 74vh;
+        border-radius: 24px;
+        padding: 28px 18px;
       }
 
-      .hero-full::before {
-        background-size: 110vw;
-        opacity: 0.07;
+      .hero-paper::before {
+        background-size: 115vw;
+        opacity: 0.05;
       }
 
-      .hero-center h1 {
-        font-size: 42px;
+      .hero-note {
+        text-align: left;
       }
 
-      summary {
-        font-size: 20px;
-      }
-
-      .tree-wrap {
+      .section-paper {
         padding: 18px;
       }
 
-      .node-block {
-        margin-left: 14px;
-        padding-left: 12px;
+      .system-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-card {
+        min-height: auto;
+      }
+
+      .focus-title {
+        font-size: 34px;
+      }
+
+      .stage-title {
+        font-size: 20px;
       }
     }
 
     @media print {
-      .navbar {
-        position: static;
+      .navbar,
+      .hero-actions {
+        display: none;
+      }
+
+      body {
+        background: #fff;
       }
 
       .page {
-        max-width: none;
-        padding: 20px 0;
-      }
-
-      .tree-wrap {
-        border: none;
+        width: 100%;
         padding: 0;
       }
 
-      details {
-        break-inside: avoid;
-      }
-
-      details[open] summary .marker,
-      summary .marker {
-        transform: rotate(45deg);
+      .hero-paper,
+      .section-paper,
+      .focus-card,
+      .stage-card,
+      .system-card {
+        box-shadow: none;
       }
     }
   </style>
 </head>
 <body>
   <header class="navbar">
-    <div class="nav-left">
-      <img src="assets/images/logo.png" alt="Faeing" class="nav-logo" />
-      <a href="index.html" class="brand">Faeing</a>
+    <div class="nav-inner">
+      <div class="nav-left">
+        <img src="assets/images/logo.png" alt="Faeing 로고" class="nav-logo" />
+        <a href="index.html" class="brand">Faeing</a>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="machines.html" class="active">구조원리</a>
+        <a href="diagnostics.html">고장진단</a>
+        <a href="maintenance.html">기계관리</a>
+        <a href="support.html">도움요청</a>
+        <a href="auth.html">계정</a>
+      </nav>
     </div>
-    <nav class="nav-menu">
-      <a href="machines.html" class="active">구조원리</a>
-      <a href="diagnostics.html">고장진단</a>
-      <a href="maintenance.html">기계관리</a>
-      <a href="support.html">도움요청</a>
-      <a href="auth.html">계정</a>
-    </nav>
   </header>
 
   <main class="page">
-    <section class="hero-full">
-      <div class="hero-center">
-        <h1>구조원리</h1>
-        <p class="hero-sub">농기계와 소통하는 사람들</p>
-        <p class="hero-desc">농기계는 여러 시스템이 함께 작동하여 움직입니다.<br>전기 → 동력 → 유압 → 조향의 흐름으로 이해합니다.</p>
+    <!-- 첫 장 -->
+    <section class="hero">
+      <div class="hero-paper">
+        <div class="hero-content">
+          <div class="hero-kicker">SYSTEM FLOW / 농기계 구조 흐름</div>
+          <h1>구조원리</h1>
+          <p class="hero-sub">농기계는 흐름으로 이해합니다</p>
+          <p class="hero-desc">
+            농기계는 하나의 부품으로 움직이지 않습니다.<br />
+            전기, 동력, 유압, 조향이 서로 연결되어 흐름을 만들고,<br />
+            그 흐름이 무너질 때 고장은 가장 약한 곳부터 드러납니다.
+          </p>
+          <div class="hero-note">
+            전기 → 동력 → 유압 → 조향의 큰 구조를 먼저 보고,
+            그 안에서 생성 → 전달 → 사용의 흐름으로 하나씩 들어가 보세요.
+          </div>
+          <div class="hero-actions">
+            <a href="#system-overview" class="btn btn-primary">전체 시스템 보기</a>
+            <a href="#focus-section" class="btn btn-secondary">선택해서 깊게 보기</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="tree-wrap">
-      <div class="tree-title">구조원리 노드</div>
-
-      <details open>
-        <summary><span class="marker"></span>전기</summary>
-        <p class="section-desc">기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.</p>
-        <div class="node-block">
-          <div class="node">
-            <h3>생성</h3>
-            <div class="items">
-              <div class="item">배터리</div>
-              <div class="item">알터네이터</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>전달</h3>
-            <div class="items">
-              <div class="item">배선</div>
-              <div class="item">퓨즈</div>
-              <div class="item">릴레이</div>
-              <div class="item">스위치</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>사용</h3>
-            <div class="items">
-              <div class="item">스타트모터</div>
-              <div class="item">ECU</div>
-              <div class="item">센서</div>
-              <div class="item">조명</div>
-            </div>
-          </div>
+    <!-- 전체 시스템 -->
+    <section class="section" id="system-overview">
+      <div class="section-paper">
+        <div class="section-head">
+          <h2 class="section-title">전체 시스템</h2>
+          <p class="section-desc">
+            먼저 큰 흐름을 봅니다. 아래 항목을 누르면 선택된 시스템이 아래에서 전면으로 올라옵니다.
+          </p>
         </div>
-      </details>
 
-      <details open>
-        <summary><span class="marker"></span>동력</summary>
-        <p class="section-desc">엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어지는 중심 시스템입니다.</p>
-        <div class="node-block">
-          <div class="node">
-            <h3>생성</h3>
-            <div class="items">
-              <div class="item">엔진</div>
+        <div class="system-grid" id="systemGrid">
+          <article class="system-card active" data-system="electric">
+            <div>
+              <div class="system-top">
+                <div class="system-name">전기</div>
+                <div class="system-index">01</div>
+              </div>
+              <p class="system-summary">
+                기계를 깨우고 시동하며 각 장치를 제어하는 시작점입니다.
+              </p>
             </div>
-            <div class="subtree">
-              <div class="subtree-title">보조시스템</div>
-              <div class="items">
-                <div class="item">연료</div>
-                <div class="item">흡기</div>
-                <div class="item">냉각</div>
-                <div class="item">윤활</div>
-                <div class="item">배기</div>
+            <div class="flow-strip">생성 → 전달 → 사용</div>
+          </article>
+
+          <article class="system-card" data-system="power">
+            <div>
+              <div class="system-top">
+                <div class="system-name">동력</div>
+                <div class="system-index">02</div>
+              </div>
+              <p class="system-summary">
+                엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어집니다.
+              </p>
+            </div>
+            <div class="flow-strip">생성 → 전달 → 사용</div>
+          </article>
+
+          <article class="system-card" data-system="hydraulic">
+            <div>
+              <div class="system-top">
+                <div class="system-name">유압</div>
+                <div class="system-index">03</div>
+              </div>
+              <p class="system-summary">
+                오일의 흐름과 압력으로 장치를 움직이고 힘을 제어합니다.
+              </p>
+            </div>
+            <div class="flow-strip">생성 → 전달 → 사용</div>
+          </article>
+
+          <article class="system-card" data-system="steering">
+            <div>
+              <div class="system-top">
+                <div class="system-name">조향</div>
+                <div class="system-index">04</div>
+              </div>
+              <p class="system-summary">
+                운전자의 입력을 방향 변화로 바꾸는 흐름입니다.
+              </p>
+            </div>
+            <div class="flow-strip">생성 → 전달 → 사용</div>
+          </article>
+        </div>
+
+        <!-- 선택 시스템 전면 표시 -->
+        <div class="focus-panel" id="focus-section">
+          <div class="focus-left">
+            <div class="focus-card">
+              <div class="focus-label">CURRENT SYSTEM</div>
+              <h3 class="focus-title" id="focusTitle">전기</h3>
+              <p class="focus-description" id="focusDescription">
+                기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.
+              </p>
+              <div class="focus-path" id="focusPath">
+                전기 → 생성 → 전달 → 사용
               </div>
             </div>
           </div>
-          <div class="node">
-            <h3>전달</h3>
-            <div class="items">
-              <div class="item">클러치</div>
-              <div class="item">변속기</div>
-              <div class="item">차동장치</div>
-              <div class="item">구동축</div>
-              <div class="item">PTO</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>사용</h3>
-            <div class="items">
-              <div class="item">주행</div>
-              <div class="item">작업기</div>
-            </div>
-            <div class="subtree">
-              <div class="subtree-title">주행 하위 구성</div>
-              <div class="items">
-                <div class="item">차축</div>
-                <div class="item">타이어</div>
-                <div class="item">브레이크</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </details>
 
-      <details open>
-        <summary><span class="marker"></span>유압</summary>
-        <p class="section-desc">오일의 흐름과 압력을 이용해 장치를 움직이고 힘을 제어하는 시스템입니다.</p>
-        <div class="node-block">
-          <div class="node">
-            <h3>생성</h3>
-            <div class="items">
-              <div class="item">유압펌프</div>
-              <div class="item">오일탱크</div>
-              <div class="item">필터</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>전달</h3>
-            <div class="items">
-              <div class="item">배관</div>
-              <div class="item">밸브</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>사용</h3>
-            <div class="items">
-              <div class="item">유압실린더</div>
-              <div class="item">유압모터</div>
+          <div class="focus-right">
+            <div class="stage-grid" id="stageGrid">
+              <!-- JS 렌더링 -->
             </div>
           </div>
         </div>
-      </details>
 
-      <details open>
-        <summary><span class="marker"></span>조향</summary>
-        <p class="section-desc">운전자의 입력을 받아 방향을 전달하고 실제 차축 방향을 바꾸는 시스템입니다.</p>
-        <div class="node-block">
-          <div class="node">
-            <h3>생성</h3>
-            <div class="items">
-              <div class="item">핸들 입력</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>전달</h3>
-            <div class="items">
-              <div class="item">조향축</div>
-              <div class="item">오비트롤</div>
-              <div class="item">조향라인</div>
-            </div>
-          </div>
-          <div class="node">
-            <h3>사용</h3>
-            <div class="items">
-              <div class="item">조향실린더</div>
-              <div class="item">차축 방향전환</div>
-            </div>
-          </div>
-        </div>
-      </details>
+        <p class="bottom-note">
+          배경 실루엣을 사용하려면
+          <code>assets/images/tractor-silhouette.png</code> 파일을 준비해 넣으면 됩니다.
+        </p>
+      </div>
     </section>
 
-    <p class="print-note">배경 실루엣을 사용하려면 <code>assets/images/tractor-silhouette.png</code> 파일을 준비해 넣으면 됩니다. 프린트할 때는 브라우저의 인쇄 기능을 사용하면 됩니다.</p>
+    <div class="footer-space"></div>
   </main>
+
+  <script>
+    const systemData = {
+      electric: {
+        name: "전기",
+        description: "기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.",
+        stages: [
+          {
+            id: "create",
+            title: "생성",
+            badge: "CREATE",
+            desc: "전기를 만들고 저장하는 시작 단계입니다.",
+            items: ["배터리", "알터네이터"],
+            detailTitle: "설명",
+            detailText:
+              "전기는 먼저 저장되거나 만들어져야 합니다. 배터리는 시동 전 초기 전원을 담당하고, 알터네이터는 엔진 구동 후 전기를 다시 만들어 충전과 공급을 이어갑니다."
+          },
+          {
+            id: "transfer",
+            title: "전달",
+            badge: "TRANSFER",
+            desc: "만들어진 전기가 필요한 곳까지 가는 통로입니다.",
+            items: ["배선", "퓨즈", "릴레이", "스위치"],
+            detailTitle: "설명",
+            detailText:
+              "전기는 눈에 보이지 않지만 반드시 길이 있습니다. 배선은 흐름의 길이고, 퓨즈는 보호, 릴레이는 큰 전류의 제어, 스위치는 입력의 시작점입니다."
+          },
+          {
+            id: "use",
+            title: "사용",
+            badge: "USE",
+            desc: "전기가 실제 기능으로 드러나는 단계입니다.",
+            items: ["스타트모터", "ECU", "센서", "조명"],
+            detailTitle: "설명",
+            detailText:
+              "전기의 최종 목적은 기능을 일으키는 것입니다. 스타트모터는 회전을 만들고, ECU와 센서는 판단과 제어를 돕고, 조명은 운전과 작업 안전을 지원합니다."
+          }
+        ]
+      },
+
+      power: {
+        name: "동력",
+        description: "엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어지는 중심 시스템입니다.",
+        stages: [
+          {
+            id: "create",
+            title: "생성",
+            badge: "CREATE",
+            desc: "힘을 만들어내는 시작 단계입니다.",
+            items: ["엔진", "연료", "흡기", "냉각", "윤활", "배기"],
+            detailTitle: "보조시스템 포함 설명",
+            detailText:
+              "엔진은 혼자 힘을 만들지 않습니다. 연료, 흡기, 냉각, 윤활, 배기가 함께 맞물려야 안정적인 동력이 만들어집니다. 생성부의 이상은 전체 시스템의 시작점에서 흐름을 흔듭니다."
+          },
+          {
+            id: "transfer",
+            title: "전달",
+            badge: "TRANSFER",
+            desc: "만들어진 힘을 필요한 곳으로 보내는 단계입니다.",
+            items: ["클러치", "변속기", "차동장치", "구동축", "PTO"],
+            detailTitle: "설명",
+            detailText:
+              "동력은 생성된 뒤 반드시 전달 구조를 거칩니다. 클러치는 연결과 분리, 변속기는 속도와 힘의 조절, 차동장치와 구동축은 실제 바퀴나 작업기로의 이동을 담당합니다."
+          },
+          {
+            id: "use",
+            title: "사용",
+            badge: "USE",
+            desc: "힘이 실제 주행과 작업으로 드러나는 단계입니다.",
+            items: ["주행", "작업기", "차축", "타이어", "브레이크"],
+            detailTitle: "설명",
+            detailText:
+              "최종적으로 동력은 주행과 작업으로 사용됩니다. 이 단계에서 이상이 보인다고 해서 원인이 항상 마지막에 있는 것은 아닙니다. 앞단의 생성과 전달이 무너져도 마지막 사용부에서 증상이 드러날 수 있습니다."
+          }
+        ]
+      },
+
+      hydraulic: {
+        name: "유압",
+        description: "오일의 흐름과 압력을 이용해 장치를 움직이고 힘을 제어하는 시스템입니다.",
+        stages: [
+          {
+            id: "create",
+            title: "생성",
+            badge: "CREATE",
+            desc: "압력과 유량의 시작점입니다.",
+            items: ["유압펌프", "오일탱크", "필터"],
+            detailTitle: "설명",
+            detailText:
+              "유압은 오일이 있어야 하고, 펌프가 흡입·토출하며, 오염이 걸러져야 안정됩니다. 생성부는 유압 전체의 체력과 같습니다."
+          },
+          {
+            id: "transfer",
+            title: "전달",
+            badge: "TRANSFER",
+            desc: "유압이 흐르는 길과 방향 제어 단계입니다.",
+            items: ["배관", "밸브"],
+            detailTitle: "설명",
+            detailText:
+              "유압은 압력만이 아니라 흐름의 방향도 중요합니다. 배관은 길을 만들고, 밸브는 보내고 막고 우회시키며 시스템의 행동을 결정합니다."
+          },
+          {
+            id: "use",
+            title: "사용",
+            badge: "USE",
+            desc: "유압이 실제 움직임과 회전으로 나타나는 단계입니다.",
+            items: ["유압실린더", "유압모터"],
+            detailTitle: "설명",
+            detailText:
+              "실린더는 직선 운동, 모터는 회전 운동으로 유압을 사용합니다. 결국 유압의 목적은 눈에 보이는 움직임과 힘을 만드는 데 있습니다."
+          }
+        ]
+      },
+
+      steering: {
+        name: "조향",
+        description: "운전자의 입력을 받아 방향을 전달하고 실제 차축 방향을 바꾸는 시스템입니다.",
+        stages: [
+          {
+            id: "create",
+            title: "생성",
+            badge: "CREATE",
+            desc: "운전자의 방향 의사가 시작되는 단계입니다.",
+            items: ["핸들 입력"],
+            detailTitle: "설명",
+            detailText:
+              "조향의 시작은 운전자의 손입니다. 핸들을 돌린다는 입력이 곧 방향 변화의 출발점입니다."
+          },
+          {
+            id: "transfer",
+            title: "전달",
+            badge: "TRANSFER",
+            desc: "입력을 실제 조향력으로 바꾸어 보내는 단계입니다.",
+            items: ["조향축", "오비트롤", "조향라인"],
+            detailTitle: "설명",
+            detailText:
+              "조향축은 물리적 회전을 전달하고, 오비트롤은 유량과 방향을 나누며, 조향라인은 그 힘을 실린더까지 보냅니다. 조향은 단순히 핸들과 바퀴의 연결이 아니라 흐름의 변환입니다."
+          },
+          {
+            id: "use",
+            title: "사용",
+            badge: "USE",
+            desc: "최종적으로 차축의 방향이 바뀌는 단계입니다.",
+            items: ["조향실린더", "차축 방향전환"],
+            detailTitle: "설명",
+            detailText:
+              "최종 사용부에서는 차축 방향이 바뀌고 기계가 원하는 방향으로 움직입니다. 사용부의 이상은 전달부와 생성부를 함께 점검해야 정확히 원인을 찾을 수 있습니다."
+          }
+        ]
+      }
+    };
+
+    const systemCards = document.querySelectorAll(".system-card");
+    const stageGrid = document.getElementById("stageGrid");
+    const focusTitle = document.getElementById("focusTitle");
+    const focusDescription = document.getElementById("focusDescription");
+    const focusPath = document.getElementById("focusPath");
+
+    let currentSystem = "electric";
+    let currentStage = "create";
+
+    function renderSystem(systemKey, stageId = "create") {
+      const system = systemData[systemKey];
+      if (!system) return;
+
+      currentSystem = systemKey;
+      currentStage = stageId;
+
+      focusTitle.textContent = system.name;
+      focusDescription.textContent = system.description;
+      focusPath.textContent = `${system.name} → 생성 → 전달 → 사용`;
+
+      systemCards.forEach((card) => {
+        const isActive = card.dataset.system === systemKey;
+        card.classList.toggle("active", isActive);
+        card.classList.toggle("dimmed", !isActive);
+      });
+
+      stageGrid.innerHTML = "";
+
+      system.stages.forEach((stage) => {
+        const stageCard = document.createElement("article");
+        stageCard.className = "stage-card" + (stage.id === stageId ? " active" : "");
+        stageCard.dataset.stage = stage.id;
+
+        stageCard.innerHTML = `
+          <div class="stage-head">
+            <h4 class="stage-title">${stage.title}</h4>
+            <div class="stage-kor">${stage.badge}</div>
+          </div>
+          <p class="stage-desc">${stage.desc}</p>
+          <div class="item-list">
+            ${stage.items.map(item => `<div class="item">${item}</div>`).join("")}
+          </div>
+          <div class="detail-panel">
+            <div class="detail-title">${stage.detailTitle}</div>
+            <p class="detail-text">${stage.detailText}</p>
+          </div>
+        `;
+
+        stageCard.addEventListener("click", () => {
+          renderSystem(systemKey, stage.id);
+          stageCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+
+        stageGrid.appendChild(stageCard);
+      });
+    }
+
+    systemCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const systemKey = card.dataset.system;
+        renderSystem(systemKey, "create");
+        document.getElementById("focus-section").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+    });
+
+    renderSystem("electric", "create");
+  </script>
 </body>
 </html>
 
