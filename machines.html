@@ -2,45 +2,33 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>구조원리 | Faeing</title>
-  <meta
-    name="description"
-    content="Faeing 구조원리 페이지 - 전기, 동력, 유압, 조향 시스템을 생성, 전달, 사용의 흐름으로 이해합니다."
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing | 구조원리</title>
+
+  <meta name="description" content="Faeing 구조원리 페이지 - 전기, 동력, 유압, 조향의 흐름을 차분하게 읽어가는 문서형 구조입니다.">
+
+  <meta property="og:title" content="Faeing | 구조원리">
+  <meta property="og:description" content="농기계의 구조원리를 차분하게 읽어가는 문서형 구조">
+  <meta property="og:image" content="https://faeing.com/og-image.png">
+  <meta property="og:url" content="https://faeing.com/machines.html">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    :root {
-      --bg: #f6f6f2;
-      --paper: #fffdf8;
-      --paper-2: #fcfbf7;
-      --line: #d8ddd3;
-      --text: #1f1f1b;
-      --muted: #5d645d;
-      --accent: #6db8b3;
-      --accent-deep: #2f6b67;
-      --accent-soft: #e8f3f1;
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 12px;
-      --max: 1180px;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
-      background: linear-gradient(180deg, #f4f5f0 0%, #f7f7f3 100%);
-      color: var(--text);
-      line-height: 1.75;
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
+      color: #222;
+      min-height: 100vh;
     }
 
     a {
@@ -48,937 +36,879 @@
       text-decoration: none;
     }
 
+    button {
+      font-family: inherit;
+    }
+
+    /* =========================
+       상단바
+    ========================= */
     .navbar {
+      width: 100%;
+      height: 56px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
       position: sticky;
       top: 0;
       z-index: 1000;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(246, 246, 242, 0.88);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .nav-inner {
-      width: min(var(--max), calc(100% - 32px));
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      min-width: 0;
+      flex: 1;
     }
 
     .nav-logo {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      border-radius: 50%;
-    }
-
-    .brand {
-      font-family: "Times New Roman", serif;
-      font-size: 24px;
-      letter-spacing: 0.08em;
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 22px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .nav-menu a {
-      font-size: 15px;
-      color: #2a2a26;
-      padding: 6px 0;
-      position: relative;
-      transition: color 0.25s ease;
-    }
-
-    .nav-menu a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 2px;
-      background: var(--accent-deep);
-      transition: width 0.25s ease;
-    }
-
-    .nav-menu a:hover,
-    .nav-menu a.active {
-      color: var(--accent-deep);
-    }
-
-    .nav-menu a:hover::after,
-    .nav-menu a.active::after {
-      width: 100%;
-    }
-
-    .page {
-      width: min(var(--max), calc(100% - 36px));
-      margin: 0 auto;
-      padding: 28px 0 100px;
-    }
-
-    .hero {
-      min-height: calc(100vh - 100px);
-      display: grid;
-      align-items: center;
-      padding: 40px 0 52px;
-    }
-
-    .hero-paper {
-      background: radial-gradient(circle at top, rgba(109, 184, 179, 0.08) 0%, rgba(255,255,255,0) 38%),
-                  linear-gradient(180deg, #fffef9 0%, #fcfbf7 100%);
-      border: 1px solid #e1e5db;
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      padding: clamp(34px, 5vw, 72px);
-      position: relative;
-      overflow: hidden;
-      min-height: 82vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .hero-paper::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("assets/images/tractor-silhouette.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: min(76vw, 960px);
-      opacity: 0.06;
-      filter: grayscale(100%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-    }
-
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border: 1px solid #dbe4de;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.8);
-      color: var(--accent-deep);
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-size: clamp(46px, 8vw, 94px);
-      line-height: 1.03;
-      letter-spacing: -0.05em;
-      margin-bottom: 18px;
-    }
-
-    .hero-sub {
-      font-size: clamp(20px, 2.4vw, 30px);
-      color: var(--accent-deep);
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .hero-desc {
-      font-size: clamp(16px, 1.7vw, 21px);
-      color: var(--muted);
-      line-height: 1.95;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .hero-note {
-      margin: 28px auto 0;
-      max-width: 700px;
-      background: var(--accent-soft);
-      color: #264a48;
-      border-left: 4px solid var(--accent);
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    .hero-actions {
-      margin-top: 28px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 140px;
-      padding: 14px 18px;
-      border-radius: 999px;
-      font-size: 15px;
-      font-weight: 700;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: var(--accent-deep);
-      color: #fff;
-      border: 1px solid var(--accent-deep);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.8);
-      color: var(--text);
-      border: 1px solid #d9dfd8;
-    }
-
-    .section {
-      margin-top: 40px;
-    }
-
-    .section-paper {
-      background: var(--paper);
-      border: 1px solid #e0e5dc;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: clamp(22px, 3vw, 34px);
-    }
-
-    .section-head {
-      margin-bottom: 24px;
-    }
-
-    .section-title {
-      font-size: clamp(28px, 4vw, 40px);
-      line-height: 1.2;
-      margin-bottom: 10px;
-      letter-spacing: -0.03em;
-    }
-
-    .section-desc {
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .system-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .system-card {
-      background: linear-gradient(180deg, #fffefb 0%, #faf9f5 100%);
-      border: 1px solid #e2e6dd;
-      border-radius: 20px;
-      padding: 20px;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
-      min-height: 180px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .system-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 28px rgba(0,0,0,0.06);
-      border-color: #c7d5cf;
-    }
-
-    .system-card.active {
-      border: 2px solid var(--accent);
-      background: linear-gradient(180deg, #ffffff 0%, #f6fcfb 100%);
-      transform: translateY(-6px);
-      box-shadow: 0 18px 32px rgba(70, 128, 122, 0.13);
-    }
-
-    .system-card.dimmed {
-      opacity: 0.45;
-    }
-
-    .system-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .system-name {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .system-index {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--accent-soft);
-      color: var(--accent-deep);
-      font-weight: 800;
-      font-size: 14px;
+      height: 36px;
+      width: auto;
+      display: block;
       flex-shrink: 0;
     }
 
-    .system-summary {
-      color: var(--muted);
+    .nav-brand {
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .system-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      margin-left: 18px;
+      overflow-x: auto;
+    }
+
+    .system-nav button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
       font-size: 15px;
-      line-height: 1.8;
+      letter-spacing: 0.08em;
+      color: #111;
+      padding: 4px 0;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    .flow-strip {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px dashed #dde2d8;
-      color: #315653;
-      font-size: 14px;
-      font-weight: 700;
+    .system-nav .separator {
+      opacity: 0.35;
+      flex-shrink: 0;
     }
 
-    .focus-panel {
-      margin-top: 24px;
-      border-top: 1px solid #e5e9e0;
-      padding-top: 24px;
+    .system-nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 1.5px;
+      background: #111;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 210px;
+    }
+
+    .nav-search::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .login-btn {
+      color: rgba(0,0,0,0.6);
+    }
+
+    .login-btn:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .signup-btn {
+      color: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.02);
+    }
+
+    .signup-btn:hover {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* =========================
+       구조원리 본문
+    ========================= */
+    .machines-page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 26px 22px 42px;
+    }
+
+    .machines-heading {
+      margin-bottom: 20px;
+    }
+
+    .machines-title {
+      font-size: 34px;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .machines-subtitle {
+      font-size: 15px;
+      color: rgba(0,0,0,0.62);
+      line-height: 1.7;
+    }
+
+    /* 하얀 설명 칸 */
+    .intro-banner {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 16px;
+      padding: 18px 24px;
+      margin-bottom: 22px;
+      font-size: 15px;
+      color: rgba(0,0,0,0.62);
+      line-height: 1.7;
+    }
+
+    .machines-layout {
       display: grid;
-      grid-template-columns: 1.05fr 1.35fr;
+      grid-template-columns: 210px 1fr;
       gap: 24px;
       align-items: start;
     }
 
-    .focus-left {
+    /* 왼쪽 단계 메뉴 */
+    .step-menu {
+      background: #ECEFEC;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 10px;
       position: sticky;
-      top: 92px;
+      top: 78px;
     }
 
-    .focus-card {
-      background: linear-gradient(180deg, #fffefb 0%, #fbfaf7 100%);
-      border: 1px solid #e2e6dd;
-      border-radius: 22px;
-      padding: 24px;
-      min-height: 100%;
-    }
-
-    .focus-label {
-      display: inline-block;
-      padding: 6px 10px;
-      background: var(--accent-soft);
-      color: var(--accent-deep);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .focus-title {
-      font-size: clamp(30px, 4vw, 48px);
-      line-height: 1.1;
-      margin-bottom: 14px;
-      letter-spacing: -0.04em;
-    }
-
-    .focus-description {
-      color: var(--muted);
+    .step-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 12px;
       font-size: 16px;
-      line-height: 1.9;
-      margin-bottom: 20px;
-    }
-
-    .focus-path {
-      border-top: 1px dashed #dde2d8;
-      padding-top: 16px;
-      color: #355b58;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .stage-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .stage-card {
-      background: #fbfbf8;
-      border: 1px solid #e1e6dd;
-      border-radius: 18px;
-      padding: 20px;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      color: rgba(0,0,0,0.68);
       cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      margin-bottom: 6px;
     }
 
-    .stage-card:hover {
-      transform: translateY(-2px);
-      border-color: #cdd8d3;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.05);
+    .step-item:last-child {
+      margin-bottom: 0;
     }
 
-    .stage-card.active {
-      border: 2px solid var(--accent);
+    .step-item:hover {
+      background: rgba(255,255,255,0.6);
+      color: #111;
+    }
+
+    .step-item.active {
       background: #ffffff;
-      box-shadow: 0 12px 26px rgba(109, 184, 179, 0.12);
+      color: #111;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-weight: 600;
     }
 
-    .stage-head {
+    /* 오른쪽 문서 */
+    .paper-wrap {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .paper {
+      width: min(960px, 100%);
+      min-height: 1180px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.06);
+      padding: 56px 60px 64px;
+      position: relative;
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: linear-gradient(to right, #e5e5e0, #f5f5f2, #e5e5e0);
+    }
+
+    .paper-head {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .paper-system {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 8px;
+    }
+
+    .paper-title {
+      font-size: 34px;
+      line-height: 1.34;
+      letter-spacing: -0.02em;
+      font-weight: 400;
       margin-bottom: 10px;
     }
 
-    .stage-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #214746;
-      letter-spacing: -0.03em;
-    }
-
-    .stage-kor {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--accent-deep);
-      background: var(--accent-soft);
-      padding: 5px 9px;
-      border-radius: 999px;
-    }
-
-    .stage-desc {
-      color: var(--muted);
+    .paper-sub {
       font-size: 15px;
-      margin-bottom: 14px;
+      color: rgba(0,0,0,0.56);
+      line-height: 1.8;
     }
 
-    .item-list {
-      display: grid;
-      gap: 8px;
+    .paper-image {
+      width: 100%;
+      height: 300px;
+      margin: 28px 0 30px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #f3f4f1, #e8ece8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.38);
+      font-size: 18px;
+      overflow: hidden;
     }
 
-    .item {
-      position: relative;
-      padding-left: 14px;
-      color: #2b2f2b;
-      font-size: 15px;
+    .paper-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .item::before {
-      content: "–";
-      position: absolute;
-      left: 0;
-      color: var(--muted);
+    .paper-body {
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(0,0,0,0.84);
+      white-space: pre-line;
     }
 
-    .detail-panel {
-      margin-top: 18px;
-      padding: 18px;
-      background: #f8faf8;
-      border: 1px dashed #d6ddd4;
-      border-radius: 16px;
-    }
-
-    .detail-title {
+    .paper-quote {
+      margin-top: 30px;
+      padding: 18px 20px;
+      background: #F6F6F2;
+      border-left: 2px solid #CBBDA5;
       font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: #2f5955;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.72);
     }
 
-    .detail-text {
-      color: var(--muted);
+    .paper-note {
+      margin-top: 34px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 18px;
       font-size: 15px;
-      line-height: 1.85;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.58);
     }
 
-    .bottom-note {
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    @media (max-width: 1200px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 18px;
+      }
 
-    .footer-space {
-      height: 40px;
+      .nav-left {
+        width: 100%;
+      }
+
+      .system-nav {
+        margin-left: 10px;
+      }
     }
 
     @media (max-width: 1100px) {
-      .system-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .focus-panel {
+      .machines-layout {
         grid-template-columns: 1fr;
       }
 
-      .focus-left {
+      .step-menu {
         position: static;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .navbar {
-        height: auto;
-        min-height: 60px;
-        padding: 10px 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
       }
 
-      .nav-inner {
-        width: calc(100% - 24px);
+      .step-item {
+        margin-bottom: 0;
+        text-align: center;
       }
 
-      .nav-menu {
-        display: none;
-      }
-
-      .page {
-        width: calc(100% - 24px);
-        padding: 18px 0 70px;
-      }
-
-      .hero-paper {
-        min-height: 74vh;
-        border-radius: 24px;
-        padding: 28px 18px;
-      }
-
-      .hero-paper::before {
-        background-size: 115vw;
-        opacity: 0.05;
-      }
-
-      .hero-note {
-        text-align: left;
-      }
-
-      .section-paper {
-        padding: 18px;
-      }
-
-      .system-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .system-card {
+      .paper {
         min-height: auto;
+        padding: 36px 24px 42px;
       }
 
-      .focus-title {
-        font-size: 34px;
+      .paper-title {
+        font-size: 28px;
       }
 
-      .stage-title {
-        font-size: 20px;
+      .paper-body {
+        font-size: 16px;
       }
     }
 
-    @media print {
-      .navbar,
-      .hero-actions {
-        display: none;
+    @media (max-width: 768px) {
+      .nav-search {
+        width: 130px;
       }
 
-      body {
-        background: #fff;
+      .nav-btn {
+        padding: 7px 12px;
       }
 
-      .page {
-        width: 100%;
-        padding: 0;
+      .machines-page {
+        padding: 18px 14px 28px;
       }
 
-      .hero-paper,
-      .section-paper,
-      .focus-card,
-      .stage-card,
-      .system-card {
-        box-shadow: none;
+      .machines-title {
+        font-size: 28px;
+      }
+
+      .step-menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .paper-image {
+        height: 220px;
+      }
+
+      .intro-banner {
+        padding: 16px 18px;
       }
     }
   </style>
 </head>
+
 <body>
-  <header class="navbar">
-    <div class="nav-inner">
-      <div class="nav-left">
-        <img src="assets/images/logo.png" alt="Faeing 로고" class="nav-logo" />
-        <a href="index.html" class="brand">Faeing</a>
-      </div>
-
-      <nav class="nav-menu">
-        <a href="machines.html" class="active">구조원리</a>
-        <a href="diagnostics.html">고장진단</a>
-        <a href="maintenance.html">기계관리</a>
-        <a href="support.html">도움요청</a>
-        <a href="auth.html">계정</a>
-      </nav>
+  <div class="navbar">
+    <div class="nav-left">
+      <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
+      <span class="nav-brand">Faeing</span>
+      <div class="system-nav" id="systemTabs"></div>
     </div>
-  </header>
 
-  <main class="page">
-    <!-- 첫 장 -->
-    <section class="hero">
-      <div class="hero-paper">
-        <div class="hero-content">
-          <div class="hero-kicker">SYSTEM FLOW / 농기계 구조 흐름</div>
-          <h1>구조원리</h1>
-          <p class="hero-sub">농기계는 흐름으로 이해합니다</p>
-          <p class="hero-desc">
-            농기계는 하나의 부품으로 움직이지 않습니다.<br />
-            전기, 동력, 유압, 조향이 서로 연결되어 흐름을 만들고,<br />
-            그 흐름이 무너질 때 고장은 가장 약한 곳부터 드러납니다.
-          </p>
-          <div class="hero-note">
-            전기 → 동력 → 유압 → 조향의 큰 구조를 먼저 보고,
-            그 안에서 생성 → 전달 → 사용의 흐름으로 하나씩 들어가 보세요.
-          </div>
-          <div class="hero-actions">
-            <a href="#system-overview" class="btn btn-primary">전체 시스템 보기</a>
-            <a href="#focus-section" class="btn btn-secondary">선택해서 깊게 보기</a>
-          </div>
-        </div>
-      </div>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
+      <button class="nav-btn login-btn">Login</button>
+      <button class="nav-btn signup-btn">Sign Up</button>
+    </div>
+  </div>
+
+  <main class="machines-page">
+    <section class="machines-heading">
+      <h1 class="machines-title">구조원리</h1>
+      <p class="machines-subtitle">전체를 먼저 보고, 발생과 전달을 지나, 마지막 사용 단계까지 차분하게 읽어갑니다.</p>
     </section>
 
-    <!-- 전체 시스템 -->
-    <section class="section" id="system-overview">
-      <div class="section-paper">
-        <div class="section-head">
-          <h2 class="section-title">전체 시스템</h2>
-          <p class="section-desc">
-            먼저 큰 흐름을 봅니다. 아래 항목을 누르면 선택된 시스템이 아래에서 전면으로 올라옵니다.
-          </p>
-        </div>
-
-        <div class="system-grid" id="systemGrid">
-          <article class="system-card active" data-system="electric">
-            <div>
-              <div class="system-top">
-                <div class="system-name">전기</div>
-                <div class="system-index">01</div>
-              </div>
-              <p class="system-summary">
-                기계를 깨우고 시동하며 각 장치를 제어하는 시작점입니다.
-              </p>
-            </div>
-            <div class="flow-strip">생성 → 전달 → 사용</div>
-          </article>
-
-          <article class="system-card" data-system="power">
-            <div>
-              <div class="system-top">
-                <div class="system-name">동력</div>
-                <div class="system-index">02</div>
-              </div>
-              <p class="system-summary">
-                엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어집니다.
-              </p>
-            </div>
-            <div class="flow-strip">생성 → 전달 → 사용</div>
-          </article>
-
-          <article class="system-card" data-system="hydraulic">
-            <div>
-              <div class="system-top">
-                <div class="system-name">유압</div>
-                <div class="system-index">03</div>
-              </div>
-              <p class="system-summary">
-                오일의 흐름과 압력으로 장치를 움직이고 힘을 제어합니다.
-              </p>
-            </div>
-            <div class="flow-strip">생성 → 전달 → 사용</div>
-          </article>
-
-          <article class="system-card" data-system="steering">
-            <div>
-              <div class="system-top">
-                <div class="system-name">조향</div>
-                <div class="system-index">04</div>
-              </div>
-              <p class="system-summary">
-                운전자의 입력을 방향 변화로 바꾸는 흐름입니다.
-              </p>
-            </div>
-            <div class="flow-strip">생성 → 전달 → 사용</div>
-          </article>
-        </div>
-
-        <!-- 선택 시스템 전면 표시 -->
-        <div class="focus-panel" id="focus-section">
-          <div class="focus-left">
-            <div class="focus-card">
-              <div class="focus-label">CURRENT SYSTEM</div>
-              <h3 class="focus-title" id="focusTitle">전기</h3>
-              <p class="focus-description" id="focusDescription">
-                기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.
-              </p>
-              <div class="focus-path" id="focusPath">
-                전기 → 생성 → 전달 → 사용
-              </div>
-            </div>
-          </div>
-
-          <div class="focus-right">
-            <div class="stage-grid" id="stageGrid">
-              <!-- JS 렌더링 -->
-            </div>
-          </div>
-        </div>
-
-        <p class="bottom-note">
-          배경 실루엣을 사용하려면
-          <code>assets/images/tractor-silhouette.png</code> 파일을 준비해 넣으면 됩니다.
-        </p>
-      </div>
+    <section class="intro-banner">
+      농기계를 한 번에 다 보는 것이 아니라, 흐름을 차분하게 읽어가는 문서형 구조입니다.
     </section>
 
-    <div class="footer-space"></div>
+    <section class="machines-layout">
+      <aside class="step-menu" id="stepMenu"></aside>
+
+      <section class="paper-wrap">
+        <article class="paper">
+          <div class="paper-head">
+            <div class="paper-system" id="paperSystem">ELECTRICAL SYSTEM</div>
+            <h2 class="paper-title" id="paperTitle">전기 | 전체 시스템</h2>
+            <div class="paper-sub" id="paperSub">전기 시스템 전체 흐름을 한 장의 문서처럼 정리합니다.</div>
+          </div>
+
+          <div class="paper-image" id="paperImage">대표 이미지 영역</div>
+          <div class="paper-body" id="paperBody"></div>
+          <div class="paper-quote" id="paperQuote"></div>
+          <div class="paper-note" id="paperNote"></div>
+        </article>
+      </section>
+    </section>
   </main>
 
   <script>
-    const systemData = {
+    const contentData = {
       electric: {
-        name: "전기",
-        description: "기계를 깨우고 시동하며 각 장치를 제어하는 기본 시스템입니다.",
-        stages: [
-          {
-            id: "create",
-            title: "생성",
-            badge: "CREATE",
-            desc: "전기를 만들고 저장하는 시작 단계입니다.",
-            items: ["배터리", "알터네이터"],
-            detailTitle: "설명",
-            detailText:
-              "전기는 먼저 저장되거나 만들어져야 합니다. 배터리는 시동 전 초기 전원을 담당하고, 알터네이터는 엔진 구동 후 전기를 다시 만들어 충전과 공급을 이어갑니다."
+        label: "전기",
+        eng: "ELECTRICAL SYSTEM",
+        steps: {
+          all: {
+            title: "전체 시스템",
+            subtitle: "전기 시스템 전체 흐름을 한 장의 문서처럼 정리합니다.",
+            image: "",
+            imageText: "전기 전체 시스템 이미지",
+            body:
+`전기는 농기계에서 가장 먼저 조건을 만들고,
+다른 시스템이 움직일 수 있도록 시작을 준비하는 흐름입니다.
+
+배터리에서 출발한 전원은
+퓨즈, 키 스위치, 릴레이, 각종 안전장치와 배선을 지나
+스타터, 센서, 계기판, 솔레노이드까지 이어집니다.
+
+전기는 눈에 잘 보이지 않기 때문에
+증상만 보고 판단하면 놓치는 경우가 많습니다.
+
+따라서 전기는
+어디가 끊어졌는가,
+어디까지 전압이 도달했는가,
+입력과 출력이 이어지는가를
+차례대로 보는 것이 중요합니다.`,
+            quote: "전기는 보이지 않지만, 흐름은 반드시 흔적을 남깁니다.",
+            note: "현장에서는 부품을 바로 바꾸기보다 먼저 전압, 접지, 입력, 출력의 흐름을 확인하는 것이 훨씬 중요합니다."
           },
-          {
-            id: "transfer",
+          generate: {
+            title: "발생",
+            subtitle: "전기의 시작점과 기본 전원 형성 단계입니다.",
+            image: "",
+            imageText: "배터리 / 발전기 이미지",
+            body:
+`전기의 발생은 배터리와 발전기에서 시작됩니다.
+
+배터리는 시동 전 기본 전원을 공급하고,
+발전기는 엔진이 작동한 뒤 시스템 전체 전원을 유지하거나 충전합니다.
+
+전기 문제가 생기면
+가장 먼저 전압이 충분한지,
+접지 상태가 안정적인지,
+충전이 제대로 되는지를 확인해야 합니다.
+
+발생 단계가 약하면
+뒤쪽 릴레이나 센서가 멀쩡해 보여도
+전체 시스템은 흔들릴 수 있습니다.`,
+            quote: "전기가 약하면 뒤가 멀쩡해 보여도 전체가 흔들립니다.",
+            note: "배터리 단자 부식, 접지 불량, 충전 부족은 가장 먼저 의심할 수 있는 기본 원인입니다."
+          },
+          transfer: {
             title: "전달",
-            badge: "TRANSFER",
-            desc: "만들어진 전기가 필요한 곳까지 가는 통로입니다.",
-            items: ["배선", "퓨즈", "릴레이", "스위치"],
-            detailTitle: "설명",
-            detailText:
-              "전기는 눈에 보이지 않지만 반드시 길이 있습니다. 배선은 흐름의 길이고, 퓨즈는 보호, 릴레이는 큰 전류의 제어, 스위치는 입력의 시작점입니다."
+            subtitle: "전압과 신호가 배선과 접점을 통해 이동하는 과정입니다.",
+            image: "",
+            imageText: "배선 / 릴레이 / 퓨즈 이미지",
+            body:
+`전기의 전달은 배선, 커넥터, 퓨즈, 릴레이, 스위치를 통해 이뤄집니다.
+
+이 단계에서는 단선만 보는 것이 아니라
+접촉불량, 전압강하, 부식, 진동에 의한 순간 단절까지 함께 봐야 합니다.
+
+전달 구간이 무너지면
+가끔 된다,
+열 받으면 안 된다,
+흔들리면 꺼진다 같은 증상이 자주 나타납니다.
+
+즉 전기의 전달은
+이어져 있느냐보다
+안정적으로 이어져 있느냐가 핵심입니다.`,
+            quote: "전기는 연결보다 접촉의 품질이 더 중요할 때가 많습니다.",
+            note: "현장에서는 커넥터, 릴레이 접점, 퓨즈홀더, 하네스 꺾임 구간을 함께 보는 습관이 중요합니다."
           },
-          {
-            id: "use",
+          use: {
             title: "사용",
-            badge: "USE",
-            desc: "전기가 실제 기능으로 드러나는 단계입니다.",
-            items: ["스타트모터", "ECU", "센서", "조명"],
-            detailTitle: "설명",
-            detailText:
-              "전기의 최종 목적은 기능을 일으키는 것입니다. 스타트모터는 회전을 만들고, ECU와 센서는 판단과 제어를 돕고, 조명은 운전과 작업 안전을 지원합니다."
+            subtitle: "전기가 실제 작동으로 이어지는 최종 단계입니다.",
+            image: "",
+            imageText: "스타터 / 계기판 / 솔밸브 이미지",
+            body:
+`전기의 사용 단계는
+스타터 모터가 돌고,
+계기판이 점등되고,
+센서가 신호를 보내고,
+솔레노이드와 액추에이터가 작동하는 자리입니다.
+
+사용 단계의 증상은 분명하게 보이지만
+원인은 앞단의 발생 또는 전달에 숨어 있는 경우가 많습니다.
+
+그래서 시동 불량, 계기판 이상, 센서 오작동이 보이면
+부품만 바로 바꾸기보다
+그 부품까지 전기 흐름이 정상적으로 도달했는지를 먼저 확인해야 합니다.`,
+            quote: "증상은 마지막에서 보이고, 원인은 그 앞에 숨어 있을 수 있습니다.",
+            note: "보이는 부품 하나만 보는 습관보다 그 부품까지 도달한 흐름 전체를 보는 습관이 더 정확한 진단으로 이어집니다."
           }
-        ]
+        }
       },
 
       power: {
-        name: "동력",
-        description: "엔진에서 힘을 만들고, 전달하여, 주행과 작업으로 이어지는 중심 시스템입니다.",
-        stages: [
-          {
-            id: "create",
-            title: "생성",
-            badge: "CREATE",
-            desc: "힘을 만들어내는 시작 단계입니다.",
-            items: ["엔진", "연료", "흡기", "냉각", "윤활", "배기"],
-            detailTitle: "보조시스템 포함 설명",
-            detailText:
-              "엔진은 혼자 힘을 만들지 않습니다. 연료, 흡기, 냉각, 윤활, 배기가 함께 맞물려야 안정적인 동력이 만들어집니다. 생성부의 이상은 전체 시스템의 시작점에서 흐름을 흔듭니다."
+        label: "동력",
+        eng: "POWER SYSTEM",
+        steps: {
+          all: {
+            title: "전체 시스템",
+            subtitle: "엔진에서 시작된 힘이 작업으로 이어지는 흐름입니다.",
+            image: "",
+            imageText: "동력 전체 시스템 이미지",
+            body:
+`동력 시스템은 엔진에서 만들어진 힘이
+클러치, 변속기, 샤프트, 차축, PTO를 지나
+주행과 작업으로 이어지는 흐름입니다.
+
+농기계의 많은 문제는
+힘이 아예 없는 것이 아니라
+힘이 제대로 전달되지 않는 데서 생기기도 합니다.
+
+따라서 동력은
+발생된 힘의 크기,
+전달 과정의 손실,
+최종 사용처의 부하를 함께 봐야 합니다.`,
+            quote: "동력은 힘 자체보다 흐름 전체로 봐야 분명해집니다.",
+            note: "겉으로는 같은 출력 저하처럼 보여도 원인은 엔진, 클러치, 변속기, PTO 쪽으로 각각 다를 수 있습니다."
           },
-          {
-            id: "transfer",
+          generate: {
+            title: "발생",
+            subtitle: "엔진이 힘을 만들어내는 구간입니다.",
+            image: "",
+            imageText: "엔진 / 연소 시스템 이미지",
+            body:
+`동력의 발생은 엔진 연소에서 시작됩니다.
+
+흡입, 압축, 연소, 배기의 흐름이 안정적이어야
+정상적인 토크와 출력을 만들 수 있습니다.
+
+출력이 약하다면
+연료, 공기, 압축, 냉각, 배기 상태를 먼저 봐야 합니다.
+
+동력은 발생 단계에서 이미 흔들릴 수 있고
+그 결과가 전달과 사용 단계에서 더 크게 드러납니다.`,
+            quote: "엔진이 약하면 뒤의 모든 단계가 약해집니다.",
+            note: "냉각, 필터, 연료, 흡기, 배기 같은 기초 상태를 먼저 보는 습관이 중요합니다."
+          },
+          transfer: {
             title: "전달",
-            badge: "TRANSFER",
-            desc: "만들어진 힘을 필요한 곳으로 보내는 단계입니다.",
-            items: ["클러치", "변속기", "차동장치", "구동축", "PTO"],
-            detailTitle: "설명",
-            detailText:
-              "동력은 생성된 뒤 반드시 전달 구조를 거칩니다. 클러치는 연결과 분리, 변속기는 속도와 힘의 조절, 차동장치와 구동축은 실제 바퀴나 작업기로의 이동을 담당합니다."
+            subtitle: "발생한 힘이 손실 없이 이동하는 구간입니다.",
+            image: "",
+            imageText: "클러치 / 변속기 / 샤프트 이미지",
+            body:
+`동력 전달은 클러치, 변속기, 기어, 샤프트, 디퍼렌셜 등을 통해 이뤄집니다.
+
+이 단계에서는 마모, 슬립, 유격, 베어링 손상, 기어 이상이 문제를 만듭니다.
+
+힘은 있는데 앞으로 안 나가거나,
+부하를 걸면 힘이 빠지는 증상은
+전달 손실을 의심해야 합니다.
+
+즉 전달은 연결이 아니라
+실제 토크가 살아서 넘어가느냐를 보는 단계입니다.`,
+            quote: "동력 전달은 토크 손실을 볼 줄 알아야 합니다.",
+            note: "특히 슬립이나 유격은 소리보다 먼저 느낌과 반응 속도에서 드러나는 경우가 많습니다."
           },
-          {
-            id: "use",
+          use: {
             title: "사용",
-            badge: "USE",
-            desc: "힘이 실제 주행과 작업으로 드러나는 단계입니다.",
-            items: ["주행", "작업기", "차축", "타이어", "브레이크"],
-            detailTitle: "설명",
-            detailText:
-              "최종적으로 동력은 주행과 작업으로 사용됩니다. 이 단계에서 이상이 보인다고 해서 원인이 항상 마지막에 있는 것은 아닙니다. 앞단의 생성과 전달이 무너져도 마지막 사용부에서 증상이 드러날 수 있습니다."
+            subtitle: "주행과 작업기의 실제 힘 사용 구간입니다.",
+            image: "",
+            imageText: "주행 / PTO / 작업기 이미지",
+            body:
+`사용 단계에서는 동력이 실제 일을 합니다.
+
+바퀴를 돌리고,
+작업기를 움직이고,
+PTO를 통해 작업 장치를 구동합니다.
+
+여기서 보이는 증상은 매우 직접적이지만
+원인은 발생이나 전달 구간에서 시작된 경우가 많습니다.
+
+따라서 힘이 없다, 밀린다, 멈춘다 같은 증상은
+항상 앞단까지 거슬러 올라가야 합니다.`,
+            quote: "사용 단계는 결과를 보여주는 자리입니다.",
+            note: "보이는 증상만 좇지 말고, 그 앞단의 흐름이 어디서 무너졌는지를 함께 봐야 합니다."
           }
-        ]
+        }
       },
 
       hydraulic: {
-        name: "유압",
-        description: "오일의 흐름과 압력을 이용해 장치를 움직이고 힘을 제어하는 시스템입니다.",
-        stages: [
-          {
-            id: "create",
-            title: "생성",
-            badge: "CREATE",
-            desc: "압력과 유량의 시작점입니다.",
-            items: ["유압펌프", "오일탱크", "필터"],
-            detailTitle: "설명",
-            detailText:
-              "유압은 오일이 있어야 하고, 펌프가 흡입·토출하며, 오염이 걸러져야 안정됩니다. 생성부는 유압 전체의 체력과 같습니다."
+        label: "유압",
+        eng: "HYDRAULIC SYSTEM",
+        steps: {
+          all: {
+            title: "전체 시스템",
+            subtitle: "압력을 만들고 보내고 쓰는 흐름을 설명합니다.",
+            image: "",
+            imageText: "유압 전체 시스템 이미지",
+            body:
+`유압 시스템은 오일의 흐름과 압력을 이용해
+기계를 들어 올리고, 밀고, 조향하고, 제어하는 구조입니다.
+
+유압은 눈에 잘 보이지 않기 때문에
+누유만 보거나 실린더만 보면 전체를 놓치기 쉽습니다.
+
+펌프에서 압력이 만들어지고,
+밸브와 라인을 통해 전달되며,
+실린더나 모터에서 실제 일을 하게 됩니다.`,
+            quote: "유압은 오일보다 압력의 흐름을 봐야 합니다.",
+            note: "겉으로 새는 누유만이 아니라 내부 누설과 압력 손실까지 함께 보는 관점이 중요합니다."
           },
-          {
-            id: "transfer",
+          generate: {
+            title: "발생",
+            subtitle: "압력을 만드는 시작점입니다.",
+            image: "",
+            imageText: "유압펌프 이미지",
+            body:
+`유압의 발생은 펌프에서 시작됩니다.
+
+펌프가 오일을 끌어오고 밀어내며
+필요한 압력과 유량을 형성합니다.
+
+이 단계가 약하면
+승강이 느리거나,
+조향이 무겁거나,
+작업 반응이 둔해질 수 있습니다.
+
+오일 부족, 필터 막힘, 펌프 마모는
+발생 단계의 대표적인 문제입니다.`,
+            quote: "펌프가 약하면 유압 전체가 둔해집니다.",
+            note: "유압은 발생 단계의 기본 체력이 약해지면 뒤에서 동시에 여러 증상이 나타날 수 있습니다."
+          },
+          transfer: {
             title: "전달",
-            badge: "TRANSFER",
-            desc: "유압이 흐르는 길과 방향 제어 단계입니다.",
-            items: ["배관", "밸브"],
-            detailTitle: "설명",
-            detailText:
-              "유압은 압력만이 아니라 흐름의 방향도 중요합니다. 배관은 길을 만들고, 밸브는 보내고 막고 우회시키며 시스템의 행동을 결정합니다."
+            subtitle: "압력과 유량이 라인과 밸브를 통해 이동합니다.",
+            image: "",
+            imageText: "유압라인 / 밸브 이미지",
+            body:
+`유압 전달은 라인, 호스, 밸브, 내부 통로를 통해 이뤄집니다.
+
+이 단계에서는 외부 누유뿐 아니라
+내부 누설, 압력 손실, 밸브 sticking도 함께 봐야 합니다.
+
+겉으로 안 새도 힘이 빠지면
+내부 누설을 의심해야 합니다.
+
+유압 전달은 단순히 오일이 움직이는 것이 아니라
+정해진 압력이 살아서 이동하는지를 확인하는 과정입니다.`,
+            quote: "안 새도 힘이 빠질 수 있습니다.",
+            note: "유압은 눈에 보이지 않는 내부 누설 때문에 더더욱 흐름 관점이 중요합니다."
           },
-          {
-            id: "use",
+          use: {
             title: "사용",
-            badge: "USE",
-            desc: "유압이 실제 움직임과 회전으로 나타나는 단계입니다.",
-            items: ["유압실린더", "유압모터"],
-            detailTitle: "설명",
-            detailText:
-              "실린더는 직선 운동, 모터는 회전 운동으로 유압을 사용합니다. 결국 유압의 목적은 눈에 보이는 움직임과 힘을 만드는 데 있습니다."
+            subtitle: "실린더와 모터가 실제 일을 하는 단계입니다.",
+            image: "",
+            imageText: "실린더 / 작업기 / 조향 이미지",
+            body:
+`유압 사용 단계에서는
+실린더가 올라가고 내려가며,
+유압모터가 회전하고,
+조향이 이루어집니다.
+
+이 단계의 증상은 눈에 잘 보입니다.
+그러나 실린더를 바로 의심하기보다
+압력이 제대로 왔는지,
+밸브 제어가 정상인지 먼저 확인해야 합니다.
+
+사용 단계는 결과가 드러나는 자리이기 때문에
+언제나 앞단과 함께 봐야 정확합니다.`,
+            quote: "움직임은 끝에서 보이지만, 원인은 앞에서 생길 수 있습니다.",
+            note: "실린더나 모터가 보이는 마지막 장치라 해도 원인은 펌프, 밸브, 내부 누설 쪽일 수 있습니다."
           }
-        ]
+        }
       },
 
       steering: {
-        name: "조향",
-        description: "운전자의 입력을 받아 방향을 전달하고 실제 차축 방향을 바꾸는 시스템입니다.",
-        stages: [
-          {
-            id: "create",
-            title: "생성",
-            badge: "CREATE",
-            desc: "운전자의 방향 의사가 시작되는 단계입니다.",
-            items: ["핸들 입력"],
-            detailTitle: "설명",
-            detailText:
-              "조향의 시작은 운전자의 손입니다. 핸들을 돌린다는 입력이 곧 방향 변화의 출발점입니다."
+        label: "조향",
+        eng: "STEERING SYSTEM",
+        steps: {
+          all: {
+            title: "전체 시스템",
+            subtitle: "조향은 입력, 제어, 반응이 함께 이루어지는 시스템입니다.",
+            image: "",
+            imageText: "조향 전체 시스템 이미지",
+            body:
+`조향은 운전자의 입력이 기계의 방향 전환으로 이어지는 시스템입니다.
+
+핸들 입력, 오비트롤, 유압 흐름, 차축과 타이어 반응까지
+여러 요소가 함께 움직입니다.
+
+핸들이 무겁다거나,
+한쪽으로 쏠리거나,
+반응이 느리다면
+단순히 타이어만 보지 말고
+전체 조향 흐름을 함께 봐야 합니다.`,
+            quote: "조향은 손의 입력이 바퀴 반응으로 이어지는 흐름입니다.",
+            note: "조향은 여러 요소가 동시에 연결되므로 한 부분만 떼어 보기보다 전체 흐름으로 보는 습관이 중요합니다."
           },
-          {
-            id: "transfer",
+          generate: {
+            title: "발생",
+            subtitle: "조향 입력과 기본 압력 형성 단계입니다.",
+            image: "",
+            imageText: "핸들 입력 / 조향 펌프 이미지",
+            body:
+`조향의 시작은 운전자의 핸들 입력과
+이를 보조하는 기본 유압 형성 단계입니다.
+
+핸들을 돌릴 때 필요한 기본 압력과 입력이 준비되지 않으면
+조향 전체가 무거워지거나 늦어집니다.
+
+따라서 조향 문제는
+운전자 입력부와 기본 유압 형성 상태를 함께 봐야 합니다.`,
+            quote: "조향도 시작점이 약하면 끝까지 무거워집니다.",
+            note: "핸들 입력 느낌, 조향 초기 반응, 펌프 상태를 함께 보는 습관이 좋습니다."
+          },
+          transfer: {
             title: "전달",
-            badge: "TRANSFER",
-            desc: "입력을 실제 조향력으로 바꾸어 보내는 단계입니다.",
-            items: ["조향축", "오비트롤", "조향라인"],
-            detailTitle: "설명",
-            detailText:
-              "조향축은 물리적 회전을 전달하고, 오비트롤은 유량과 방향을 나누며, 조향라인은 그 힘을 실린더까지 보냅니다. 조향은 단순히 핸들과 바퀴의 연결이 아니라 흐름의 변환입니다."
+            subtitle: "조향 신호와 압력이 전달되는 과정입니다.",
+            image: "",
+            imageText: "오비트롤 / 유압라인 이미지",
+            body:
+`조향 전달은 오비트롤, 밸브, 라인, 연결기구를 통해 이뤄집니다.
+
+이 과정에서 막힘, 내부 누설, 유격, 편마모가 생기면
+핸들 반응이 느려지거나 좌우 차이가 발생할 수 있습니다.
+
+특히 조향은 작은 이상도 운전자에게 크게 느껴지므로
+정밀하게 흐름을 봐야 합니다.`,
+            quote: "조향은 작은 손실도 크게 느껴집니다.",
+            note: "오비트롤 내부 상태, 라인 압력, 링크 유격은 함께 확인할수록 정확도가 올라갑니다."
           },
-          {
-            id: "use",
+          use: {
             title: "사용",
-            badge: "USE",
-            desc: "최종적으로 차축의 방향이 바뀌는 단계입니다.",
-            items: ["조향실린더", "차축 방향전환"],
-            detailTitle: "설명",
-            detailText:
-              "최종 사용부에서는 차축 방향이 바뀌고 기계가 원하는 방향으로 움직입니다. 사용부의 이상은 전달부와 생성부를 함께 점검해야 정확히 원인을 찾을 수 있습니다."
+            subtitle: "바퀴가 실제로 방향을 바꾸는 최종 반응 단계입니다.",
+            image: "",
+            imageText: "차축 / 타이어 반응 이미지",
+            body:
+`사용 단계에서는 실제 바퀴와 차축이 방향을 바꿉니다.
+
+이 단계의 문제는 매우 직관적으로 보이지만
+항상 타이어나 너클만의 문제는 아닙니다.
+
+앞선 유압, 전달, 기구 연결 상태가 모두 영향을 줍니다.
+
+따라서 조향의 최종 반응은
+전체 흐름이 정상인지 보여주는 결과 화면이라고 볼 수 있습니다.`,
+            quote: "조향 반응은 시스템 전체 상태를 보여줍니다.",
+            note: "최종 반응이 어색할수록 앞단 입력과 전달 과정까지 함께 확인하는 것이 중요합니다."
           }
-        ]
+        }
       }
     };
 
-    const systemCards = document.querySelectorAll(".system-card");
-    const stageGrid = document.getElementById("stageGrid");
-    const focusTitle = document.getElementById("focusTitle");
-    const focusDescription = document.getElementById("focusDescription");
-    const focusPath = document.getElementById("focusPath");
+    const stepNames = {
+      all: "전체 시스템",
+      generate: "발생",
+      transfer: "전달",
+      use: "사용"
+    };
 
     let currentSystem = "electric";
-    let currentStage = "create";
+    let currentStep = "all";
 
-    function renderSystem(systemKey, stageId = "create") {
-      const system = systemData[systemKey];
-      if (!system) return;
+    const systemTabsEl = document.getElementById("systemTabs");
+    const stepMenuEl = document.getElementById("stepMenu");
+    const paperSystemEl = document.getElementById("paperSystem");
+    const paperTitleEl = document.getElementById("paperTitle");
+    const paperSubEl = document.getElementById("paperSub");
+    const paperImageEl = document.getElementById("paperImage");
+    const paperBodyEl = document.getElementById("paperBody");
+    const paperQuoteEl = document.getElementById("paperQuote");
+    const paperNoteEl = document.getElementById("paperNote");
 
-      currentSystem = systemKey;
-      currentStage = stageId;
+    function renderSystemTabs() {
+      systemTabsEl.innerHTML = "";
+      const keys = Object.keys(contentData);
 
-      focusTitle.textContent = system.name;
-      focusDescription.textContent = system.description;
-      focusPath.textContent = `${system.name} → 생성 → 전달 → 사용`;
+      keys.forEach((key, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = currentSystem === key ? "active" : "";
+        btn.textContent = contentData[key].label;
+        btn.onclick = () => {
+          currentSystem = key;
+          currentStep = "all";
+          renderAll();
+        };
+        systemTabsEl.appendChild(btn);
 
-      systemCards.forEach((card) => {
-        const isActive = card.dataset.system === systemKey;
-        card.classList.toggle("active", isActive);
-        card.classList.toggle("dimmed", !isActive);
-      });
-
-      stageGrid.innerHTML = "";
-
-      system.stages.forEach((stage) => {
-        const stageCard = document.createElement("article");
-        stageCard.className = "stage-card" + (stage.id === stageId ? " active" : "");
-        stageCard.dataset.stage = stage.id;
-
-        stageCard.innerHTML = `
-          <div class="stage-head">
-            <h4 class="stage-title">${stage.title}</h4>
-            <div class="stage-kor">${stage.badge}</div>
-          </div>
-          <p class="stage-desc">${stage.desc}</p>
-          <div class="item-list">
-            ${stage.items.map(item => `<div class="item">${item}</div>`).join("")}
-          </div>
-          <div class="detail-panel">
-            <div class="detail-title">${stage.detailTitle}</div>
-            <p class="detail-text">${stage.detailText}</p>
-          </div>
-        `;
-
-        stageCard.addEventListener("click", () => {
-          renderSystem(systemKey, stage.id);
-          stageCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        });
-
-        stageGrid.appendChild(stageCard);
+        if (index < keys.length - 1) {
+          const sep = document.createElement("span");
+          sep.className = "separator";
+          sep.textContent = "/";
+          systemTabsEl.appendChild(sep);
+        }
       });
     }
 
-    systemCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        const systemKey = card.dataset.system;
-        renderSystem(systemKey, "create");
-        document.getElementById("focus-section").scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      });
-    });
+    function renderStepMenu() {
+      stepMenuEl.innerHTML = "";
 
-    renderSystem("electric", "create");
+      Object.keys(stepNames).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "step-item" + (key === currentStep ? " active" : "");
+        btn.textContent = stepNames[key];
+        btn.onclick = () => {
+          currentStep = key;
+          renderAll();
+        };
+        stepMenuEl.appendChild(btn);
+      });
+    }
+
+    function renderPaper() {
+      const system = contentData[currentSystem];
+      const page = system.steps[currentStep];
+
+      paperSystemEl.textContent = system.eng;
+      paperTitleEl.textContent = `${system.label} | ${page.title}`;
+      paperSubEl.textContent = page.subtitle;
+      paperBodyEl.textContent = page.body;
+      paperQuoteEl.textContent = page.quote;
+      paperNoteEl.textContent = page.note;
+
+      if (page.image) {
+        paperImageEl.innerHTML = `<img src="${page.image}" alt="${system.label} ${page.title}">`;
+      } else {
+        paperImageEl.textContent = page.imageText;
+      }
+    }
+
+    function renderAll() {
+      renderSystemTabs();
+      renderStepMenu();
+      renderPaper();
+    }
+
+    renderAll();
   </script>
 </body>
 </html>
