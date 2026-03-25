@@ -55,7 +55,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      gap: 18px;
+      gap: 20px;
     }
 
     .nav-left {
@@ -63,21 +63,37 @@
       align-items: center;
       gap: 14px;
       min-width: 0;
-      flex: 1;
+      flex-shrink: 0;
     }
 
     .nav-logo {
       height: 36px;
       width: auto;
       display: block;
-      flex-shrink: 0;
     }
 
     .nav-brand {
       font-size: 22px;
       letter-spacing: 0.08em;
       white-space: nowrap;
-      flex-shrink: 0;
+    }
+
+    .nav-center {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .page-message {
+      font-size: 14px;
+      color: rgba(0,0,0,0.62);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
     }
 
     .system-nav {
@@ -85,9 +101,7 @@
       align-items: center;
       gap: 12px;
       white-space: nowrap;
-      margin-left: 18px;
-      overflow-x: auto;
-      overflow-y: hidden;
+      flex-shrink: 0;
     }
 
     .system-nav button {
@@ -99,12 +113,10 @@
       color: #111;
       padding: 4px 0;
       position: relative;
-      flex-shrink: 0;
     }
 
     .system-nav .separator {
       opacity: 0.35;
-      flex-shrink: 0;
     }
 
     .system-nav button.active::after {
@@ -187,18 +199,6 @@
     }
 
     .machines-subtitle {
-      font-size: 15px;
-      color: rgba(0,0,0,0.62);
-      line-height: 1.7;
-    }
-
-    /* 하얀 설명 칸 */
-    .intro-banner {
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 16px;
-      padding: 18px 24px;
-      margin-bottom: 22px;
       font-size: 15px;
       color: rgba(0,0,0,0.62);
       line-height: 1.7;
@@ -359,12 +359,16 @@
         padding: 12px 18px;
       }
 
-      .nav-left {
+      .nav-center {
+        order: 3;
         width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
 
-      .system-nav {
-        margin-left: 10px;
+      .page-message {
+        width: 100%;
       }
     }
 
@@ -424,8 +428,15 @@
         height: 220px;
       }
 
-      .intro-banner {
-        padding: 16px 18px;
+      .system-nav {
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .page-message {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
       }
     }
   </style>
@@ -436,6 +447,11 @@
     <div class="nav-left">
       <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
       <span class="nav-brand">Faeing</span>
+    </div>
+
+    <div class="nav-center">
+      <div class="page-message">농기계를 한 번에 다 보는 것이 아니라, 흐름을 차분하게 읽어가는 문서형 구조입니다.</div>
+
       <div class="system-nav" id="systemTabs"></div>
     </div>
 
@@ -452,10 +468,6 @@
       <p class="machines-subtitle">전체를 먼저 보고, 발생과 전달을 지나, 마지막 사용 단계까지 차분하게 읽어갑니다.</p>
     </section>
 
-    <section class="intro-banner">
-      농기계를 한 번에 다 보는 것이 아니라, 흐름을 차분하게 읽어가는 문서형 구조입니다.
-    </section>
-
     <section class="machines-layout">
       <aside class="step-menu" id="stepMenu"></aside>
 
@@ -468,8 +480,11 @@
           </div>
 
           <div class="paper-image" id="paperImage">대표 이미지 영역</div>
+
           <div class="paper-body" id="paperBody"></div>
+
           <div class="paper-quote" id="paperQuote"></div>
+
           <div class="paper-note" id="paperNote"></div>
         </article>
       </section>
@@ -670,8 +685,8 @@ PTO를 통해 작업 장치를 구동합니다.
             image: "",
             imageText: "유압 전체 시스템 이미지",
             body:
-유압은 계속 순환하여  평소에는 탱크로 돌아간다.
-필요할 때만 밸브에 의해 방향이 바뀌어 일을 한 뒤 다시 돌아온다.
+`유압 시스템은 오일의 흐름과 압력을 이용해
+기계를 들어 올리고, 밀고, 조향하고, 제어하는 구조입니다.
 
 유압은 눈에 잘 보이지 않기 때문에
 누유만 보거나 실린더만 보면 전체를 놓치기 쉽습니다.
@@ -846,6 +861,7 @@ PTO를 통해 작업 장치를 구동합니다.
 
     function renderSystemTabs() {
       systemTabsEl.innerHTML = "";
+
       const keys = Object.keys(contentData);
 
       keys.forEach((key, index) => {
