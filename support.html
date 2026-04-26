@@ -2,298 +2,988 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Faeing · Parking</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing | 도움요청</title>
 
-  <!-- 홈 기준 스타일 -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/home.css">
+  <meta name="description" content="Faeing 도움요청 페이지 - 내 기계 문제를 안전하게 전달하기 위한 로그인 기반 요청서 구조입니다.">
 
-  <!-- 슬로건용 서체 -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Faeing | 도움요청">
+  <meta property="og:description" content="농기계 문제를 안전하게 전달하는 로그인 기반 도움요청 구조">
+  <meta property="og:image" content="https://faeing.com/og-image.png">
+  <meta property="og:url" content="https://faeing.com/support.html">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <style>
-    *{ margin:0; padding:0; box-sizing:border-box; }
-
-    /* ===== NAVBAR ===== */
-    .navbar{
-      height:56px;
-      padding:0 32px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#F2F1EE;
-      border-bottom:1px solid rgba(0,0,0,0.04);
-      position:sticky;
-      top:0;
-      z-index:50;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:20px;
-      white-space:nowrap;
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    /* =========================
+       상단바
+    ========================= */
+    .navbar {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      gap: 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       min-width: 0;
+      flex: 1;
     }
 
-    .nav-brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-decoration:none;
-      color:inherit;
-      min-width: 0;
+    .nav-home {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
     }
 
-    .nav-logo{
-      max-height: 30px;
-      height: auto;
+    .nav-logo {
+      height: 36px;
       width: auto;
       display: block;
       flex-shrink: 0;
     }
 
-    .nav-title{
-      font-size: 18px;
-      letter-spacing: .08em;
-      line-height: 1;
+    .nav-brand {
+      font-size: 22px;
+      letter-spacing: 0.08em;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    /* ===== 흐름 텍스트 ===== */
-    .nav-flow{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:14px;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .system-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      margin-left: 18px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
-    .flow-link{
-      cursor:pointer;
-      opacity:.65;
-      transition:opacity .15s ease;
-      user-select:none;
+    .system-nav::-webkit-scrollbar {
+      display: none;
     }
 
-    .flow-link:hover{ opacity:1; }
-    .flow-link.active{
-      opacity:1;
-      font-weight:700;
+    .system-nav button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: #111;
+      padding: 4px 0;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    .slash{
-      opacity:.35;
-      user-select:none;
+    .system-nav .separator {
+      opacity: 0.35;
+      flex-shrink: 0;
     }
 
-    /* ===== 검색 ===== */
-    .nav-right{
-      display:flex;
-      align-items:center;
-      gap: 10px;
+    .system-nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 1.5px;
+      background: #111;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 210px;
+    }
+
+    .nav-search::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .login-btn {
+      color: rgba(0,0,0,0.6);
+    }
+
+    .login-btn:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .signup-btn {
+      color: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.02);
+    }
+
+    .signup-btn:hover {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* =========================
+       도움요청 본문
+    ========================= */
+    .machines-page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 26px 22px 42px;
+    }
+
+    .machines-heading {
+      margin-bottom: 20px;
+    }
+
+    .machines-title {
+      font-size: 34px;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .machines-subtitle {
+      font-size: 15px;
+      color: rgba(0,0,0,0.62);
+      line-height: 1.7;
+    }
+
+    .machines-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .step-menu {
+      background: #ECEFEC;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 10px;
+      position: sticky;
+      top: 78px;
+    }
+
+    .step-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      color: rgba(0,0,0,0.68);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      margin-bottom: 6px;
+    }
+
+    .step-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-item:hover {
+      background: rgba(255,255,255,0.6);
+      color: #111;
+    }
+
+    .step-item.active {
+      background: #ffffff;
+      color: #111;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-weight: 600;
+    }
+
+    .paper-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .paper {
+      width: min(960px, 100%);
+      min-height: 1180px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.06);
+      padding: 56px 60px 64px;
       position: relative;
     }
 
-    .search{
-      height:36px;
-      width: 320px;
-      max-width: 42vw;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,0.1);
-      padding:0 36px 0 14px;
-      background:rgba(255,255,255,0.7);
-      font-size:13px;
+    .paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: linear-gradient(to right, #e5e5e0, #f5f5f2, #e5e5e0);
+    }
+
+    .paper-head {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .paper-system {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 8px;
+    }
+
+    .paper-title {
+      font-size: 34px;
+      line-height: 1.34;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .paper-sub {
+      font-size: 15px;
+      color: rgba(0,0,0,0.56);
+      line-height: 1.8;
+    }
+
+    .paper-image {
+      width: 100%;
+      min-height: 230px;
+      margin: 28px 0 30px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #f3f4f1, #e8ece8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.50);
+      font-size: 18px;
+      line-height: 1.8;
+      padding: 30px;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .paper-body {
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(0,0,0,0.84);
+      white-space: pre-line;
+    }
+
+    .paper-quote {
+      margin-top: 30px;
+      padding: 18px 20px;
+      background: #F6F6F2;
+      border-left: 2px solid #CBBDA5;
+      font-size: 16px;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.72);
+    }
+
+    .paper-note {
+      margin-top: 34px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 18px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.58);
+      white-space: pre-line;
+    }
+
+    .login-panel,
+    .request-panel {
+      margin-top: 28px;
+      padding: 24px;
+      background: #F6F6F2;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 18px;
+    }
+
+    .panel-title {
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .panel-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.66);
+      margin-bottom: 18px;
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .main-action,
+    .sub-action {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .main-action {
+      background: #222;
+      color: #fff;
+    }
+
+    .sub-action {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.12);
+      color: rgba(0,0,0,0.72);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+      color: rgba(0,0,0,0.62);
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 13px;
+      font-size: 15px;
       outline: none;
     }
 
-    .search:focus{
-      background: rgba(255,255,255,0.9);
-      border-color: rgba(0,0,0,0.18);
+    .form-field textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.6;
     }
 
-    .search-clear{
-      position:absolute;
-      right: 10px;
-      width: 20px;
-      height: 20px;
+    .private-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
       border-radius: 999px;
-      border: 0;
-      background: rgba(0,0,0,0.08);
-      cursor: pointer;
-      font-size: 16px;
-      line-height: 20px;
-      opacity: .8;
-    }
-    .search-clear:hover{ opacity: 1; }
-
-    /* ===== CENTER ===== */
-    main{
-      min-height:calc(100vh - 56px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 40px 16px 60px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.10);
+      color: rgba(0,0,0,0.62);
+      font-size: 13px;
+      margin-bottom: 12px;
     }
 
-    .view{
-      display:none;
-      text-align:center;
-      width: 100%;
-      max-width: 900px;
+    @media (max-width: 1200px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 18px;
+      }
+
+      .nav-left {
+        width: 100%;
+        flex-wrap: wrap;
+      }
     }
 
-    .view.active{ display:block; }
+    @media (max-width: 1100px) {
+      .machines-layout {
+        grid-template-columns: 1fr;
+      }
 
-    .center-logo{
-      width:360px;
-      max-width:70vw;
-      margin: 0 auto 24px;
-      display:block;
-    }
+      .step-menu {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
 
-    .slogan{
-      font-family:"Nanum Pen Script", cursive;
-      font-size:38px;
-      line-height:1.15;
-      color: rgba(0,0,0,0.85);
-    }
-    .slogan.sub{
-      margin-top:8px;
-      font-size:30px;
-      opacity:.82;
-    }
+      .step-item {
+        margin-bottom: 0;
+        text-align: center;
+      }
 
-    .stage-title{
-      font-size:22px;
-      margin-bottom:14px;
-    }
-    .stage-desc{
-      opacity:.78;
-      line-height:1.7;
-    }
+      .paper {
+        min-height: auto;
+        padding: 36px 24px 42px;
+      }
 
-    .note{
-      margin-top:14px;
-      font-size:13px;
-      opacity:.65;
-      line-height:1.6;
+      .paper-title {
+        font-size: 28px;
+      }
+
+      .paper-body {
+        font-size: 16px;
+      }
     }
 
-    @media (max-width:768px){
-      .navbar{ padding:0 16px; }
-      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
-      .search{ width: 180px; max-width: 44vw; }
-      .slogan{ font-size:32px; }
-      .slogan.sub{ font-size:26px; }
+    @media (max-width: 768px) {
+      .nav-search {
+        width: 130px;
+      }
+
+      .nav-btn {
+        padding: 7px 12px;
+      }
+
+      .machines-page {
+        padding: 18px 14px 28px;
+      }
+
+      .machines-title {
+        font-size: 28px;
+      }
+
+      .step-menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .paper-image {
+        min-height: 190px;
+      }
+
+      .system-nav {
+        gap: 10px;
+        margin-left: 0;
+        width: 100%;
+        padding-top: 4px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="/" class="nav-home" aria-label="Faeing 메인으로 이동">
+        <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
+        <span class="nav-brand">Faeing</span>
+      </a>
+      <div class="system-nav" id="systemTabs"></div>
+    </div>
 
-<header class="navbar">
-  <div class="nav-left">
-    <a href="index.html" class="nav-brand">
-      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
-      <span class="nav-title">Faeing</span>
-    </a>
-
-    <!-- Parking 흐름 -->
-    <nav class="nav-flow" aria-label="Parking flow">
-      <span class="flow-link" data-view="problem">무엇이 문제인가</span>
-      <span class="slash">/</span>
-      <span class="flow-link" data-view="idea">어떤 방향인가</span>
-      <span class="slash">/</span>
-      <span class="flow-link" data-view="status">지금 상태</span>
-    </nav>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
+      <button class="nav-btn login-btn" onclick="showLoginNotice()">Login</button>
+      <button class="nav-btn signup-btn" onclick="showLoginNotice()">Sign Up</button>
+    </div>
   </div>
 
-  <div class="nav-right" role="search">
-    <input class="search" id="searchInput" type="search" placeholder="검색 (준비중)">
-    <button class="search-clear" id="searchClear" type="button">×</button>
-  </div>
-</header>
+  <main class="machines-page">
+    <section class="machines-heading">
+      <h1 class="machines-title">도움요청</h1>
+      <p class="machines-subtitle">도움요청은 공개 게시판이 아니라, 내 기계 문제를 안전하게 전달하는 개인 요청서입니다.</p>
+    </section>
 
-<main>
+    <section class="machines-layout">
+      <aside class="step-menu" id="stepMenu"></aside>
 
-  <!-- 기본 진입 -->
-  <section class="view active" id="home">
-    <img src="assets/images/logo.png" class="center-logo" alt="Faeing"
-         onerror="this.style.display='none'">
+      <section class="paper-wrap">
+        <article class="paper">
+          <div class="paper-head">
+            <div class="paper-system" id="paperSystem">PRIVATE SUPPORT REQUEST</div>
+            <h2 class="paper-title" id="paperTitle">도움요청 | 안내</h2>
+            <div class="paper-sub" id="paperSub">정비사가 판단할 수 있도록 증상, 사진, 기계 정보, 위치와 연락처를 정리합니다.</div>
+          </div>
 
-    <div class="slogan">주차 공간의 스마트한 활용</div>
+          <div class="paper-image" id="paperImage">도움요청 흐름 영역</div>
 
+          <div class="paper-body" id="paperBody"></div>
 
-  <!-- 문제 -->
-  <section class="view" id="problem">
-    <h1 class="stage-title">무엇이 문제인가</h1>
-    <p class="stage-desc">
-      자리는 비어 있는데 찾지 못하고,<br>
-      서로의 시간을 낭비하게 됩니다.<br>
-      주차 문제는 대부분 “정보의 부재”에서 시작됩니다.
-    </p>
-  </section>
+          <div class="paper-quote" id="paperQuote"></div>
 
-  <!-- 방향 -->
-  <section class="view" id="idea">
-    <h1 class="stage-title">어떤 방향인가</h1>
-    <p class="stage-desc">
-      지금 비어 있는 공간을 알려주고,<br>
-      회전이 필요한 자리는 자연스럽게 흐르게 합니다.<br>
-      강제가 아니라 “이해되는 안내”를 목표로 합니다.
-    </p>
-  </section>
+          <div class="paper-note" id="paperNote"></div>
 
-  <!-- 상태 -->
-  <section class="view" id="status">
-    <h1 class="stage-title">지금 상태</h1>
-    <p class="stage-desc">
-      개념 정리와 구조 설계 단계에 있습니다.<br>
-      현장에 부담을 주지 않는 방식부터 고민하고 있습니다.
-    </p>
-    <p class="note">
-      (센서 / 표시 / 운영 방식은 정리 후 단계적으로 공개합니다.)
-    </p>
-  </section>
+          <div id="extraArea"></div>
+        </article>
+      </section>
+    </section>
+  </main>
 
-</main>
+  <script>
+    const contentData = {
+      guide: {
+        label: "안내",
+        eng: "PRIVATE SUPPORT REQUEST",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "도움요청은 정비 판단에 필요한 정보를 순서대로 모으는 과정입니다.",
+            imageText: "로그인 → 내 기계 선택 → 증상 설명 → 사진 첨부 → 위치/연락처 → 요청 확인",
+            body:
+`도움요청은 단순히 급하게 전화를 거는 것이 아니라, 정비사가 판단할 수 있는 정보를 안전하게 전달하는 과정입니다.
 
-<script>
-  const links = document.querySelectorAll('.flow-link');
-  const views = document.querySelectorAll('.view');
+기계 정보, 증상, 사진, 위치, 연락처가 들어가기 때문에 기본은 로그인 영역으로 두는 것이 맞습니다.
 
-  function show(id){
-    views.forEach(v => v.classList.toggle('active', v.id === id));
-  }
+로그인 없이 볼 수 있는 것은 도움요청 안내와 개인정보 보호 원칙입니다.
+실제 요청 작성과 이력 확인은 로그인 후 본인 계정에서만 가능하게 설계합니다.`,
+            quote: "도움요청은 공개 게시판이 아니라, 내 기계 문제를 안전하게 전달하는 개인 요청서입니다.",
+            note: "기본은 비공개, 공유는 허락 기반입니다. 요청 정보는 정비 판단에 필요한 범위로만 모으는 것이 좋습니다."
+          },
+          privacy: {
+            title: "개인정보 원칙",
+            subtitle: "도움요청 정보는 기본 비공개로 다룹니다.",
+            imageText: "비공개 기본 / 필요한 정보만 / 제한 공유 / 요청 이력 보호",
+            body:
+`도움요청에는 이름, 연락처, 위치, 기계 정보, 사진이 포함될 수 있습니다.
 
-  show('home');
+따라서 요청 내용은 기본적으로 공개하지 않습니다.
+정비사나 업체에게 전달할 때도 사용자가 요청한 범위 안에서만 공유하는 것이 좋습니다.
 
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      const target = link.dataset.view;
+공개 사례로 활용할 때는 이름, 연락처, 정확한 위치, 기대번호 등 개인을 특정할 수 있는 정보는 제거해야 합니다.`,
+            quote: "도움은 받되, 기록은 보호되어야 합니다.",
+            note: "신뢰가 있어야 농가는 사진과 기록을 남깁니다. 서비스 초기에 이 원칙을 명확히 두는 것이 중요합니다."
+          }
+        }
+      },
 
-      links.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+      symptom: {
+        label: "증상 설명",
+        eng: "SYMPTOM DESCRIPTION",
+        steps: {
+          all: {
+            title: "증상 정리",
+            subtitle: "언제, 어떤 상황에서, 어떻게 문제가 나타나는지 정리합니다.",
+            imageText: "언제 발생? / 어떤 작업 중? / 소리? / 연기? / 경고등? / 반복 여부?",
+            body:
+`증상 설명은 도움요청의 중심입니다.
 
-      show(target);
-    });
-  });
+문제가 언제 발생했는지,
+어떤 작업 중이었는지,
+시동 전인지 작업 중인지,
+소리나 연기, 경고등이 있었는지,
+한 번만 발생했는지 반복되는지 적어야 합니다.
 
-  const searchInput = document.getElementById('searchInput');
-  const searchClear = document.getElementById('searchClear');
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-  });
-</script>
+증상 설명이 구체적일수록 정비사는 확인 순서를 빠르게 잡을 수 있습니다.`,
+            quote: "증상은 고장의 결과이고, 설명은 진단의 시작입니다.",
+            note: "좋은 설명은 ‘안 됩니다’가 아니라 ‘언제, 무엇을 할 때, 어떻게 안 되는지’를 담습니다."
+          },
+          example: {
+            title: "좋은 설명 예시",
+            subtitle: "짧아도 판단 가능한 형태로 적습니다.",
+            imageText: "예: 로터리 작업 중 힘이 빠지고 검은 연기가 많아졌습니다.",
+            body:
+`좋은 설명 예시는 다음과 같습니다.
 
+“시동은 걸리지만 로터리 작업 중 힘이 급격히 약해지고 검은 연기가 많이 납니다.”
+
+“키를 ON 해도 계기판이 들어오지 않고 아무 소리도 나지 않습니다.”
+
+“작업 중 20분 정도 지나면 꺼지고, 식으면 다시 시동이 걸립니다.”
+
+이처럼 증상, 조건, 반복 여부가 함께 들어가면 판단이 빨라집니다.`,
+            quote: "짧아도 조건이 들어가면 좋은 설명입니다.",
+            note: "소리 표현도 도움이 됩니다. 딸깍, 따다다다, 낑낑, 끼익 같은 현장 표현은 진단 단서가 됩니다."
+          }
+        }
+      },
+
+      photo: {
+        label: "사진 첨부",
+        eng: "PHOTO ATTACHMENT",
+        steps: {
+          all: {
+            title: "사진 준비",
+            subtitle: "전체 사진, 문제 부위, 계기판, 누유 흔적을 나누어 찍습니다.",
+            imageText: "전체 사진 / 문제 부위 / 계기판 / 누유 / 기대번호",
+            body:
+`사진은 말로 설명하기 어려운 현장 상태를 보여줍니다.
+
+기계 전체 사진을 한 장 찍습니다.
+문제가 의심되는 부위를 가까이 찍습니다.
+계기판 경고등이나 에러코드가 있으면 찍습니다.
+누유, 파손, 이물질, 배선 빠짐이 보이면 찍습니다.
+
+가능하면 기대번호나 모델명도 함께 확인할 수 있게 찍어두면 좋습니다.`,
+            quote: "사진은 현장을 줄여서 보내는 가장 빠른 방법입니다.",
+            note: "개인정보가 보이는 주변 배경이나 차량 번호, 사람 얼굴은 가능하면 피해서 찍는 것이 좋습니다."
+          },
+          tips: {
+            title: "촬영 요령",
+            subtitle: "멀리 한 장, 가까이 한 장, 표시 한 장이 좋습니다.",
+            imageText: "멀리 / 가까이 / 표시 / 밝게 / 흔들림 없이",
+            body:
+`사진은 너무 가까이만 찍으면 위치를 알기 어렵습니다.
+
+먼저 전체 위치를 알 수 있게 멀리서 한 장 찍습니다.
+그다음 문제 부위를 가까이 찍습니다.
+가능하면 손가락이나 표시로 어느 부위인지 알려줍니다.
+
+어두운 곳에서는 플래시를 사용하고 흔들리지 않게 찍는 것이 좋습니다.`,
+            quote: "좋은 사진은 설명 시간을 줄여줍니다.",
+            note: "사진 첨부 기능은 다음 단계에서 실제 업로드 기능으로 연결하면 됩니다."
+          }
+        }
+      },
+
+      machine: {
+        label: "기계 정보",
+        eng: "MACHINE INFORMATION",
+        steps: {
+          all: {
+            title: "기계 정보",
+            subtitle: "정확한 기계 정보가 있어야 부품과 구조를 맞게 볼 수 있습니다.",
+            imageText: "업체명 / 기종 / 제품명 / 기대번호 / 사용 시간",
+            body:
+`기계 정보는 도움요청의 기준점입니다.
+
+업체명, 기종, 제품명, 기대번호, 사용 시간, 최근 정비 이력을 입력합니다.
+같은 회사의 비슷한 기계라도 연식과 기대번호에 따라 부품과 회로가 다를 수 있습니다.
+
+정확한 기계 정보가 있어야 잘못된 판단과 부품 착오를 줄일 수 있습니다.`,
+            quote: "정확한 기계 정보는 정확한 도움의 출발점입니다.",
+            note: "나중에는 ‘내 기계 등록’과 연결하여 선택만 하면 자동으로 정보가 들어오게 만들면 좋습니다."
+          },
+          serial: {
+            title: "기대번호",
+            subtitle: "부품과 구조 확인에 중요한 고유 정보입니다.",
+            imageText: "기대번호 / 모델명 / 명판 위치",
+            body:
+`기대번호는 기계의 고유번호입니다.
+
+부품 확인, 연식 확인, 사양 확인에 중요한 역할을 합니다.
+도움요청 시 기대번호가 있으면 정비사가 필요한 정보를 훨씬 정확하게 찾을 수 있습니다.
+
+다만 기대번호는 개인 기계 정보이므로 공개 게시판에 그대로 노출하지 않는 것이 좋습니다.`,
+            quote: "기대번호는 정확도를 높이지만, 공개할 정보는 아닙니다.",
+            note: "로그인 영역에서 안전하게 저장하고 필요한 사람에게만 제한 공유하는 구조가 좋습니다."
+          }
+        }
+      },
+
+      location: {
+        label: "위치/연락처",
+        eng: "LOCATION AND CONTACT",
+        steps: {
+          all: {
+            title: "위치와 연락처",
+            subtitle: "방문 가능 여부와 연락 방법을 정리합니다.",
+            imageText: "지역 / 상세 위치 / 연락처 / 방문 가능 시간 / 긴급 여부",
+            body:
+`도움요청에는 연락 가능한 방법과 위치 정보가 필요할 수 있습니다.
+
+지역, 방문 위치, 연락처, 연락 가능 시간, 긴급 여부를 정리합니다.
+다만 위치와 연락처는 민감한 정보이므로 로그인 후 본인 요청서 안에서만 다루는 것이 안전합니다.
+
+공개 화면에는 정확한 위치나 전화번호가 노출되지 않도록 해야 합니다.`,
+            quote: "위치와 연락처는 도움을 가능하게 하지만, 보호되어야 할 정보입니다.",
+            note: "처음에는 읍/면 단위 정도로 입력하고, 실제 출동이 필요할 때 상세 위치를 확인하는 방식도 가능합니다."
+          },
+          urgency: {
+            title: "긴급도",
+            subtitle: "작업 중단, 안전 위험, 농번기 여부를 기준으로 나눕니다.",
+            imageText: "긴급 / 빠른 상담 / 일반 문의 / 기록만 남기기",
+            body:
+`모든 요청이 같은 긴급도는 아닙니다.
+
+작업이 완전히 중단되었는지,
+안전 위험이 있는지,
+농번기 급한 작업인지,
+전화 상담으로 가능한지 구분해야 합니다.
+
+긴급도를 나누면 정비사도 우선순위를 정하기 쉽습니다.`,
+            quote: "긴급도는 감정이 아니라 작업 중단과 안전 기준으로 나눕니다.",
+            note: "타는 냄새, 큰 소리, 심한 진동, 과열은 즉시 중지 후 도움을 요청하는 것이 좋습니다."
+          }
+        }
+      },
+
+      request: {
+        label: "요청 작성",
+        eng: "CREATE REQUEST",
+        loginRequired: true,
+        steps: {
+          all: {
+            title: "로그인 필요",
+            subtitle: "도움요청 작성은 로그인 후 이용합니다.",
+            imageText: "내 기계 선택 → 증상 입력 → 사진 첨부 → 위치/연락처 → 요청 제출",
+            body:
+`도움요청 작성은 처음부터 로그인 영역으로 두는 것이 안전합니다.
+
+요청서에는 기계 정보, 증상, 사진, 위치, 연락처가 포함될 수 있습니다.
+따라서 사용자의 계정 안에서 작성하고, 본인과 허락받은 정비사만 확인하는 구조가 좋습니다.
+
+지금 단계에서는 실제 전송 기능 전에 입력 구조만 먼저 잡아두면 됩니다.`,
+            quote: "도움요청은 공개 글이 아니라 개인 요청서입니다.",
+            note: "다음 단계에서 Firebase 로그인, 사진 업로드, 요청 저장 기능을 붙이면 실제 서비스로 이어질 수 있습니다."
+          }
+        }
+      }
+    };
+
+    const stepNamesBySystem = {
+      guide: {
+        all: "전체 흐름",
+        privacy: "개인정보 원칙"
+      },
+      symptom: {
+        all: "증상 정리",
+        example: "설명 예시"
+      },
+      photo: {
+        all: "사진 준비",
+        tips: "촬영 요령"
+      },
+      machine: {
+        all: "기계 정보",
+        serial: "기대번호"
+      },
+      location: {
+        all: "위치/연락처",
+        urgency: "긴급도"
+      },
+      request: {
+        all: "요청 작성"
+      }
+    };
+
+    let currentSystem = "guide";
+    let currentStep = "all";
+    let isLoggedIn = false;
+
+    const systemTabsEl = document.getElementById("systemTabs");
+    const stepMenuEl = document.getElementById("stepMenu");
+    const paperSystemEl = document.getElementById("paperSystem");
+    const paperTitleEl = document.getElementById("paperTitle");
+    const paperSubEl = document.getElementById("paperSub");
+    const paperImageEl = document.getElementById("paperImage");
+    const paperBodyEl = document.getElementById("paperBody");
+    const paperQuoteEl = document.getElementById("paperQuote");
+    const paperNoteEl = document.getElementById("paperNote");
+    const extraAreaEl = document.getElementById("extraArea");
+
+    function renderSystemTabs() {
+      systemTabsEl.innerHTML = "";
+      const keys = Object.keys(contentData);
+
+      keys.forEach((key, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = currentSystem === key ? "active" : "";
+        btn.textContent = contentData[key].label;
+        btn.onclick = () => {
+          currentSystem = key;
+          currentStep = "all";
+          renderAll();
+        };
+        systemTabsEl.appendChild(btn);
+
+        if (index < keys.length - 1) {
+          const sep = document.createElement("span");
+          sep.className = "separator";
+          sep.textContent = "/";
+          systemTabsEl.appendChild(sep);
+        }
+      });
+    }
+
+    function renderStepMenu() {
+      stepMenuEl.innerHTML = "";
+      const stepNames = stepNamesBySystem[currentSystem];
+
+      Object.keys(stepNames).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "step-item" + (key === currentStep ? " active" : "");
+        btn.textContent = stepNames[key];
+        btn.onclick = () => {
+          currentStep = key;
+          renderAll();
+        };
+        stepMenuEl.appendChild(btn);
+      });
+    }
+
+    function renderPaper() {
+      const system = contentData[currentSystem];
+      const page = system.steps[currentStep];
+
+      paperSystemEl.textContent = system.eng;
+      paperTitleEl.textContent = `${system.label} | ${page.title}`;
+      paperSubEl.textContent = page.subtitle;
+      paperImageEl.textContent = page.imageText;
+      paperBodyEl.textContent = page.body;
+      paperQuoteEl.textContent = page.quote;
+      paperNoteEl.textContent = page.note;
+
+      renderExtraArea(system);
+    }
+
+    function renderExtraArea(system) {
+      extraAreaEl.innerHTML = "";
+
+      if (system.loginRequired && !isLoggedIn) {
+        extraAreaEl.innerHTML = `
+          <div class="login-panel">
+            <span class="private-badge">🔒 로그인 필요 영역</span>
+            <h3 class="panel-title">도움요청 작성은 로그인 후 이용 가능합니다</h3>
+            <p class="panel-text">
+              도움요청에는 기계 정보, 증상, 사진, 위치, 연락처가 포함될 수 있습니다.<br>
+              그래서 처음부터 로그인 기반의 개인 요청서로 설계하는 것이 안전합니다.
+            </p>
+            <div class="login-actions">
+              <button class="main-action" onclick="showLoginNotice()">로그인하기</button>
+              <button class="sub-action" onclick="showLoginNotice()">회원가입</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (system.loginRequired && isLoggedIn) {
+        extraAreaEl.innerHTML = `
+          <div class="request-panel">
+            <span class="private-badge">🔒 개인 요청서</span>
+            <h3 class="panel-title">도움요청 작성 예시</h3>
+            <p class="panel-text">실제 로그인과 저장 기능을 연결하면 이 입력값이 사용자 계정에 안전하게 저장됩니다.</p>
+
+            <div class="form-grid">
+              <label class="form-field">
+                내 기계 선택
+                <select>
+                  <option>등록된 기계를 선택하세요</option>
+                  <option>트랙터 / FAE-001</option>
+                  <option>콤바인 / FAE-002</option>
+                </select>
+              </label>
+
+              <label class="form-field">
+                긴급도
+                <select>
+                  <option>일반 문의</option>
+                  <option>빠른 상담 필요</option>
+                  <option>작업 중단</option>
+                  <option>안전 위험</option>
+                </select>
+              </label>
+
+              <label class="form-field full">
+                증상 설명
+                <textarea placeholder="언제, 어떤 작업 중, 어떤 증상이 나타났는지 적어주세요."></textarea>
+              </label>
+
+              <label class="form-field">
+                지역
+                <input type="text" placeholder="예: 창원시 동읍">
+              </label>
+
+              <label class="form-field">
+                연락 가능 시간
+                <input type="text" placeholder="예: 오후 3시 이후">
+              </label>
+
+              <label class="form-field full">
+                사진 첨부
+                <input type="file" multiple>
+              </label>
+            </div>
+
+            <div class="login-actions" style="margin-top:18px;">
+              <button class="main-action" onclick="showSubmitNotice()">요청 제출</button>
+              <button class="sub-action">임시 저장</button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function showLoginNotice() {
+      alert("현재는 로그인 화면 연결 전 단계입니다. 다음 단계에서 Firebase 로그인 또는 자체 로그인으로 연결할 수 있습니다.");
+    }
+
+    function showSubmitNotice() {
+      alert("현재는 요청 저장 기능 연결 전 단계입니다. 다음 단계에서 데이터베이스와 사진 업로드를 연결할 수 있습니다.");
+    }
+
+    function renderAll() {
+      renderSystemTabs();
+      renderStepMenu();
+      renderPaper();
+    }
+
+    renderAll();
+  </script>
 </body>
 </html>
+
 
 
 
