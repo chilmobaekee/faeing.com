@@ -2,604 +2,926 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>페잉 고장진단</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing | 고장진단</title>
+
+  <meta name="description" content="Faeing 고장진단 페이지 - 시동, 출력, 정지, 이상 소리, 유압 문제를 차분하게 따라가는 문서형 진단 구조입니다.">
+
+  <meta property="og:title" content="Faeing | 고장진단">
+  <meta property="og:description" content="농기계 고장 증상을 차분하게 따라가는 문서형 진단 구조">
+  <meta property="og:image" content="https://faeing.com/og-image.png">
+  <meta property="og:url" content="https://faeing.com/diagnosis.html">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f6f2;
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
       color: #222;
-      line-height: 1.6;
+      min-height: 100vh;
     }
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid #ddd;
-      padding: 18px 20px;
-    }
-
-    .brand {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand-title {
-      font-size: 22px;
-      font-weight: 800;
-    }
-
-    .brand-subtitle {
-      font-size: 13px;
-      color: #666;
-    }
-
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 24px 16px 60px;
-    }
-
-    .hero, .diagnosis-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 26px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: 28px;
-      line-height: 1.3;
-    }
-
-    .hero p {
-      margin: 0;
-      color: #555;
-    }
-
-    .flow-box {
-      background: #eef4ec;
-      border: 1px solid #d8e4d4;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
-      font-size: 14px;
-      color: #365038;
-    }
-
-    .step-title {
-      font-size: 21px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .question {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .answers {
-      display: grid;
-      gap: 10px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     button {
-      border: none;
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #2f5d3a;
-      color: #ffffff;
-      transition: 0.2s;
-      text-align: left;
+      font-family: inherit;
     }
 
-    button:hover {
-      background: #24492d;
-      transform: translateY(-1px);
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .category-button {
-      min-height: 94px;
-      background: #ffffff;
-      color: #222;
-      border: 1px solid #d8e4d4;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-    }
-
-    .category-button strong {
-      display: block;
-      font-size: 17px;
-      margin-bottom: 5px;
-      color: #2f5d3a;
-    }
-
-    .category-button span {
-      display: block;
-      font-size: 13px;
-      color: #666;
-    }
-
-    .category-button:hover {
-      background: #eef4ec;
-      color: #222;
-    }
-
-    .sub-buttons {
+    /* =========================
+       상단바
+    ========================= */
+    .navbar {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 24px;
       display: flex;
-      gap: 10px;
-      margin-top: 16px;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      gap: 20px;
     }
 
-    .sub-buttons button {
-      background: #ffffff;
-      color: #2f5d3a;
-      border: 1px solid #b8c9b5;
-      text-align: center;
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+      flex: 1;
     }
 
-    .sub-buttons button:hover {
-      background: #eef4ec;
+    .nav-home {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
     }
 
-    .history {
-      margin-bottom: 18px;
-      padding: 14px;
-      background: #f7f7f7;
-      border-radius: 14px;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .history strong {
+    .nav-logo {
+      height: 36px;
+      width: auto;
       display: block;
-      margin-bottom: 6px;
-      color: #222;
+      flex-shrink: 0;
     }
 
-    .result-title {
+    .nav-brand {
       font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #2f5d3a;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .section-title {
-      margin-top: 20px;
-      margin-bottom: 8px;
-      font-weight: 800;
-      font-size: 17px;
+    .system-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      margin-left: 18px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
-    ul, ol {
-      padding-left: 22px;
-      margin-top: 8px;
+    .system-nav::-webkit-scrollbar {
+      display: none;
     }
 
-    li { margin-bottom: 6px; }
-
-    .warning {
-      margin-top: 22px;
-      padding: 14px;
-      border-radius: 14px;
-      background: #fff7e6;
-      border: 1px solid #f0d49a;
-      font-size: 14px;
-      color: #6b4b00;
+    .system-nav button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: #111;
+      padding: 4px 0;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    footer {
-      text-align: center;
-      color: #777;
+    .system-nav .separator {
+      opacity: 0.35;
+      flex-shrink: 0;
+    }
+
+    .system-nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 1.5px;
+      background: #111;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
       font-size: 13px;
-      padding: 30px 16px;
+      color: #333;
+      outline: none;
+      width: 210px;
     }
 
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 23px; }
-      .brand { align-items: flex-start; flex-direction: column; }
-      .diagnosis-card, .hero { padding: 20px; }
-      .sub-buttons { flex-direction: column; }
-      .category-grid { grid-template-columns: 1fr; }
+    .nav-search::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .login-btn {
+      color: rgba(0,0,0,0.6);
+    }
+
+    .login-btn:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .signup-btn {
+      color: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.02);
+    }
+
+    .signup-btn:hover {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* =========================
+       고장진단 본문
+    ========================= */
+    .machines-page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 26px 22px 42px;
+    }
+
+    .machines-heading {
+      margin-bottom: 20px;
+    }
+
+    .machines-title {
+      font-size: 34px;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .machines-subtitle {
+      font-size: 15px;
+      color: rgba(0,0,0,0.62);
+      line-height: 1.7;
+    }
+
+    .machines-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* 왼쪽 진단 단계 메뉴 */
+    .step-menu {
+      background: #ECEFEC;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 10px;
+      position: sticky;
+      top: 78px;
+    }
+
+    .step-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      color: rgba(0,0,0,0.68);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      margin-bottom: 6px;
+    }
+
+    .step-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-item:hover {
+      background: rgba(255,255,255,0.6);
+      color: #111;
+    }
+
+    .step-item.active {
+      background: #ffffff;
+      color: #111;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-weight: 600;
+    }
+
+    /* 오른쪽 문서 */
+    .paper-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .paper {
+      width: min(960px, 100%);
+      min-height: 1180px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.06);
+      padding: 56px 60px 64px;
+      position: relative;
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: linear-gradient(to right, #e5e5e0, #f5f5f2, #e5e5e0);
+    }
+
+    .paper-head {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .paper-system {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 8px;
+    }
+
+    .paper-title {
+      font-size: 34px;
+      line-height: 1.34;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .paper-sub {
+      font-size: 15px;
+      color: rgba(0,0,0,0.56);
+      line-height: 1.8;
+    }
+
+    .paper-image {
+      width: 100%;
+      min-height: 230px;
+      margin: 28px 0 30px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #f3f4f1, #e8ece8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.50);
+      font-size: 18px;
+      line-height: 1.8;
+      padding: 30px;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .paper-body {
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(0,0,0,0.84);
+      white-space: pre-line;
+    }
+
+    .paper-quote {
+      margin-top: 30px;
+      padding: 18px 20px;
+      background: #F6F6F2;
+      border-left: 2px solid #CBBDA5;
+      font-size: 16px;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.72);
+    }
+
+    .paper-note {
+      margin-top: 34px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 18px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.58);
+      white-space: pre-line;
+    }
+
+    @media (max-width: 1200px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 18px;
+      }
+
+      .nav-left {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .machines-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .step-menu {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .step-item {
+        margin-bottom: 0;
+        text-align: center;
+      }
+
+      .paper {
+        min-height: auto;
+        padding: 36px 24px 42px;
+      }
+
+      .paper-title {
+        font-size: 28px;
+      }
+
+      .paper-body {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-search {
+        width: 130px;
+      }
+
+      .nav-btn {
+        padding: 7px 12px;
+      }
+
+      .machines-page {
+        padding: 18px 14px 28px;
+      }
+
+      .machines-title {
+        font-size: 28px;
+      }
+
+      .step-menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .paper-image {
+        min-height: 190px;
+      }
+
+      .system-nav {
+        gap: 10px;
+        margin-left: 0;
+        width: 100%;
+        padding-top: 4px;
+      }
     }
   </style>
 </head>
-<body>
-  <header>
-    <div class="brand">
-      <div>
-        <div class="brand-title">Faeing.com</div>
-        <div class="brand-subtitle">농기계와 소통하는 사람들</div>
-      </div>
-      <div class="brand-subtitle">고장진단 프로토타입</div>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <h1>농기계 고장진단</h1>
-      <p>고장은 부품 하나가 아니라 흐름이 끊긴 결과입니다. 먼저 증상을 고르고, 전원 · 동력 · 연료 · 유압 · 제어 흐름 순서로 확인합니다.</p>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="/" class="nav-home" aria-label="Faeing 메인으로 이동">
+        <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
+        <span class="nav-brand">Faeing</span>
+      </a>
+      <div class="system-nav" id="systemTabs"></div>
+    </div>
+
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
+      <button class="nav-btn login-btn">Login</button>
+      <button class="nav-btn signup-btn">Sign Up</button>
+    </div>
+  </div>
+
+  <main class="machines-page">
+    <section class="machines-heading">
+      <h1 class="machines-title">고장진단</h1>
+      <p class="machines-subtitle">증상을 먼저 선택하고, 원인이 숨어 있는 흐름을 순서대로 확인합니다.</p>
     </section>
 
-    <div class="flow-box">
-      핵심 증상: 시동 안 걸림 / 힘이 약함 / 작업 중 꺼짐 / 이상 소리 / 유압 작동 불량
-    </div>
+    <section class="machines-layout">
+      <aside class="step-menu" id="stepMenu"></aside>
 
-    <section class="diagnosis-card" id="diagnosis"></section>
+      <section class="paper-wrap">
+        <article class="paper">
+          <div class="paper-head">
+            <div class="paper-system" id="paperSystem">DIAGNOSIS FLOW</div>
+            <h2 class="paper-title" id="paperTitle">시동 안 걸림 | 전체 흐름</h2>
+            <div class="paper-sub" id="paperSub">시동 조건부터 전원, 크랭킹, 연료와 제어 흐름을 차례로 확인합니다.</div>
+          </div>
 
-    <div class="sub-buttons">
-      <button onclick="goBack()">이전 단계</button>
-      <button onclick="restartDiagnosis()">처음으로</button>
-    </div>
+          <div class="paper-image" id="paperImage">진단 흐름 영역</div>
+
+          <div class="paper-body" id="paperBody"></div>
+
+          <div class="paper-quote" id="paperQuote"></div>
+
+          <div class="paper-note" id="paperNote"></div>
+        </article>
+      </section>
+    </section>
   </main>
 
-  <footer>
-    Faeing Diagnosis Prototype · 미완성이라도 흐름부터 만든다
-  </footer>
-
   <script>
-    const steps = {
-      home: {
-        type: "category",
-        title: "어떤 문제가 발생했습니까?",
-        question: "가장 가까운 증상을 선택하세요.",
-        categories: [
-          {
-            title: "시동이 안 걸림",
-            desc: "전원, 스타트, 연료, 제어 흐름 확인",
-            next: "startCondition"
+    const contentData = {
+      noStart: {
+        label: "시동 안 걸림",
+        eng: "NO START DIAGNOSIS",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "시동 조건부터 전원, 크랭킹, 연료와 제어 흐름을 차례로 확인합니다.",
+            imageText: "시동 조건 → 계기판 전원 → 크랭킹 여부 → 소리 구분 → 연료 / 제어 / 흡배기 확인",
+            body:
+`시동이 걸리지 않는 문제는 크게 세 갈래로 나눠 볼 수 있습니다.
+
+첫째, 시동 조건이 맞지 않아 안전 회로가 막고 있는 경우입니다.
+전후진 레버, PTO, 클러치, 좌석 스위치 조건을 먼저 확인합니다.
+
+둘째, 전기가 스타트모터까지 제대로 도달하지 않는 경우입니다.
+배터리, 단자, 접지, 퓨즈, 릴레이, 키 스위치, 스타트 신호를 순서대로 봅니다.
+
+셋째, 엔진은 돌지만 연료나 제어 조건이 맞지 않아 연소가 시작되지 않는 경우입니다.
+연료, 에어 혼입, 필터, ECU 전원, 센서, IMV, 예열, 흡배기 흐름을 확인합니다.`,
+            quote: "시동 불량은 부품 하나보다 조건, 전원, 연료, 제어 흐름이 어디서 끊겼는지를 보는 문제입니다.",
+            note: "현장에서는 가장 먼저 안전 조건을 보고, 그다음 계기판 전원과 크랭킹 소리로 큰 방향을 나누는 것이 좋습니다."
           },
-          {
-            title: "힘이 약함 / 출력 저하",
-            desc: "공기, 연료, 필터, 부하, 압축 확인",
-            next: "resultLowPower"
+          condition: {
+            title: "시동 조건",
+            subtitle: "안전 조건이 맞지 않으면 고장이 아니어도 시동 회로가 차단됩니다.",
+            imageText: "전후진 중립 / PTO 꺼짐 / 클러치 밟음 / 좌석 스위치",
+            body:
+`시동 진단의 첫 단계는 부품이 아니라 조건입니다.
+
+전후진 레버가 중립인지 확인합니다.
+PTO가 꺼져 있는지 확인합니다.
+클러치를 끝까지 밟았는지 확인합니다.
+좌석 스위치나 안전 스위치가 적용된 기종이라면 해당 조건도 함께 확인합니다.
+
+이 단계에서 조건이 맞지 않으면 스타트모터가 돌지 않는 것이 정상일 수 있습니다.`,
+            quote: "고장이 아니라 조건 미충족일 수 있습니다.",
+            note: "중립 스위치, 클러치 스위치, PTO 스위치는 오래 쓰면 접점 불량으로 실제 조건과 신호가 다를 수 있습니다."
           },
-          {
-            title: "작업 중 꺼짐",
-            desc: "연료 공급, 과열, 센서, 전원 끊김 확인",
-            next: "resultStall"
+          panel: {
+            title: "계기판 전원",
+            subtitle: "키 ON 상태에서 전원이 살아 있는지 먼저 확인합니다.",
+            imageText: "배터리 → 메인 퓨즈 → 키 스위치 → 계기판",
+            body:
+`키를 ON 했을 때 계기판이 들어오는지 확인합니다.
+
+계기판이 아예 들어오지 않으면 배터리, 배터리 단자, 접지, 메인 퓨즈, 퓨저블 링크, 키 스위치 쪽을 먼저 봅니다.
+
+계기판이 희미하거나 깜빡이면 전압은 있으나 전류가 부족하거나 접촉이 불안정할 가능성이 있습니다.
+
+전기는 눈에 보이지 않기 때문에 어디까지 전압이 도달하는지 순서대로 확인해야 합니다.`,
+            quote: "계기판은 전원 흐름의 첫 번째 신호입니다.",
+            note: "배터리 전압만 보지 말고 시동 시 전압 강하, 단자 조임, 차체 접지를 함께 확인해야 합니다."
           },
-          {
-            title: "이상 소리 발생",
-            desc: "베어링, 기어, 벨트, 풀림, 간섭 확인",
-            next: "resultNoise"
+          crank: {
+            title: "크랭킹 소리",
+            subtitle: "엔진이 도는지, 어떤 소리가 나는지로 방향을 나눕니다.",
+            imageText: "아무 소리 없음 / 딸깍 / 따다다다 / 낑낑 / 정상 크랭킹",
+            body:
+`시동을 걸 때 엔진이 실제로 도는지 확인합니다.
+
+아무 소리도 없으면 스타트 신호가 전달되지 않는 쪽을 봅니다.
+딸깍 소리만 나면 릴레이나 마그네틱은 반응하지만 전류가 부족할 수 있습니다.
+따다다다 소리는 배터리 전압이 순간적으로 무너질 때 자주 나타납니다.
+낑낑거리며 약하게 돌면 배터리, 접지, 스타트모터, 엔진 저항을 함께 봅니다.
+
+정상적으로 크랭킹되는데 시동이 안 걸리면 연료와 제어 흐름으로 넘어갑니다.`,
+            quote: "소리는 고장 방향을 알려주는 현장 언어입니다.",
+            note: "소리를 구분하면 배터리, 릴레이, 스타트모터, 연료 계통 중 어디부터 볼지 빠르게 좁힐 수 있습니다."
           },
-          {
-            title: "유압 / 작업기 작동 불량",
-            desc: "오일, 펌프, 밸브, 내부 누설 확인",
-            next: "resultHydraulic"
+          fuelControl: {
+            title: "연료와 제어",
+            subtitle: "크랭킹은 되는데 시동이 안 걸리면 연료, 예열, 센서, ECU 흐름을 봅니다.",
+            imageText: "연료량 → 필터 → 에어 빼기 → 연료압 → ECU 전원 → 센서 신호",
+            body:
+`엔진이 정상적으로 도는데 시동이 걸리지 않으면 연료가 연소실까지 들어가는지 확인합니다.
+
+연료량, 연료 필터, 수분 분리기, 에어 혼입, 저압 펌프 상태를 봅니다.
+
+연기가 거의 없으면 연료가 들어가지 않거나 분사 명령이 없을 수 있습니다.
+흰 연기가 나면 연료는 들어가지만 예열, 압축, 분사 상태 문제일 수 있습니다.
+검은 연기가 나면 공기 부족, 흡기 막힘, EGR, 연소 불량을 의심합니다.
+
+전자제어 기종은 ECU 전원, 접지, 크랭크각 센서, IMV, 에러코드도 함께 확인해야 합니다.`,
+            quote: "엔진은 돌지만 시동이 안 걸리면 연료와 제어가 만나는 지점을 봐야 합니다.",
+            note: "진단기가 있다면 크랭킹 중 엔진 회전수 신호, 연료압, 에러코드를 함께 확인하면 방향이 빨라집니다."
           }
-        ]
+        }
       },
 
-      startCondition: {
-        title: "1단계 · 시동 조건 확인",
-        question: "전후진 레버 중립, PTO 꺼짐, 클러치 밟음 상태가 맞습니까?",
-        answers: [
-          { text: "예, 시동 조건은 맞습니다", next: "panelPower" },
-          { text: "아니요, 조건이 맞지 않습니다", next: "resultStartCondition" },
-          { text: "잘 모르겠습니다", next: "resultStartCondition" }
-        ]
+      lowPower: {
+        label: "출력 저하",
+        eng: "LOW POWER DIAGNOSIS",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "힘이 약할 때는 공기, 연료, 부하, 압축 흐름을 차례로 봅니다.",
+            imageText: "공기 → 연료 → 부하 → 배기 → 압축",
+            body:
+`출력이 약한 증상은 단순히 엔진이 나빠졌다는 뜻이 아닙니다.
+
+에어클리너가 막혀 공기가 부족할 수 있고,
+연료 필터가 막혀 연료 공급이 약할 수 있습니다.
+작업 부하가 과하거나 작업기 쪽 저항이 커진 경우도 출력 저하처럼 느껴집니다.
+
+검은 연기가 많으면 공기 부족이나 연소 불량을 보고,
+연기 없이 힘만 약하면 연료 공급, 센서, 부하 쪽을 함께 봐야 합니다.`,
+            quote: "힘이 약한 것은 엔진만의 문제가 아니라 흐름의 저항 문제일 수 있습니다.",
+            note: "가장 먼저 필터, 연료, 흡기, 작업 부하처럼 확인하기 쉬운 것부터 보는 것이 좋습니다."
+          },
+          basic: {
+            title: "기본 점검",
+            subtitle: "필터, 연료, 흡기 상태를 먼저 확인합니다.",
+            imageText: "에어클리너 / 연료 필터 / 수분 분리기",
+            body:
+`에어클리너 막힘을 확인합니다.
+연료 필터와 수분 분리기를 확인합니다.
+흡기 호스가 빠지거나 찌그러지지 않았는지 확인합니다.
+연료량과 연료 상태를 확인합니다.
+
+이 기본 점검만으로도 출력 저하의 상당 부분은 방향이 잡힙니다.`,
+            quote: "출력 저하는 기본 소모품에서 시작되는 경우가 많습니다.",
+            note: "필터류는 비용 대비 진단 가치가 높은 첫 점검 항목입니다."
+          },
+          load: {
+            title: "부하 확인",
+            subtitle: "기계가 약한 것인지 작업 부하가 큰 것인지 나눕니다.",
+            imageText: "공회전 / 무부하 / 작업 부하 비교",
+            body:
+`무부하에서는 정상인데 작업할 때만 힘이 약하면 작업기 부하를 함께 봐야 합니다.
+
+작업기 베어링, 체인, 기어, 로터리 저항, 예취부 막힘처럼 실제 부하가 커져도 엔진 출력 저하처럼 느껴질 수 있습니다.
+
+가능하면 작업기를 분리하거나 부하를 낮춰 반응을 비교합니다.`,
+            quote: "힘이 약한 것이 아니라 일이 너무 무거운 것일 수 있습니다.",
+            note: "부하 비교는 엔진 문제와 작업기 문제를 나누는 좋은 방법입니다."
+          },
+          deep: {
+            title: "심화 확인",
+            subtitle: "기본 점검 후에도 약하면 압축, 분사, 터보, 센서를 봅니다.",
+            imageText: "압축 / 인젝터 / 터보 / 센서값",
+            body:
+`기본 점검과 부하 확인 후에도 출력이 약하면 더 깊은 원인을 봅니다.
+
+압축 압력 저하, 인젝터 분사 불량, 터보 흡기 누설, EGR 문제, 센서값 이상이 원인일 수 있습니다.
+
+전자제어 기종은 진단기로 흡기압, 연료압, 회전수, 부하 관련 데이터를 함께 확인합니다.`,
+            quote: "기본이 정상일 때 심화 진단으로 들어가야 합니다.",
+            note: "처음부터 고가 부품을 의심하기보다 확인 순서를 지키는 것이 중요합니다."
+          }
+        }
       },
 
-      panelPower: {
-        title: "2단계 · 계기판 전원 확인",
-        question: "키를 ON 했을 때 계기판이 들어옵니까?",
-        answers: [
-          { text: "예, 계기판이 들어옵니다", next: "cranking" },
-          { text: "아니요, 계기판이 안 들어옵니다", next: "resultNoPanelPower" },
-          { text: "희미하게 들어오거나 깜빡입니다", next: "resultNoPanelPower" }
-        ]
+      stall: {
+        label: "작업 중 꺼짐",
+        eng: "STALL DIAGNOSIS",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "작업 중 꺼짐은 연료 공급, 과열, 전원 끊김, 센서 신호를 나눠 봅니다.",
+            imageText: "연료 공급 → 냉각 → 전원 → 센서 / ECU",
+            body:
+`작업 중 꺼짐은 위험도가 높은 증상입니다.
+
+연료 공급이 부족해 서서히 힘이 빠지며 꺼질 수 있고,
+과열로 보호 또는 성능 저하가 올 수 있습니다.
+또는 전원, 접지, 릴레이, 센서 신호가 순간적으로 끊겨 갑자기 꺼질 수도 있습니다.
+
+꺼지기 전 증상과 꺼진 뒤 재시동 가능 여부가 중요한 단서입니다.`,
+            quote: "꺼지는 순간보다 꺼지기 전의 신호가 더 중요합니다.",
+            note: "재시동이 바로 되는지, 식으면 되는지, 부하를 걸 때만 꺼지는지를 반드시 기록해야 합니다."
+          },
+          fuel: {
+            title: "연료 공급",
+            subtitle: "서서히 힘이 빠지며 꺼진다면 연료 흐름을 먼저 봅니다.",
+            imageText: "탱크 이물질 / 필터 막힘 / 에어 혼입",
+            body:
+`작업 중 서서히 힘이 빠지고 꺼진다면 연료 공급 부족을 의심합니다.
+
+연료 탱크 이물질, 필터 막힘, 수분 혼입, 에어 혼입, 저압 펌프 불량을 확인합니다.
+
+꺼진 뒤 시간이 지나 다시 걸리는 경우도 연료 흐름 문제에서 나타날 수 있습니다.`,
+            quote: "연료가 부족하면 기계는 먼저 힘을 잃고 그다음 멈춥니다.",
+            note: "탱크 내부 이물질은 평소에는 괜찮다가 작업 중 흔들리며 흡입구를 막을 수 있습니다."
+          },
+          heat: {
+            title: "과열 확인",
+            subtitle: "열이 오르며 꺼지면 냉각 흐름을 봅니다.",
+            imageText: "라디에이터 / 냉각수 / 팬벨트 / 오일",
+            body:
+`냉각수 온도 상승, 라디에이터 막힘, 팬벨트 문제, 냉각수 부족을 확인합니다.
+
+과열은 엔진 출력 저하와 시동 꺼짐을 만들 수 있습니다.
+특히 먼지 많은 작업에서는 라디에이터 외부 막힘이 자주 발생합니다.`,
+            quote: "열 관리는 엔진 생존 관리입니다.",
+            note: "과열 상태에서 무리하게 재시동하거나 계속 작업하면 큰 고장으로 이어질 수 있습니다."
+          },
+          electric: {
+            title: "전원 / 센서",
+            subtitle: "갑자기 꺼진다면 전원, 접지, 센서 신호를 확인합니다.",
+            imageText: "퓨즈 / 릴레이 / 접지 / ECU / 센서",
+            body:
+`갑자기 툭 꺼지면 전원이나 제어 신호가 끊긴 경우를 봐야 합니다.
+
+배터리 단자, 접지, 메인 릴레이, 키 스위치, ECU 전원, 센서 커넥터를 확인합니다.
+
+진동에 의해 순간 접촉 불량이 생기는 경우도 있으므로 하네스 꺾임과 커넥터 상태를 함께 봅니다.`,
+            quote: "갑작스러운 정지는 순간 단절의 흔적일 수 있습니다.",
+            note: "재현이 어려운 고장은 커넥터 흔들림, 열 받은 뒤 증상, 진동 조건을 함께 봐야 합니다."
+          }
+        }
       },
 
-      cranking: {
-        title: "3단계 · 크랭킹 여부 확인",
-        question: "시동을 걸 때 엔진이 돌아갑니까?",
-        answers: [
-          { text: "예, 엔진은 돌아갑니다", next: "crankButNoStart" },
-          { text: "아니요, 엔진이 안 돌아갑니다", next: "crankSound" },
-          { text: "소리만 나고 잘 모르겠습니다", next: "crankSound" }
-        ]
+      noise: {
+        label: "이상 소리",
+        eng: "NOISE DIAGNOSIS",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "소리 위치, 회전수, 부하 조건을 기준으로 원인을 좁힙니다.",
+            imageText: "위치 → 회전수 변화 → 부하 변화 → 열 / 흔들림 확인",
+            body:
+`이상 소리는 고장이 커지기 전에 기계가 보내는 신호입니다.
+
+어디서 나는지, 회전수를 올리면 변하는지, 작업 부하를 걸면 커지는지, 열이 발생하는지를 순서대로 봅니다.
+
+소리를 무시하면 베어링, 기어, 체인, 벨트 문제가 더 큰 파손으로 이어질 수 있습니다.`,
+            quote: "소리는 기계가 보내는 가장 빠른 경고입니다.",
+            note: "소리가 커지고 진동이 동반되면 운전을 멈추고 확인하는 것이 안전합니다."
+          },
+          location: {
+            title: "위치 확인",
+            subtitle: "엔진, 변속기, 유압, 작업기 중 어디서 나는지 나눕니다.",
+            imageText: "엔진 / 변속기 / 유압펌프 / 작업기",
+            body:
+`소리의 위치를 먼저 나눕니다.
+
+엔진 쪽인지, 변속기나 차축 쪽인지, 유압펌프 쪽인지, 작업기 쪽인지 확인합니다.
+
+위치를 나누지 않으면 원인 후보가 너무 많아져 진단이 흐려집니다.`,
+            quote: "소리 진단은 위치를 잡는 것부터 시작합니다.",
+            note: "긴 드라이버나 청진 도구를 이용해 안전하게 진동 전달음을 비교할 수 있습니다."
+          },
+          condition: {
+            title: "조건 비교",
+            subtitle: "공회전, 주행, 작업 부하에서 소리가 어떻게 변하는지 봅니다.",
+            imageText: "공회전 / 주행 / 작업 / 회전수 변화",
+            body:
+`공회전에서 나는 소리인지, 주행할 때만 나는지, 작업기를 작동할 때만 나는지 비교합니다.
+
+회전수에 따라 빨라지는 소리는 회전체와 관련될 가능성이 높습니다.
+부하를 걸 때만 커지는 소리는 베어링, 기어, 체인, 유압 부하와 관련될 수 있습니다.`,
+            quote: "소리는 조건을 바꾸면 정체를 드러냅니다.",
+            note: "소리 녹음과 발생 조건 기록은 나중에 진단 자료로 큰 도움이 됩니다."
+          },
+          stop: {
+            title: "운전 중지 기준",
+            subtitle: "큰 파손으로 이어질 수 있는 소리는 즉시 멈춥니다.",
+            imageText: "금속 마찰음 / 큰 진동 / 타는 냄새 / 열 발생",
+            body:
+`금속이 갈리는 소리, 큰 충격음, 심한 진동, 타는 냄새, 급격한 열 발생이 있으면 운전을 멈춥니다.
+
+계속 운전하면 작은 베어링 문제가 축, 기어, 케이스 파손으로 확대될 수 있습니다.
+
+소리는 비용을 줄일 수 있는 조기 경고입니다.`,
+            quote: "멈춰야 할 때 멈추는 것도 정비입니다.",
+            note: "안전 확보 후 커버, 벨트, 체인, 베어링, 볼트 풀림을 확인합니다."
+          }
+        }
       },
 
-      crankSound: {
-        title: "4단계 · 소리로 구분",
-        question: "시동을 걸 때 소리가 어떤 느낌입니까?",
-        answers: [
-          { text: "아무 소리도 없습니다", next: "resultNoSound" },
-          { text: "딸깍 소리만 납니다", next: "resultClick" },
-          { text: "따다다다 소리가 납니다", next: "resultRapidClick" },
-          { text: "낑낑거리며 약하게 돕니다", next: "resultSlowCrank" },
-          { text: "정상적으로 잘 돕니다", next: "crankButNoStart" }
-        ]
-      },
+      hydraulic: {
+        label: "유압 불량",
+        eng: "HYDRAULIC DIAGNOSIS",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "오일량, 흡입, 펌프, 밸브, 실린더 내부 누설 순서로 봅니다.",
+            imageText: "탱크 → 필터 → 펌프 → 밸브 → 실린더 → 복귀",
+            body:
+`유압 문제는 오일이 순환하면서 압력과 유량을 만들어 일을 하는 흐름으로 봐야 합니다.
 
-      crankButNoStart: {
-        title: "4단계 · 크랭킹은 되는데 시동 불가",
-        question: "최근 연료 필터 교체, 연료 부족, 에어 혼입 가능성이 있었습니까?",
-        answers: [
-          { text: "예, 연료 쪽이 의심됩니다", next: "resultFuel" },
-          { text: "아니요, 연료 쪽은 아닌 것 같습니다", next: "smoke" },
-          { text: "경고등이나 에러코드가 있습니다", next: "resultControl" },
-          { text: "잘 모르겠습니다", next: "smoke" }
-        ]
-      },
+오일량이 부족하거나 필터가 막히면 펌프가 정상 압력을 만들기 어렵습니다.
+펌프가 약하면 전체 기능이 둔해집니다.
+밸브가 고착되거나 내부 누설이 있으면 특정 기능만 약하거나 움직이지 않을 수 있습니다.
 
-      smoke: {
-        title: "5단계 · 배기 연기 확인",
-        question: "크랭킹 중 배기 연기가 보입니까?",
-        answers: [
-          { text: "검은 연기가 납니다", next: "resultBlackSmoke" },
-          { text: "흰 연기가 납니다", next: "resultWhiteSmoke" },
-          { text: "연기가 거의 없습니다", next: "resultNoSmoke" },
-          { text: "잘 모르겠습니다", next: "resultFuel" }
-        ]
-      },
+겉으로 누유가 없어도 내부 누설로 힘이 빠질 수 있습니다.`,
+            quote: "유압은 새는 것만 보는 게 아니라 압력이 살아 있는지를 봐야 합니다.",
+            note: "전체가 약한지, 한 기능만 안 되는지 구분하면 펌프 문제와 밸브/실린더 문제를 나누기 쉽습니다."
+          },
+          oil: {
+            title: "오일 / 필터",
+            subtitle: "가장 먼저 오일량, 오일 상태, 필터를 확인합니다.",
+            imageText: "유압오일량 / 오염 / 거품 / 필터",
+            body:
+`유압오일량을 확인합니다.
+오일에 거품이 많은지, 오염이 심한지 확인합니다.
+필터 교체 이력과 막힘 가능성을 봅니다.
 
-      resultLowPower: {
-        result: true,
-        title: "힘이 약함 / 출력 저하",
-        summary: "출력이 약할 때는 먼저 공기와 연료 흐름, 필터 막힘, 부하 증가, 엔진 상태를 순서대로 확인합니다.",
-        causes: ["에어클리너 막힘", "연료 필터 막힘", "연료 공급 부족", "터보 흡기 누설", "과부하 작업", "압축 압력 저하"],
-        checks: ["에어클리너를 확인합니다.", "연료 필터와 수분 분리기를 확인합니다.", "작업기를 분리하거나 부하를 낮춰 반응을 봅니다.", "검은 연기 여부를 확인합니다.", "흡기 호스 빠짐이나 터보 라인 누설을 확인합니다.", "필요 시 압축과 인젝터 상태를 확인합니다."]
-      },
+오일과 필터는 유압 진단의 시작점입니다.`,
+            quote: "유압의 기본 체력은 오일과 필터에서 시작됩니다.",
+            note: "오일 부족이나 흡입 에어는 펌프 소음과 작동 지연을 만들 수 있습니다."
+          },
+          pump: {
+            title: "펌프 / 압력",
+            subtitle: "전체 기능이 약하면 펌프와 압력 형성을 봅니다.",
+            imageText: "펌프 소음 / 압력 / 유량 / 흡입 라인",
+            body:
+`승강, 조향, 작업기 등 전체 유압 기능이 함께 약하다면 펌프나 흡입 쪽을 의심합니다.
 
-      resultStall: {
-        result: true,
-        title: "작업 중 꺼짐",
-        summary: "작업 중 꺼짐은 연료 공급이 끊기거나, 과열 보호, 전원/센서 신호가 순간적으로 끊길 때 자주 발생합니다.",
-        causes: ["연료 탱크 이물질", "연료 필터 막힘", "연료 라인 에어 혼입", "엔진 과열", "ECU 전원 끊김", "센서 신호 불량"],
-        checks: ["꺼지기 전 힘이 약해졌는지 확인합니다.", "연료 필터와 탱크 이물질을 확인합니다.", "냉각수 온도와 라디에이터 막힘을 확인합니다.", "꺼진 뒤 바로 재시동이 되는지 확인합니다.", "퓨즈, 릴레이, 배터리 단자, 접지선을 확인합니다.", "에러코드가 있으면 진단기로 확인합니다."]
-      },
+펌프 소음, 흡입 라인 에어 혼입, 필터 막힘, 압력 형성 부족을 확인합니다.
 
-      resultNoise: {
-        result: true,
-        title: "이상 소리 발생",
-        summary: "이상 소리는 고장이 커지기 전에 기계가 보내는 신호입니다. 소리 위치, 회전수 변화, 작업 부하와의 관계를 먼저 봅니다.",
-        causes: ["베어링 마모", "벨트 장력 불량", "풀리 또는 체인 간섭", "기어 손상", "볼트 풀림", "작업기 내부 이물질"],
-        checks: ["공회전과 작업 중 소리가 다른지 확인합니다.", "엔진 회전수에 따라 소리가 변하는지 확인합니다.", "벨트, 풀리, 체인, 커버 간섭을 확인합니다.", "베어링 열 발생이나 흔들림을 확인합니다.", "작업기 내부 이물질이나 풀림을 확인합니다.", "소리가 커지는 상태라면 운전을 중지합니다."]
-      },
+필요하면 압력 게이지로 실제 압력을 확인해야 합니다.`,
+            quote: "전체가 약하면 발생 지점부터 봐야 합니다.",
+            note: "펌프를 교환하기 전 흡입, 필터, 오일 상태를 먼저 확인해야 합니다."
+          },
+          valveCylinder: {
+            title: "밸브 / 실린더",
+            subtitle: "특정 기능만 안 되거나 내려가면 밸브와 내부 누설을 봅니다.",
+            imageText: "밸브 고착 / 실린더 패킹 / 내부 누설 / 링크",
+            body:
+`특정 기능만 안 되면 해당 밸브, 링크, 호스, 실린더를 봅니다.
 
-      resultHydraulic: {
-        result: true,
-        title: "유압 / 작업기 작동 불량",
-        summary: "유압 문제는 오일량, 흡입, 펌프, 밸브, 실린더 내부 누설 흐름으로 나누어 확인합니다.",
-        causes: ["유압오일 부족", "오일 필터 막힘", "흡입 라인 에어 혼입", "펌프 성능 저하", "밸브 고착", "실린더 내부 누설"],
-        checks: ["유압오일량과 오일 상태를 확인합니다.", "필터 교체 이력을 확인합니다.", "작동 시 펌프 소음이 커지는지 확인합니다.", "한쪽 기능만 안 되는지 전체가 약한지 구분합니다.", "실린더가 서서히 내려가는지 확인합니다.", "밸브 조작감과 링크 연결 상태를 확인합니다."]
-      },
+실린더가 올라간 뒤 서서히 내려가면 내부 누설 가능성이 있습니다.
+밸브가 고착되면 조작해도 오일 방향 전환이 제대로 되지 않습니다.
 
-      resultStartCondition: {
-        result: true,
-        title: "시동 조건 미충족 가능성",
-        summary: "기계 고장이라기보다 안전 조건 때문에 시동 회로가 차단되었을 가능성이 있습니다.",
-        causes: ["전후진 레버 중립 아님", "PTO 켜짐", "클러치 안전스위치 조건 미충족", "좌석 스위치 또는 안전 스위치 조건 미충족"],
-        checks: ["전후진 레버를 중립 위치로 둡니다.", "PTO 스위치를 꺼짐 위치로 둡니다.", "클러치를 끝까지 밟고 다시 시동을 시도합니다.", "계기판 안전 경고등을 확인합니다."]
-      },
-
-      resultNoPanelPower: {
-        result: true,
-        title: "계기판 전원 불량 가능성",
-        summary: "키를 ON 했을 때 계기판이 들어오지 않는다면 메인 전원 흐름부터 확인해야 합니다.",
-        causes: ["배터리 방전", "배터리 단자 접촉 불량", "메인 퓨즈 또는 퓨저블 링크 단선", "키 스위치 또는 메인 릴레이 불량", "차체 접지 불량"],
-        checks: ["배터리 전압을 측정합니다.", "배터리 +, - 단자 조임 상태와 부식을 확인합니다.", "메인 퓨즈와 퓨저블 링크를 확인합니다.", "차체 접지선 체결 상태를 확인합니다.", "키 ON 전후 전압이 어디까지 전달되는지 확인합니다."]
-      },
-
-      resultNoSound: {
-        result: true,
-        title: "스타트 신호 미전달 가능성",
-        summary: "아무 소리도 없다면 스타트모터까지 작동 명령이 가지 않는 쪽을 먼저 봐야 합니다.",
-        causes: ["시동 릴레이 불량", "키 스위치 START 접점 불량", "중립 스위치 또는 클러치 스위치 불량", "스타트 신호 배선 단선", "ECU 또는 안전 제어 조건 미충족"],
-        checks: ["시동 조건을 다시 확인합니다.", "시동 릴레이 작동음을 확인합니다.", "릴레이 입력 전원과 출력 전원을 확인합니다.", "스타트모터 S단자에 시동 신호가 들어오는지 측정합니다."]
-      },
-
-      resultClick: {
-        result: true,
-        title: "배터리 전류 부족 또는 스타터 계통 문제",
-        summary: "딸깍 소리는 릴레이나 마그네틱은 반응하지만 스타트모터를 돌릴 힘이 부족할 때 자주 나타납니다.",
-        causes: ["배터리 전류 부족", "배터리 단자 접촉 불량", "접지 불량", "스타트모터 마그네틱 불량", "스타트모터 내부 마모"],
-        checks: ["배터리 정지 전압과 시동 시 전압 강하를 확인합니다.", "배터리 단자와 접지선을 조입니다.", "점프 시동 시 반응이 달라지는지 확인합니다.", "스타트모터 B단자 전원과 S단자 신호를 확인합니다."]
-      },
-
-      resultRapidClick: {
-        result: true,
-        title: "배터리 방전 가능성 높음",
-        summary: "따다다다 소리는 배터리 전압이 순간적으로 무너지며 릴레이가 붙었다 떨어지는 상황에서 흔합니다.",
-        causes: ["배터리 방전", "배터리 수명 저하", "충전 불량", "단자 접촉 불량", "장시간 방치로 인한 전압 저하"],
-        checks: ["배터리 전압을 측정합니다.", "가능하면 부하 테스트를 진행합니다.", "점프 시동으로 반응을 확인합니다.", "시동 후 발전기 충전 전압을 확인합니다."]
-      },
-
-      resultSlowCrank: {
-        result: true,
-        title: "크랭킹 힘 부족",
-        summary: "엔진은 돌지만 낑낑거리며 약하게 돈다면 배터리, 접지, 스타트모터, 엔진 저항을 함께 봐야 합니다.",
-        causes: ["배터리 약함", "접지 불량", "스타트모터 성능 저하", "엔진오일 점도 문제 또는 저온 영향", "엔진 내부 저항 증가"],
-        checks: ["배터리 전압 강하를 확인합니다.", "접지선과 스타트모터 전원선을 확인합니다.", "점프 시동 시 회전 속도가 좋아지는지 봅니다.", "엔진오일 상태와 점도를 확인합니다."]
-      },
-
-      resultFuel: {
-        result: true,
-        title: "연료 계통 문제 가능성",
-        summary: "크랭킹은 정상인데 시동이 안 걸린다면 연료 흐름을 먼저 확인합니다.",
-        causes: ["연료 부족", "연료 라인 에어 혼입", "연료 필터 막힘", "저압 연료펌프 불량", "수분 혼입 또는 동절기 연료 문제"],
-        checks: ["연료량을 실제로 확인합니다.", "연료 필터와 수분 분리기를 확인합니다.", "에어 빼기를 진행합니다.", "저압 연료가 분사펌프 또는 커먼레일 쪽으로 공급되는지 확인합니다."]
-      },
-
-      resultControl: {
-        result: true,
-        title: "전자제어 또는 센서 계통 가능성",
-        summary: "크랭킹은 정상이고 연료 흐름도 의심이 적다면 ECU 전원, 센서, IMV, 배선 쪽을 확인해야 합니다.",
-        causes: ["ECU 전원 또는 접지 불량", "IMV 또는 연료 압력 제어 문제", "크랭크각 센서 신호 불량", "EGR 관련 배선 문제", "CAN 통신 또는 제어 계통 오류"],
-        checks: ["계기판 경고등과 에러코드를 확인합니다.", "ECU 전원 퓨즈와 접지를 확인합니다.", "진단기로 연료압, 회전수 신호, 센서값을 확인합니다.", "IMV 커넥터와 배선을 확인합니다."]
-      },
-
-      resultBlackSmoke: {
-        result: true,
-        title: "공기 부족 또는 연소 불량 가능성",
-        summary: "검은 연기가 나며 시동이 잘 안 걸리면 연료는 들어가지만 공기나 연소 조건이 맞지 않을 가능성이 있습니다.",
-        causes: ["에어클리너 막힘", "흡기 라인 막힘", "EGR 고착 또는 흡기 오염", "분사량 과다 또는 분사 상태 불량", "압축 압력 저하"],
-        checks: ["에어클리너 상태를 확인합니다.", "흡기 호스 찌그러짐 또는 막힘을 확인합니다.", "EGR 밸브와 흡기 오염 상태를 확인합니다.", "인젝터 분사 상태를 확인합니다."]
-      },
-
-      resultWhiteSmoke: {
-        result: true,
-        title: "연료 미연소 또는 압축 문제 가능성",
-        summary: "흰 연기가 나며 시동이 안 걸리면 연료가 들어가지만 제대로 연소되지 않는 상황일 수 있습니다.",
-        causes: ["예열 불량", "압축 압력 저하", "분사 시기 또는 분사 상태 문제", "연료 내 수분 혼입", "저온 시동 조건 불량"],
-        checks: ["예열 플러그 또는 예열 릴레이를 확인합니다.", "연료 필터 수분을 확인합니다.", "인젝터 분사 상태를 확인합니다.", "필요 시 압축 압력을 확인합니다."]
-      },
-
-      resultNoSmoke: {
-        result: true,
-        title: "연료 미공급 또는 분사 신호 없음 가능성",
-        summary: "크랭킹은 정상인데 연기가 전혀 없다면 연료가 연소실로 들어가지 않거나 분사 명령이 없는 쪽을 봐야 합니다.",
-        causes: ["연료 공급 안 됨", "에어 혼입", "연료 차단 솔레노이드 문제", "ECU 분사 제어 불량", "크랭크각 센서 신호 없음"],
-        checks: ["연료량과 연료 필터를 확인합니다.", "에어 빼기를 진행합니다.", "연료 차단 솔레노이드 작동 여부를 확인합니다.", "진단기로 엔진 회전수 신호가 잡히는지 확인합니다."]
+겉으로 새지 않아도 내부에서 압력이 빠질 수 있습니다.`,
+            quote: "안 새도 힘이 빠질 수 있습니다.",
+            note: "외부 누유와 내부 누설을 구분하는 것이 유압 진단의 핵심입니다."
+          }
+        }
       }
     };
 
-    let currentStepId = "home";
-    let history = [];
-
-    function renderStep() {
-      const box = document.getElementById("diagnosis");
-      const step = steps[currentStepId];
-
-      let historyHtml = "";
-      if (history.length > 0) {
-        historyHtml = `
-          <div class="history">
-            <strong>지금까지 선택한 내용</strong>
-            ${history.map(item => `<div>• ${item.question} → ${item.answer}</div>`).join("")}
-          </div>
-        `;
+    const stepNamesBySymptom = {
+      noStart: {
+        all: "전체 흐름",
+        condition: "시동 조건",
+        panel: "계기판 전원",
+        crank: "크랭킹 소리",
+        fuelControl: "연료/제어"
+      },
+      lowPower: {
+        all: "전체 흐름",
+        basic: "기본 점검",
+        load: "부하 확인",
+        deep: "심화 확인"
+      },
+      stall: {
+        all: "전체 흐름",
+        fuel: "연료 공급",
+        heat: "과열 확인",
+        electric: "전원/센서"
+      },
+      noise: {
+        all: "전체 흐름",
+        location: "위치 확인",
+        condition: "조건 비교",
+        stop: "중지 기준"
+      },
+      hydraulic: {
+        all: "전체 흐름",
+        oil: "오일/필터",
+        pump: "펌프/압력",
+        valveCylinder: "밸브/실린더"
       }
+    };
 
-      if (step.type === "category") {
-        box.innerHTML = `
-          <div class="step-title">${step.title}</div>
-          <div class="question">${step.question}</div>
-          <div class="category-grid">
-            ${step.categories.map(category => `
-              <button class="category-button" onclick="selectCategory('${category.next}', '${escapeText(step.question)}', '${escapeText(category.title)}')">
-                <strong>${category.title}</strong>
-                <span>${category.desc}</span>
-              </button>
-            `).join("")}
-          </div>
-        `;
-        return;
-      }
+    let currentSystem = "noStart";
+    let currentStep = "all";
 
-      if (step.result) {
-        box.innerHTML = `
-          ${historyHtml}
-          <div class="result-title">${step.title}</div>
-          <p>${step.summary}</p>
+    const systemTabsEl = document.getElementById("systemTabs");
+    const stepMenuEl = document.getElementById("stepMenu");
+    const paperSystemEl = document.getElementById("paperSystem");
+    const paperTitleEl = document.getElementById("paperTitle");
+    const paperSubEl = document.getElementById("paperSub");
+    const paperImageEl = document.getElementById("paperImage");
+    const paperBodyEl = document.getElementById("paperBody");
+    const paperQuoteEl = document.getElementById("paperQuote");
+    const paperNoteEl = document.getElementById("paperNote");
 
-          <div class="section-title">가능 원인</div>
-          <ul>${step.causes.map(cause => `<li>${cause}</li>`).join("")}</ul>
+    function renderSystemTabs() {
+      systemTabsEl.innerHTML = "";
 
-          <div class="section-title">확인 순서</div>
-          <ol>${step.checks.map(check => `<li>${check}</li>`).join("")}</ol>
+      const keys = Object.keys(contentData);
 
-          <div class="warning">
-            주의: 이 진단은 방향을 잡기 위한 참고용입니다. 실제 수리는 안전을 확보하고 장비 매뉴얼과 현장 상태를 함께 확인해야 합니다.
-          </div>
-        `;
-        return;
-      }
+      keys.forEach((key, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = currentSystem === key ? "active" : "";
+        btn.textContent = contentData[key].label;
+        btn.onclick = () => {
+          currentSystem = key;
+          currentStep = "all";
+          renderAll();
+        };
+        systemTabsEl.appendChild(btn);
 
-      box.innerHTML = `
-        ${historyHtml}
-        <div class="step-title">${step.title}</div>
-        <div class="question">${step.question}</div>
-        <div class="answers">
-          ${step.answers.map(answer => `
-            <button onclick="selectAnswer('${answer.next}', '${escapeText(step.question)}', '${escapeText(answer.text)}')">
-              ${answer.text}
-            </button>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    function escapeText(text) {
-      return text.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
-    }
-
-    function selectCategory(nextStepId, question, answer) {
-      history.push({ question, answer });
-      currentStepId = nextStepId;
-      renderStep();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function selectAnswer(nextStepId, question, answer) {
-      history.push({ question, answer });
-      currentStepId = nextStepId;
-      renderStep();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function goBack() {
-      if (history.length === 0) return;
-      history.pop();
-
-      currentStepId = "home";
-      const savedHistory = [...history];
-      history = [];
-
-      for (const item of savedHistory) {
-        const step = steps[currentStepId];
-
-        if (step.type === "category") {
-          const foundCategory = step.categories.find(c => c.title === item.answer);
-          if (foundCategory) {
-            history.push(item);
-            currentStepId = foundCategory.next;
-          }
-          continue;
+        if (index < keys.length - 1) {
+          const sep = document.createElement("span");
+          sep.className = "separator";
+          sep.textContent = "/";
+          systemTabsEl.appendChild(sep);
         }
-
-        if (step.answers) {
-          const foundAnswer = step.answers.find(a => a.text === item.answer);
-          if (foundAnswer) {
-            history.push(item);
-            currentStepId = foundAnswer.next;
-          }
-        }
-      }
-
-      renderStep();
+      });
     }
 
-    function restartDiagnosis() {
-      currentStepId = "home";
-      history = [];
-      renderStep();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    function renderStepMenu() {
+      stepMenuEl.innerHTML = "";
+
+      const stepNames = stepNamesBySymptom[currentSystem];
+
+      Object.keys(stepNames).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "step-item" + (key === currentStep ? " active" : "");
+        btn.textContent = stepNames[key];
+        btn.onclick = () => {
+          currentStep = key;
+          renderAll();
+        };
+        stepMenuEl.appendChild(btn);
+      });
     }
 
-    renderStep();
+    function renderPaper() {
+      const system = contentData[currentSystem];
+      const page = system.steps[currentStep];
+
+      paperSystemEl.textContent = system.eng;
+      paperTitleEl.textContent = `${system.label} | ${page.title}`;
+      paperSubEl.textContent = page.subtitle;
+      paperImageEl.textContent = page.imageText;
+      paperBodyEl.textContent = page.body;
+      paperQuoteEl.textContent = page.quote;
+      paperNoteEl.textContent = page.note;
+    }
+
+    function renderAll() {
+      renderSystemTabs();
+      renderStepMenu();
+      renderPaper();
+    }
+
+    renderAll();
   </script>
 </body>
 </html>
-
 
 
 
