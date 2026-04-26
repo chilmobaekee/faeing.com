@@ -2,302 +2,1055 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Faeing · Drive</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faeing | 관리</title>
 
-  <!-- 홈 기준 스타일 -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/home.css">
+  <meta name="description" content="Faeing 관리 페이지 - 일상 점검, 시즌 전 점검, 오일 관리, 유압 관리, 이력관리를 차분하게 따라가는 문서형 관리 구조입니다.">
 
-  <!-- 슬로건용 서체 -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Faeing | 관리">
+  <meta property="og:description" content="농기계 관리 흐름을 차분하게 따라가는 문서형 관리 구조">
+  <meta property="og:image" content="https://faeing.com/og-image.png">
+  <meta property="og:url" content="https://faeing.com/maintenance.html">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <style>
-    *{ margin:0; padding:0; box-sizing:border-box; }
-
-    /* ===== NAVBAR ===== */
-    .navbar{
-      height:56px;
-      padding:0 32px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#F2F1EE;
-      border-bottom:1px solid rgba(0,0,0,0.04);
-      position:sticky;
-      top:0;
-      z-index:50;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:20px;
-      white-space:nowrap;
+    body {
+      font-family: "Times New Roman", serif;
+      background: #f9faf7;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    /* =========================
+       상단바
+    ========================= */
+    .navbar {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F2F1EE;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      gap: 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       min-width: 0;
+      flex: 1;
     }
 
-    .nav-brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-decoration:none;
-      color:inherit;
-      min-width: 0;
+    .nav-home {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
     }
 
-    .nav-logo{
-      max-height: 30px;
-      height: auto;
+    .nav-logo {
+      height: 36px;
       width: auto;
       display: block;
       flex-shrink: 0;
     }
 
-    .nav-title{
-      font-size: 18px;
-      letter-spacing: .08em;
-      line-height: 1;
+    .nav-brand {
+      font-size: 22px;
+      letter-spacing: 0.08em;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    /* ===== 흐름 텍스트 (슬래시) ===== */
-    .nav-flow{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:14px;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .system-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      margin-left: 18px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
-    .flow-link{
-      cursor:pointer;
-      opacity:.65;
-      transition:opacity .15s ease;
-      user-select:none;
+    .system-nav::-webkit-scrollbar {
+      display: none;
     }
 
-    .flow-link:hover{ opacity:1; }
-    .flow-link.active{
-      opacity:1;
-      font-weight:700;
+    .system-nav button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: #111;
+      padding: 4px 0;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    .slash{
-      opacity:.35;
-      user-select:none;
+    .system-nav .separator {
+      opacity: 0.35;
+      flex-shrink: 0;
     }
 
-    /* ===== 검색 ===== */
-    .nav-right{
-      display:flex;
-      align-items:center;
-      gap: 10px;
+    .system-nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 1.5px;
+      background: #111;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      width: 210px;
+    }
+
+    .nav-search::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .login-btn {
+      color: rgba(0,0,0,0.6);
+    }
+
+    .login-btn:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .signup-btn {
+      color: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.02);
+    }
+
+    .signup-btn:hover {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* =========================
+       관리 본문
+    ========================= */
+    .machines-page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 26px 22px 42px;
+    }
+
+    .machines-heading {
+      margin-bottom: 20px;
+    }
+
+    .machines-title {
+      font-size: 34px;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .machines-subtitle {
+      font-size: 15px;
+      color: rgba(0,0,0,0.62);
+      line-height: 1.7;
+    }
+
+    .machines-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .step-menu {
+      background: #ECEFEC;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 10px;
+      position: sticky;
+      top: 78px;
+    }
+
+    .step-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      color: rgba(0,0,0,0.68);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      margin-bottom: 6px;
+    }
+
+    .step-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-item:hover {
+      background: rgba(255,255,255,0.6);
+      color: #111;
+    }
+
+    .step-item.active {
+      background: #ffffff;
+      color: #111;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-weight: 600;
+    }
+
+    .paper-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .paper {
+      width: min(960px, 100%);
+      min-height: 1180px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.06);
+      padding: 56px 60px 64px;
       position: relative;
     }
 
-    .search{
-      height:36px;
-      width: 320px;
-      max-width: 42vw;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,0.1);
-      padding:0 36px 0 14px;
-      background:rgba(255,255,255,0.7);
-      font-size:13px;
-      outline: none;
-    }
-    .search:focus{
-      background: rgba(255,255,255,0.9);
-      border-color: rgba(0,0,0,0.18);
+    .paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: linear-gradient(to right, #e5e5e0, #f5f5f2, #e5e5e0);
     }
 
-    .search-clear{
-      position:absolute;
-      right: 10px;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 0;
-      background: rgba(0,0,0,0.08);
-      cursor: pointer;
-      font-size: 16px;
-      line-height: 20px;
-      opacity: .8;
-    }
-    .search-clear:hover{ opacity: 1; }
-
-    /* ===== CENTER ===== */
-    main{
-      min-height:calc(100vh - 56px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 40px 16px 60px;
+    .paper-head {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
     }
 
-    .view{
-      display:none;
-      text-align:center;
+    .paper-system {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 8px;
+    }
+
+    .paper-title {
+      font-size: 34px;
+      line-height: 1.34;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .paper-sub {
+      font-size: 15px;
+      color: rgba(0,0,0,0.56);
+      line-height: 1.8;
+    }
+
+    .paper-image {
       width: 100%;
-      max-width: 900px;
+      min-height: 230px;
+      margin: 28px 0 30px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #f3f4f1, #e8ece8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.50);
+      font-size: 18px;
+      line-height: 1.8;
+      padding: 30px;
+      white-space: pre-line;
+      text-align: center;
     }
 
-    .view.active{ display:block; }
-
-    .center-logo{
-      width:360px;
-      max-width:70vw;
-      margin: 0 auto 24px;
-      display:block;
+    .paper-body {
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(0,0,0,0.84);
+      white-space: pre-line;
     }
 
-    /* 제목(슬로건 스타일 활용) */
-    .slogan{
-      font-family:"Nanum Pen Script", cursive;
-      font-size:38px;
-      line-height:1.15;
-      color: rgba(0,0,0,0.85);
-    }
-    .slogan.sub{
-      margin-top:8px;
-      font-size:30px;
-      opacity:.82;
+    .paper-quote {
+      margin-top: 30px;
+      padding: 18px 20px;
+      background: #F6F6F2;
+      border-left: 2px solid #CBBDA5;
+      font-size: 16px;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.72);
     }
 
-    /* 단계 화면(간결하게) */
-    .stage-title{
-      font-size:22px;
-      margin-bottom:14px;
-    }
-    .stage-desc{
-      opacity:.78;
-      line-height:1.7;
-    }
-
-    /* 작은 안내문 */
-    .note{
-      margin-top:14px;
-      font-size:13px;
-      opacity:.65;
-      line-height:1.6;
+    .paper-note {
+      margin-top: 34px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 18px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.58);
+      white-space: pre-line;
     }
 
-    @media (max-width:768px){
-      .navbar{ padding:0 16px; }
-      .nav-flow{ overflow-x:auto; -webkit-overflow-scrolling: touch; }
-      .search{ width: 180px; max-width: 44vw; }
-      .slogan{ font-size:32px; }
-      .slogan.sub{ font-size:26px; }
+    .login-panel {
+      margin-top: 28px;
+      padding: 24px;
+      background: #F6F6F2;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 18px;
+    }
+
+    .login-panel-title {
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .login-panel-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.66);
+      margin-bottom: 18px;
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .main-action,
+    .sub-action {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .main-action {
+      background: #222;
+      color: #fff;
+    }
+
+    .sub-action {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.12);
+      color: rgba(0,0,0,0.72);
+    }
+
+    .history-sample {
+      margin-top: 22px;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .history-sample th,
+    .history-sample td {
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .history-sample th {
+      background: #F2F1EE;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1200px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 18px;
+      }
+
+      .nav-left {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .machines-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .step-menu {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .step-item {
+        margin-bottom: 0;
+        text-align: center;
+      }
+
+      .paper {
+        min-height: auto;
+        padding: 36px 24px 42px;
+      }
+
+      .paper-title {
+        font-size: 28px;
+      }
+
+      .paper-body {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-search {
+        width: 130px;
+      }
+
+      .nav-btn {
+        padding: 7px 12px;
+      }
+
+      .machines-page {
+        padding: 18px 14px 28px;
+      }
+
+      .machines-title {
+        font-size: 28px;
+      }
+
+      .step-menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .paper-image {
+        min-height: 190px;
+      }
+
+      .system-nav {
+        gap: 10px;
+        margin-left: 0;
+        width: 100%;
+        padding-top: 4px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="/" class="nav-home" aria-label="Faeing 메인으로 이동">
+        <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
+        <span class="nav-brand">Faeing</span>
+      </a>
+      <div class="system-nav" id="systemTabs"></div>
+    </div>
 
-<header class="navbar">
-  <div class="nav-left">
-    <a href="index.html" class="nav-brand">
-      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
-      <span class="nav-title">Faeing</span>
-    </a>
-
-    <!-- ✅ Drive 흐름 -->
-    <nav class="nav-flow" aria-label="Drive flow">
-      <span class="flow-link" data-view="why">왜</span>
-      <span class="slash">/</span>
-      <span class="flow-link" data-view="how">어떻게</span>
-      <span class="slash">/</span>
-      <span class="flow-link" data-view="status">지금 상태</span>
-    </nav>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="검색하거나 이동하세요…">
+      <button class="nav-btn login-btn" onclick="showLoginNotice()">Login</button>
+      <button class="nav-btn signup-btn" onclick="showLoginNotice()">Sign Up</button>
+    </div>
   </div>
 
-  <div class="nav-right" role="search">
-    <input class="search" id="searchInput" type="search" placeholder="검색 (준비중)">
-    <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기">×</button>
-  </div>
-</header>
+  <main class="machines-page">
+    <section class="machines-heading">
+      <h1 class="machines-title">관리</h1>
+      <p class="machines-subtitle">관리 방법은 누구나 볼 수 있고, 내 기계 이력은 로그인 후 안전하게 기록합니다.</p>
+    </section>
 
-<main>
+    <section class="machines-layout">
+      <aside class="step-menu" id="stepMenu"></aside>
 
-  <!-- ✅ Drive 진입 기본 상태 -->
-  <section class="view active" id="home">
-    <img src="assets/images/logo.png" class="center-logo" alt="Faeing"
-         onerror="this.style.display='none'">
+      <section class="paper-wrap">
+        <article class="paper">
+          <div class="paper-head">
+            <div class="paper-system" id="paperSystem">MAINTENANCE FLOW</div>
+            <h2 class="paper-title" id="paperTitle">일상 점검 | 전체 흐름</h2>
+            <div class="paper-sub" id="paperSub">작업 전, 작업 중, 작업 후의 기본 관리 흐름입니다.</div>
+          </div>
 
-    <div class="slogan">안전거리는 감이 아닌 습관입니다</div>
+          <div class="paper-image" id="paperImage">관리 흐름 영역</div>
 
+          <div class="paper-body" id="paperBody"></div>
 
-  <!-- 왜 -->
-  <section class="view" id="why">
-    <h1 class="stage-title">왜 필요한가</h1>
-    <p class="stage-desc">
-      순간의 방심은 누구에게나 오고,<br>
-      그때 가장 먼저 무너지는 게 안전거리입니다.<br>
-      Drive는 “생각하기 전에 지켜지는 거리”를 목표로 합니다.
-    </p>
-  </section>
+          <div class="paper-quote" id="paperQuote"></div>
 
-  <!-- 어떻게 -->
-  <section class="view" id="how">
-    <h1 class="stage-title">어떻게 돕나</h1>
-    <p class="stage-desc">
-      지금 속도에서 필요한 안전거리를 알려주고,<br>
-      가까워질 때는 부드럽게 경고합니다.<br>
-      운전자의 감각을 “평균”으로 되돌려줍니다.
-    </p>
-  </section>
+          <div class="paper-note" id="paperNote"></div>
 
-  <!-- 지금 상태 -->
-  <section class="view" id="status">
-    <h1 class="stage-title">지금 상태</h1>
-    <p class="stage-desc">
-      현재는 개념 정리와 구조 설계 단계입니다.<br>
-      사용자가 부담 없이 쓰는 형태를 먼저 잡고 있습니다.
-    </p>
-    <p class="note">
-      (센서 방식/표시 방식/설치는 정리되면 별도 페이지로 분리합니다.)
-    </p>
-  </section>
+          <div id="extraArea"></div>
+        </article>
+      </section>
+    </section>
+  </main>
 
-</main>
+  <script>
+    const contentData = {
+      daily: {
+        label: "일상 점검",
+        eng: "DAILY MAINTENANCE",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "작업 전, 작업 중, 작업 후의 기본 관리 흐름입니다.",
+            imageText: "작업 전 → 작업 중 → 작업 후 → 기록",
+            body:
+`일상 점검은 고장을 막는 가장 작은 습관입니다.
 
-<script>
-  const links = document.querySelectorAll('.flow-link');
-  const views = document.querySelectorAll('.view');
+농기계는 작업 환경이 거칠고 먼지, 진동, 열, 습기에 계속 노출됩니다.
+하루 작업 전후의 작은 확인만으로도 큰 고장을 줄일 수 있습니다.
 
-  function show(id){
-    views.forEach(v => v.classList.toggle('active', v.id === id));
-  }
+일상 점검은 어렵게 생각할 필요가 없습니다.
+오일, 냉각수, 누유, 소리, 진동, 온도, 이물질을 반복해서 확인하는 것입니다.`,
+            quote: "관리는 큰 수리보다 작은 반복에서 시작됩니다.",
+            note: "처음에는 완벽한 점검표보다 매일 반복할 수 있는 짧은 점검 루틴이 더 중요합니다."
+          },
+          before: {
+            title: "작업 전",
+            subtitle: "작업을 시작하기 전에 기본 상태를 확인합니다.",
+            imageText: "오일 / 냉각수 / 연료 / 누유 / 타이어 / 안전장치",
+            body:
+`작업 전에는 기계가 오늘 일을 시작할 준비가 되었는지 확인합니다.
 
-  // ✅ 처음엔 active 표시 없음 + home 화면 유지
-  show('home');
+엔진오일량을 확인합니다.
+냉각수량을 확인합니다.
+연료량과 연료 누유를 확인합니다.
+유압오일 누유와 호스 상태를 확인합니다.
+타이어 공기압과 볼트 풀림을 확인합니다.
 
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      const target = link.dataset.view;
+시동 후에는 계기판 경고등과 소리를 확인합니다.`,
+            quote: "작업 전 점검은 오늘의 고장을 미리 줄이는 시간입니다.",
+            note: "작업 전 3분 점검이 현장 중단 시간을 크게 줄일 수 있습니다."
+          },
+          during: {
+            title: "작업 중",
+            subtitle: "작업 중에는 소리, 진동, 온도, 힘 변화를 관찰합니다.",
+            imageText: "소리 / 진동 / 온도 / 힘 / 연기",
+            body:
+`작업 중에는 기계가 보내는 신호를 봅니다.
 
-      links.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+평소와 다른 소리가 나는지 확인합니다.
+진동이 커졌는지 확인합니다.
+냉각수 온도와 계기판 경고등을 봅니다.
+힘이 갑자기 약해졌는지 확인합니다.
+배기 연기가 평소와 달라졌는지 봅니다.
 
-      show(target);
-    });
-  });
+기계는 갑자기 멈춘 것 같지만, 그 전부터 신호를 보내는 경우가 많습니다.`,
+            quote: "작업 중 관찰은 고장 전 신호를 잡는 일입니다.",
+            note: "소리와 진동이 커지는 상태에서는 계속 밀어붙이지 말고 멈춰서 확인하는 것이 좋습니다."
+          },
+          after: {
+            title: "작업 후",
+            subtitle: "작업이 끝난 뒤 청소와 이물질 제거, 다음 작업 준비를 합니다.",
+            imageText: "청소 / 먼지 제거 / 이물질 제거 / 누유 재확인",
+            body:
+`작업 후 관리는 다음 고장을 줄이는 시간입니다.
 
-  // 검색 X
-  const searchInput = document.getElementById('searchInput');
-  const searchClear = document.getElementById('searchClear');
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-  });
-</script>
+라디에이터와 에어클리너 주변 먼지를 확인합니다.
+작업기에 감긴 풀, 끈, 비닐, 흙을 제거합니다.
+누유가 새로 생겼는지 확인합니다.
+볼트 풀림이나 커버 손상을 확인합니다.
 
+작업 후 발견한 이상은 바로 기록해 두는 것이 좋습니다.`,
+            quote: "작업 후 정리는 다음 작업의 시작입니다.",
+            note: "청소는 외관 관리가 아니라 열, 회전, 흡입, 누유를 확인하는 진단 과정입니다."
+          }
+        }
+      },
+
+      season: {
+        label: "시즌 전 점검",
+        eng: "SEASONAL MAINTENANCE",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "시즌 한 달 전 전체 상태를 확인해 작업 중단을 줄입니다.",
+            imageText: "시즌 한 달 전 → 기본 소모품 → 배터리 → 벨트/호스 → 시운전",
+            body:
+`시즌 전 점검은 작업이 바빠지기 전에 고장을 미리 줄이는 준비입니다.
+
+농번기에는 작은 고장도 큰 손실로 이어집니다.
+따라서 시즌이 시작되기 전 오일, 필터, 배터리, 벨트, 호스, 냉각, 유압, 작업기 상태를 미리 봐야 합니다.
+
+시즌 전 점검은 수리보다 예방에 가깝습니다.`,
+            quote: "농번기 고장은 시즌 전에 이미 준비되었을 수 있습니다.",
+            note: "시즌 한 달 전 점검을 기준으로 잡으면 부품 준비와 정비 일정 조정이 쉬워집니다."
+          },
+          engine: {
+            title: "엔진 기본",
+            subtitle: "엔진오일, 연료필터, 에어클리너, 냉각 상태를 봅니다.",
+            imageText: "엔진오일 / 연료필터 / 에어클리너 / 냉각수",
+            body:
+`엔진은 시즌 전 가장 먼저 확인해야 할 중심입니다.
+
+엔진오일량과 오염 상태를 확인합니다.
+연료필터와 수분 분리기를 확인합니다.
+에어클리너 막힘을 확인합니다.
+냉각수량과 라디에이터 막힘을 확인합니다.
+
+시동 후에는 공회전 상태, 배기 연기, 이상 소리를 함께 봅니다.`,
+            quote: "엔진 기본이 흔들리면 시즌 전체가 흔들립니다.",
+            note: "터보 장착 기종은 시동 후와 작업 후 2~3분 정도 안정 운전을 해주는 습관이 좋습니다."
+          },
+          battery: {
+            title: "배터리 / 전기",
+            subtitle: "시동성과 전원 흐름을 미리 확인합니다.",
+            imageText: "배터리 / 단자 / 접지 / 퓨즈 / 경고등",
+            body:
+`배터리는 시즌 초 시동 불량의 대표 원인입니다.
+
+배터리 전압을 확인합니다.
+단자 부식과 조임 상태를 확인합니다.
+차체 접지선을 확인합니다.
+퓨즈와 주요 배선 손상을 확인합니다.
+
+시동 시 계기판이 희미하거나 크랭킹이 약하면 미리 조치해야 합니다.`,
+            quote: "전기는 보이지 않지만 시즌 첫 고장을 만들 수 있습니다.",
+            note: "장기 보관 후 첫 시동 전에는 배터리와 접지를 먼저 보는 것이 좋습니다."
+          },
+          trial: {
+            title: "시운전",
+            subtitle: "실제 작업 전 가볍게 움직여 반응을 확인합니다.",
+            imageText: "시동 → 주행 → 조향 → 유압 → 작업기 작동",
+            body:
+`시즌 전에는 실제 작업에 들어가기 전에 시운전을 해야 합니다.
+
+시동성을 확인합니다.
+주행과 변속 반응을 확인합니다.
+조향이 무겁거나 쏠리지 않는지 봅니다.
+유압 상승과 하강 반응을 확인합니다.
+작업기를 공회전 또는 저부하 상태에서 돌려봅니다.
+
+시운전 중 이상 소리나 진동이 있으면 작업 전에 원인을 확인합니다.`,
+            quote: "시운전은 고장이 현장에서 터지기 전에 불러내는 과정입니다.",
+            note: "기계는 세워두면 멀쩡해 보여도 움직이면 문제가 드러납니다."
+          }
+        }
+      },
+
+      engineOil: {
+        label: "엔진오일/필터",
+        eng: "ENGINE OIL AND FILTER",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "엔진오일과 필터는 엔진 수명 관리의 기본입니다.",
+            imageText: "오일량 → 오염 상태 → 교환 주기 → 필터 → 기록",
+            body:
+`엔진오일은 윤활, 냉각, 세정, 밀봉 역할을 합니다.
+
+오일이 부족하거나 오염되면 마찰과 열이 늘고, 엔진 내부 마모가 빨라집니다.
+필터가 막히면 오일 흐름이 나빠지고 보호 성능이 떨어질 수 있습니다.
+
+엔진오일 관리는 단순 교환이 아니라 엔진 상태를 읽는 기본 관리입니다.`,
+            quote: "엔진오일은 엔진 안에서 일하는 보이지 않는 작업자입니다.",
+            note: "교환 여부보다 언제, 어떤 조건에서, 어떤 상태로 교환했는지 기록하는 것이 중요합니다."
+          },
+          check: {
+            title: "오일 확인",
+            subtitle: "오일량, 색, 점도, 냄새를 확인합니다.",
+            imageText: "오일 게이지 / 색상 / 점도 / 냄새",
+            body:
+`오일 게이지로 오일량을 확인합니다.
+
+오일이 너무 부족하면 누유나 소모를 의심합니다.
+오일이 지나치게 검거나 묽으면 교환 주기와 사용 조건을 봅니다.
+연료 냄새가 강하면 연료 희석 가능성도 확인합니다.
+
+오일 확인은 평평한 곳에서 엔진 정지 후 안정된 상태에서 하는 것이 좋습니다.`,
+            quote: "오일 상태는 엔진 내부 상태의 작은 창입니다.",
+            note: "오일량이 갑자기 줄거나 늘었다면 단순 보충으로 끝내지 말고 원인을 확인해야 합니다."
+          },
+          change: {
+            title: "교환 주기",
+            subtitle: "시간, 계절, 작업 강도를 함께 고려합니다.",
+            imageText: "100시간 기준 / 연 1회 / 고부하 작업 / 먼지 많은 작업",
+            body:
+`엔진오일 교환 주기는 사용 시간과 작업 조건에 따라 달라집니다.
+
+기본적으로 100시간을 하나의 기준으로 볼 수 있습니다.
+사용 시간이 적어도 1년에 한 번은 상태를 보고 교환을 검토하는 것이 좋습니다.
+먼지, 고부하, 장시간 작업이 많으면 주기를 앞당길 수 있습니다.
+
+교환 시에는 필터도 함께 확인해야 합니다.`,
+            quote: "시간보다 중요한 것은 어떤 조건에서 일했는가입니다.",
+            note: "정확한 기준은 기종별 매뉴얼을 우선하고, 현장 조건에 따라 보수적으로 잡는 것이 안전합니다."
+          },
+          filter: {
+            title: "필터 관리",
+            subtitle: "오일필터, 연료필터, 에어클리너를 함께 봅니다.",
+            imageText: "오일필터 / 연료필터 / 에어클리너",
+            body:
+`필터는 이물질이 시스템 안으로 들어가거나 순환하는 것을 막습니다.
+
+오일필터는 엔진 내부 이물질 순환을 줄입니다.
+연료필터는 수분과 이물질로부터 연료계통을 보호합니다.
+에어클리너는 흡입 공기를 깨끗하게 유지합니다.
+
+필터 관리는 엔진 출력과 수명에 직접 연결됩니다.`,
+            quote: "필터는 작은 부품이지만 큰 고장을 막습니다.",
+            note: "필터는 가격보다 보호하는 부품의 가치를 기준으로 봐야 합니다."
+          }
+        }
+      },
+
+      hydraulic: {
+        label: "유압/미션오일",
+        eng: "HYDRAULIC AND TRANSMISSION OIL",
+        steps: {
+          all: {
+            title: "전체 흐름",
+            subtitle: "유압과 미션오일은 힘 전달과 작동 품질을 지키는 관리입니다.",
+            imageText: "오일량 → 오염 → 필터 → 누유 → 작동 반응",
+            body:
+`유압과 미션오일은 기계의 힘 전달과 작업 반응을 지키는 중요한 요소입니다.
+
+오일이 부족하거나 오염되면 펌프, 밸브, 클러치, 기어, 실린더에 문제가 생길 수 있습니다.
+유압은 오일 흐름과 압력으로 일을 하기 때문에 오일 상태가 곧 작동 품질로 이어집니다.
+
+유압오일 관리는 누유만 보는 것이 아니라 오일량, 오염, 필터, 작동 반응을 함께 보는 것입니다.`,
+            quote: "유압은 오일을 쓰지만 실제로는 압력의 흐름으로 일합니다.",
+            note: "겉으로 누유가 없어도 내부 누설이나 오염으로 힘이 빠질 수 있습니다."
+          },
+          oil: {
+            title: "오일량 / 상태",
+            subtitle: "오일량과 색, 거품, 냄새를 확인합니다.",
+            imageText: "게이지 / 색상 / 거품 / 오염",
+            body:
+`유압오일과 미션오일의 양을 확인합니다.
+
+오일이 부족하면 펌프 흡입 불량과 작동 지연이 생길 수 있습니다.
+거품이 많으면 에어 혼입 가능성을 봅니다.
+색이 탁하거나 냄새가 이상하면 오염이나 열화 가능성을 확인합니다.
+
+오일 상태는 유압 시스템의 건강 상태를 보여줍니다.`,
+            quote: "오일은 시스템 안에서 흐르는 기록입니다.",
+            note: "오일 보충만 반복된다면 누유 지점이나 내부 문제를 확인해야 합니다."
+          },
+          filter: {
+            title: "필터 / 흡입",
+            subtitle: "필터 막힘과 흡입 문제는 전체 유압 성능을 떨어뜨립니다.",
+            imageText: "유압필터 / 스트레이너 / 흡입 라인",
+            body:
+`유압필터와 흡입 라인을 확인합니다.
+
+필터가 막히면 오일 흐름이 약해지고 펌프 소음이 커질 수 있습니다.
+흡입 라인에 에어가 들어가면 작동이 늦거나 끊기는 느낌이 생깁니다.
+
+전체 기능이 함께 약하면 펌프만 보기 전에 필터와 흡입부터 확인해야 합니다.`,
+            quote: "펌프를 의심하기 전에 펌프가 먹고 있는 오일 흐름을 봐야 합니다.",
+            note: "필터 교환 이력은 반드시 기록해두는 것이 좋습니다."
+          },
+          leak: {
+            title: "누유 / 내부누설",
+            subtitle: "외부 누유와 내부 누설을 나누어 봅니다.",
+            imageText: "호스 / 실린더 / 밸브 / 내부누설",
+            body:
+`유압 문제는 밖으로 새는 누유만 있는 것이 아닙니다.
+
+호스, 피팅, 실린더 로드 주변의 외부 누유를 확인합니다.
+실린더가 서서히 내려가면 내부 누설 가능성을 봅니다.
+밸브 내부에서 압력이 빠져도 힘이 약하거나 유지가 안 될 수 있습니다.
+
+안 새도 힘이 빠질 수 있다는 관점이 중요합니다.`,
+            quote: "유압은 밖으로 새지 않아도 안에서 빠질 수 있습니다.",
+            note: "특정 기능만 약한지 전체가 약한지를 구분하면 진단 방향이 빨라집니다."
+          }
+        }
+      },
+
+      history: {
+        label: "이력관리",
+        eng: "PRIVATE MAINTENANCE HISTORY",
+        loginRequired: true,
+        steps: {
+          all: {
+            title: "로그인 필요",
+            subtitle: "내 기계의 관리 이력은 로그인 후 안전하게 기록합니다.",
+            imageText: "내 기계 → 관리일자 → 작업내용 → 다음 예정일 → 알림",
+            body:
+`이력관리는 개인 기계 정보와 작업 기록을 다루기 때문에 기본은 비공개입니다.
+
+구조원리, 고장진단, 기본 관리 방법은 누구나 볼 수 있습니다.
+하지만 내 기계 등록, 기대번호, 관리 이력, 다음 관리 예정일, QR 관리카드는 로그인 후 본인만 확인하는 구조가 안전합니다.
+
+공유가 필요할 때만 정비사나 가족, 업체에게 제한적으로 공유하는 방향이 좋습니다.`,
+            quote: "정보는 공개, 내 기록은 로그인.",
+            note: "기계는 개인, 경험은 공유. 이 원칙을 지키면 농가가 안심하고 기록을 남길 수 있습니다."
+          },
+          machine: {
+            title: "내 기계 등록",
+            subtitle: "기대번호와 기종 정보를 로그인 계정에 연결합니다.",
+            imageText: "업체명 / 기종 / 제품명 / 기대번호 / 소유자",
+            body:
+`기계 등록은 이력관리의 시작입니다.
+
+업체명, 기종, 제품명, 기대번호, 관리 시작일을 저장합니다.
+이 정보는 사용자의 계정에 연결되어야 하며 기본적으로 타인에게 공개하지 않습니다.
+
+QR코드를 붙이더라도 개인정보가 바로 노출되지 않도록 관리번호 중심으로 설계하는 것이 좋습니다.`,
+            quote: "기계 등록은 기록의 기준점을 만드는 일입니다.",
+            note: "QR코드에는 개인정보보다 faeing.com 주소와 관리번호 중심으로 넣는 방식이 안전합니다."
+          },
+          record: {
+            title: "관리 기록",
+            subtitle: "언제 무엇을 했는지 남기고 다음 시기를 계산합니다.",
+            imageText: "관리일자 / 작업내용 / 점검 / 교체 / 수리 / 다음 예정일",
+            body:
+`관리 기록은 단순 메모가 아니라 다음 관리를 위한 기준입니다.
+
+관리일자, 기대번호, 작업내용, 점검/교체/수리 구분, 다음 관리 예정일, 메모를 남깁니다.
+
+기록이 쌓이면 어떤 기계가 어떤 문제를 반복하는지, 어떤 소모품이 언제 필요한지 알 수 있습니다.`,
+            quote: "기록이 쌓이면 관리는 감이 아니라 흐름이 됩니다.",
+            note: "초기에는 복잡한 입력보다 날짜, 기계, 작업내용, 다음 예정일만 확실히 남기는 것이 좋습니다."
+          },
+          share: {
+            title: "제한 공유",
+            subtitle: "필요할 때만 정비사나 업체에게 일부 기록을 공유합니다.",
+            imageText: "비공개 기본 / 특정인 공유 / 익명 사례 공유",
+            body:
+`이력관리는 기본 비공개입니다.
+
+다만 사용자가 원할 때 정비사, 가족, 업체에게 특정 기계의 기록을 제한적으로 공유할 수 있습니다.
+공개 사례로 활용할 때는 이름, 연락처, 정확한 위치 같은 개인정보를 제거하고 익명화해야 합니다.
+
+공유는 허락 기반이어야 합니다.`,
+            quote: "기본은 비공개, 공유는 허락 기반입니다.",
+            note: "공개 데이터보다 신뢰가 먼저입니다. 신뢰가 있어야 기록이 쌓입니다."
+          }
+        }
+      }
+    };
+
+    const stepNamesBySystem = {
+      daily: {
+        all: "전체 흐름",
+        before: "작업 전",
+        during: "작업 중",
+        after: "작업 후"
+      },
+      season: {
+        all: "전체 흐름",
+        engine: "엔진 기본",
+        battery: "배터리/전기",
+        trial: "시운전"
+      },
+      engineOil: {
+        all: "전체 흐름",
+        check: "오일 확인",
+        change: "교환 주기",
+        filter: "필터 관리"
+      },
+      hydraulic: {
+        all: "전체 흐름",
+        oil: "오일 상태",
+        filter: "필터/흡입",
+        leak: "누유/내부누설"
+      },
+      history: {
+        all: "로그인 필요",
+        machine: "내 기계 등록",
+        record: "관리 기록",
+        share: "제한 공유"
+      }
+    };
+
+    let currentSystem = "daily";
+    let currentStep = "all";
+    let isLoggedIn = false;
+
+    const systemTabsEl = document.getElementById("systemTabs");
+    const stepMenuEl = document.getElementById("stepMenu");
+    const paperSystemEl = document.getElementById("paperSystem");
+    const paperTitleEl = document.getElementById("paperTitle");
+    const paperSubEl = document.getElementById("paperSub");
+    const paperImageEl = document.getElementById("paperImage");
+    const paperBodyEl = document.getElementById("paperBody");
+    const paperQuoteEl = document.getElementById("paperQuote");
+    const paperNoteEl = document.getElementById("paperNote");
+    const extraAreaEl = document.getElementById("extraArea");
+
+    function renderSystemTabs() {
+      systemTabsEl.innerHTML = "";
+      const keys = Object.keys(contentData);
+
+      keys.forEach((key, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = currentSystem === key ? "active" : "";
+        btn.textContent = contentData[key].label;
+        btn.onclick = () => {
+          currentSystem = key;
+          currentStep = "all";
+          renderAll();
+        };
+        systemTabsEl.appendChild(btn);
+
+        if (index < keys.length - 1) {
+          const sep = document.createElement("span");
+          sep.className = "separator";
+          sep.textContent = "/";
+          systemTabsEl.appendChild(sep);
+        }
+      });
+    }
+
+    function renderStepMenu() {
+      stepMenuEl.innerHTML = "";
+      const stepNames = stepNamesBySystem[currentSystem];
+
+      Object.keys(stepNames).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "step-item" + (key === currentStep ? " active" : "");
+        btn.textContent = stepNames[key];
+        btn.onclick = () => {
+          currentStep = key;
+          renderAll();
+        };
+        stepMenuEl.appendChild(btn);
+      });
+    }
+
+    function renderPaper() {
+      const system = contentData[currentSystem];
+      const page = system.steps[currentStep];
+
+      paperSystemEl.textContent = system.eng;
+      paperTitleEl.textContent = `${system.label} | ${page.title}`;
+      paperSubEl.textContent = page.subtitle;
+      paperImageEl.textContent = page.imageText;
+      paperBodyEl.textContent = page.body;
+      paperQuoteEl.textContent = page.quote;
+      paperNoteEl.textContent = page.note;
+
+      renderExtraArea(system);
+    }
+
+    function renderExtraArea(system) {
+      extraAreaEl.innerHTML = "";
+
+      if (system.loginRequired && !isLoggedIn) {
+        extraAreaEl.innerHTML = `
+          <div class="login-panel">
+            <h3 class="login-panel-title">이력관리는 로그인 후 이용 가능합니다</h3>
+            <p class="login-panel-text">
+              내 기계의 기대번호, 관리일자, 수리 기록, 다음 관리 예정일은 개인 자산 정보입니다.<br>
+              따라서 기본은 비공개로 두고, 로그인한 사용자만 자신의 기록을 볼 수 있게 설계합니다.
+            </p>
+            <div class="login-actions">
+              <button class="main-action" onclick="showLoginNotice()">로그인하기</button>
+              <button class="sub-action" onclick="showLoginNotice()">회원가입</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (system.loginRequired && isLoggedIn) {
+        extraAreaEl.innerHTML = `
+          <div class="login-panel">
+            <h3 class="login-panel-title">내 관리 이력 예시</h3>
+            <p class="login-panel-text">실제 로그인 기능을 연결하면 이 영역에 사용자의 기계별 관리 기록이 표시됩니다.</p>
+            <table class="history-sample">
+              <thead>
+                <tr>
+                  <th>관리일자</th>
+                  <th>기대번호</th>
+                  <th>작업내용</th>
+                  <th>구분</th>
+                  <th>다음 예정일</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-04-26</td>
+                  <td>FAE-001</td>
+                  <td>엔진오일 및 필터 확인</td>
+                  <td>점검</td>
+                  <td>2026-10-26</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+    }
+
+    function showLoginNotice() {
+      alert("현재는 로그인 화면 연결 전 단계입니다. 다음 단계에서 Firebase 로그인 또는 자체 로그인으로 연결할 수 있습니다.");
+    }
+
+    function renderAll() {
+      renderSystemTabs();
+      renderStepMenu();
+      renderPaper();
+    }
+
+    renderAll();
+  </script>
 </body>
 </html>
+
 
 
 
