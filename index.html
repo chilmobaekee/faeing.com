@@ -4,275 +4,243 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Faeing</title>
-
-  <meta name="description" content="Faeing은 농기계 문제를 흐름으로 파악하고, 고장 진단과 관리 방향을 정리하는 현장 기반 시스템입니다.">
-
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="description" content="농기계 문제를 흐름으로 파악하는 현장 기반 진단 시스템">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
-      font-family: "Times New Roman", "Noto Sans KR", sans-serif;
-      background: #f9faf7;
-      color: #222;
-      min-height: 100vh;
+      font-family:"Noto Sans KR", "Times New Roman", sans-serif;
+      background:#f9faf7;
+      color:#222;
+      min-height:100vh;
     }
 
     .navbar {
-      height: 56px;
-      padding: 0 28px;
-      display: flex;
-      align-items: center;
-      background: #F2F1EE;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      height:56px;
+      background:#F2F1EE;
+      border-bottom:1px solid rgba(0,0,0,0.05);
+      display:flex;
+      align-items:center;
+      padding:0 22px;
     }
 
     .nav-home {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      cursor:pointer;
     }
 
-    .nav-logo { height: 34px; }
-    .nav-brand {
-      font-size: 22px;
-      letter-spacing: 0.08em;
-    }
+    .nav-logo { height:34px; }
+    .nav-brand { font-size:22px; letter-spacing:0.08em; }
 
-    .main-area {
-      min-height: calc(100vh - 56px);
-      padding: 42px 18px;
-      display: flex;
-      justify-content: center;
+    .main {
+      min-height:calc(100vh - 56px);
+      display:flex;
+      justify-content:center;
+      padding:38px 16px;
     }
 
     .screen {
-      display: none;
-      width: 100%;
-      max-width: 820px;
+      width:100%;
+      max-width:820px;
+      display:none;
     }
 
-    .screen.active { display: block; }
+    .screen.active { display:block; }
 
     .eyebrow {
-      text-align: center;
-      font-size: 13px;
-      letter-spacing: 0.12em;
-      color: rgba(0,0,0,0.42);
-      margin-bottom: 16px;
+      text-align:center;
+      font-size:13px;
+      letter-spacing:0.12em;
+      color:rgba(0,0,0,0.45);
+      margin-bottom:16px;
     }
 
-    .main-title {
-      text-align: center;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 500;
-      margin-bottom: 14px;
-      letter-spacing: -0.03em;
+    .title {
+      text-align:center;
+      font-size:clamp(28px,4vw,42px);
+      font-weight:500;
+      line-height:1.35;
+      margin-bottom:14px;
+      letter-spacing:-0.03em;
     }
 
-    .main-desc {
-      text-align: center;
-      font-size: 16px;
-      line-height: 1.7;
-      color: rgba(0,0,0,0.58);
-      margin-bottom: 38px;
+    .desc {
+      text-align:center;
+      font-size:16px;
+      line-height:1.7;
+      color:rgba(0,0,0,0.58);
+      margin-bottom:34px;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
     }
 
     .card {
-      min-height: 86px;
-      padding: 22px 24px;
-      border-radius: 22px;
-      background: #F2F1EE;
-      border: 1px solid rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      transition: 0.2s ease;
+      background:#F2F1EE;
+      border-radius:22px;
+      padding:22px 24px;
+      border:1px solid rgba(0,0,0,0.05);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      min-height:86px;
+      cursor:pointer;
+      transition:0.2s ease;
     }
 
     .card:hover {
-      background: #E9E7E1;
-      transform: translateY(-2px);
+      background:#E9E7E1;
+      transform:translateY(-2px);
     }
 
-    .card-title {
-      font-size: 21px;
-      font-weight: 500;
-    }
-
+    .card-title { font-size:21px; font-weight:500; }
     .card-sub {
-      font-size: 13px;
-      color: rgba(0,0,0,0.48);
-      margin-top: 6px;
-      line-height: 1.5;
+      font-size:13px;
+      color:rgba(0,0,0,0.48);
+      margin-top:6px;
+      line-height:1.5;
     }
 
     .arrow {
-      font-size: 24px;
-      color: rgba(0,0,0,0.35);
-    }
-
-    .back-btn {
-      border: none;
-      background: transparent;
-      font-size: 14px;
-      color: rgba(0,0,0,0.55);
-      margin-bottom: 22px;
-      cursor: pointer;
+      font-size:24px;
+      color:rgba(0,0,0,0.35);
     }
 
     .box {
-      background: #fff;
-      border-radius: 26px;
-      padding: 30px;
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+      background:#fff;
+      border-radius:26px;
+      padding:30px;
+      border:1px solid rgba(0,0,0,0.06);
+      box-shadow:0 12px 30px rgba(0,0,0,0.04);
     }
 
     .step-label {
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      color: rgba(0,0,0,0.42);
-      margin-bottom: 12px;
+      font-size:13px;
+      letter-spacing:0.1em;
+      color:rgba(0,0,0,0.42);
+      margin-bottom:12px;
     }
 
     .step-title {
-      font-size: 29px;
-      font-weight: 500;
-      line-height: 1.35;
-      margin-bottom: 12px;
+      font-size:30px;
+      line-height:1.35;
+      font-weight:500;
+      margin-bottom:12px;
     }
 
     .step-desc {
-      font-size: 15px;
-      line-height: 1.7;
-      color: rgba(0,0,0,0.6);
-      margin-bottom: 26px;
+      font-size:15px;
+      line-height:1.7;
+      color:rgba(0,0,0,0.6);
+      margin-bottom:24px;
     }
 
     .option-list {
-      display: grid;
-      gap: 12px;
+      display:grid;
+      gap:12px;
     }
 
     .choice-btn {
-      width: 100%;
-      padding: 18px 20px;
-      border: none;
-      border-radius: 18px;
-      background: #F2F1EE;
-      font-size: 17px;
-      text-align: left;
-      cursor: pointer;
+      width:100%;
+      border:none;
+      background:#F2F1EE;
+      padding:18px 20px;
+      border-radius:18px;
+      text-align:left;
+      font-size:17px;
+      cursor:pointer;
     }
 
-    .choice-btn:hover {
-      background: #E9E7E1;
-    }
+    .choice-btn:hover { background:#E9E7E1; }
 
     .progress {
-      height: 6px;
-      background: rgba(0,0,0,0.06);
-      border-radius: 99px;
-      margin-bottom: 24px;
-      overflow: hidden;
+      height:6px;
+      background:rgba(0,0,0,0.06);
+      border-radius:999px;
+      overflow:hidden;
+      margin-bottom:24px;
     }
 
     .progress-bar {
-      height: 100%;
-      background: #222;
-      width: 0%;
-      transition: 0.25s ease;
+      height:100%;
+      width:0%;
+      background:#222;
+      transition:0.25s ease;
     }
 
-    .mini-result {
-      padding: 18px;
-      background: #F9FAF7;
-      border-radius: 18px;
-      line-height: 1.7;
-      color: rgba(0,0,0,0.68);
-      margin-bottom: 24px;
+    .summary {
+      background:#F9FAF7;
+      border-radius:18px;
+      padding:18px;
+      line-height:1.8;
+      font-size:15px;
+      margin-top:20px;
     }
 
     .tools {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 24px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:24px;
     }
 
     .tool-btn {
-      border: 1px solid rgba(0,0,0,0.08);
-      background: #F2F1EE;
-      border-radius: 16px;
-      padding: 15px 10px;
-      font-size: 14px;
-      cursor: pointer;
+      border:none;
+      background:#F2F1EE;
+      border-radius:16px;
+      padding:16px;
+      cursor:pointer;
+      font-size:14px;
     }
 
     .panel {
-      display: none;
-      margin-top: 14px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #F9FAF7;
-      border: 1px solid rgba(0,0,0,0.06);
-      font-size: 15px;
-      line-height: 1.8;
+      display:none;
+      margin-top:14px;
+      padding:18px;
+      border-radius:18px;
+      background:#F9FAF7;
+      border:1px solid rgba(0,0,0,0.06);
+      line-height:1.8;
+      font-size:15px;
     }
 
-    .panel.active { display: block; }
+    .panel.active { display:block; }
 
     .restart-btn {
-      width: 100%;
-      margin-top: 24px;
-      padding: 18px;
-      border: none;
-      border-radius: 18px;
-      background: #222;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
+      width:100%;
+      margin-top:24px;
+      border:none;
+      background:#222;
+      color:#fff;
+      padding:18px;
+      border-radius:18px;
+      font-size:16px;
+      cursor:pointer;
     }
 
-    @media (max-width: 768px) {
-      .navbar {
-        height: 54px;
-        padding: 0 18px;
-      }
+    .back-btn {
+      border:none;
+      background:transparent;
+      margin-bottom:20px;
+      cursor:pointer;
+      font-size:14px;
+      color:rgba(0,0,0,0.55);
+    }
 
-      .nav-logo { height: 30px; }
-      .nav-brand { font-size: 18px; }
-
-      .main-area {
-        padding: 32px 15px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .box {
-        padding: 24px 18px;
-        border-radius: 22px;
-      }
-
-      .step-title {
-        font-size: 24px;
-      }
-
-      .tools {
-        grid-template-columns: 1fr;
-      }
+    @media(max-width:768px) {
+      .grid { grid-template-columns:1fr; }
+      .box { padding:24px 18px; }
+      .tools { grid-template-columns:1fr; }
+      .step-title { font-size:24px; }
+      .navbar { padding:0 18px; }
+      .nav-logo { height:30px; }
+      .nav-brand { font-size:18px; }
     }
   </style>
 </head>
@@ -280,17 +248,17 @@
 <body>
   <header class="navbar">
     <div class="nav-home" onclick="goHome()">
-      <img src="assets/images/logo.png" alt="Faeing" class="nav-logo">
-      <span class="nav-brand">Faeing</span>
+      <img src="assets/images/logo.png" class="nav-logo" alt="Faeing">
+      <div class="nav-brand">Faeing</div>
     </div>
   </header>
 
-  <main class="main-area">
+  <main class="main">
 
     <section id="homeScreen" class="screen active">
       <div class="eyebrow">AGRICULTURAL MACHINE DIAGNOSIS</div>
-      <h1 class="main-title">어떤 문제가 발생했습니까?</h1>
-      <p class="main-desc">
+      <h1 class="title">어떤 문제가 발생했습니까?</h1>
+      <p class="desc">
         증상을 선택하면 하나씩 확인하면서<br>
         문제 방향을 정리합니다.
       </p>
@@ -311,13 +279,11 @@
       <button class="back-btn" onclick="goBack()">← 이전으로</button>
       <div class="box">
         <div class="progress">
-          <div class="progress-bar" id="checkProgress"></div>
+          <div class="progress-bar" id="progressBar"></div>
         </div>
-
         <div class="step-label" id="checkLabel"></div>
         <h2 class="step-title" id="checkTitle"></h2>
-        <p class="step-desc" id="checkDesc"></p>
-
+        <p class="step-desc">확인한 상태에 가장 가까운 것을 선택하세요.</p>
         <div class="option-list">
           <button class="choice-btn" onclick="answerCheck('정상')">정상입니다</button>
           <button class="choice-btn" onclick="answerCheck('이상')">이상이 있습니다</button>
@@ -332,8 +298,7 @@
         <div class="step-label">정리된 방향</div>
         <h2 class="step-title" id="finalTitle"></h2>
         <p class="step-desc" id="finalDesc"></p>
-
-        <div class="mini-result" id="finalSummary"></div>
+        <div class="summary" id="summary"></div>
 
         <div class="tools">
           <button class="tool-btn" onclick="togglePanel('principlePanel')">구조원리</button>
@@ -355,19 +320,19 @@
     const diagnosisData = {
       start: {
         title: "시동",
-        sub: "시동 불량 · 크랭킹 · 꺼짐",
+        sub: "시동 불량 · 딸깍 · 따다닥",
         questions: [
           {
             q: "계기판 전원이 들어옵니까?",
-            d: "키를 ON 했을 때 계기판, 예열등, 경고등이 들어오는지 확인합니다.",
+            d: "키를 ON 했을 때 계기판, 예열등, 경고등이 들어오는지 봅니다.",
             options: [
               { text: "전원이 전혀 안 들어온다", result: "powerOff" },
               { text: "전원은 들어온다", next: 1 }
             ]
           },
           {
-            q: "시동모터가 돌아갑니까?",
-            d: "키를 START 위치로 돌렸을 때 소리와 움직임을 확인합니다.",
+            q: "시동을 걸 때 어떤 반응입니까?",
+            d: "소리와 움직임을 기준으로 고르세요.",
             options: [
               { text: "딸깍 소리만 난다", result: "click" },
               { text: "따다닥 소리가 난다", result: "weakBattery" },
@@ -378,195 +343,126 @@
         ],
         results: {
           powerOff: {
-            title: "전원 공급 흐름부터 봅니다.",
-            desc: "배터리, 메인퓨즈, 접지, 키스위치 전원 흐름이 끊겼을 수 있습니다.",
+            title: "전기가 처음부터 들어오지 않는 상태입니다.",
+            desc: "배터리, 메인퓨즈, 접지, 키스위치 쪽을 먼저 봅니다.",
+            causes: ["배터리 방전", "단자 풀림", "메인퓨즈 단선", "접지 불량"],
             checks: [
               "배터리 단자가 단단히 조여져 있습니까?",
               "배터리 전압이 충분합니까?",
-              "메인퓨즈나 휴즈블링크가 끊어지지 않았습니까?",
-              "차체 접지선이 헐겁거나 부식되지 않았습니까?",
-              "키 ON 시 계기판 전원선에 전압이 들어옵니까?"
+              "메인퓨즈가 끊어지지 않았습니까?",
+              "차체 접지선이 헐겁거나 부식되지 않았습니까?"
             ]
           },
           click: {
-            title: "스타트 릴레이 또는 배터리 출력 부족 가능성이 있습니다.",
-            desc: "딸깍 소리는 명령은 갔지만 큰 전류가 충분히 흐르지 못할 때 자주 나타납니다.",
+            title: "전기는 가지만 힘이 부족할 수 있습니다.",
+            desc: "딸깍 소리는 시동하라는 신호는 갔지만 큰 전류가 부족할 때 많습니다.",
+            causes: ["배터리 출력 부족", "단자 접촉 불량", "스타트모터 이상"],
             checks: [
               "배터리 전압이 충분합니까?",
               "시동 시 전압이 크게 떨어지지 않습니까?",
-              "배터리 단자와 접지선이 깨끗하고 단단합니까?",
-              "스타트모터 B단자에 굵은 전원이 정상입니까?",
-              "스타트모터 자체 고착이나 마모 가능성이 있습니까?"
+              "배터리 단자와 접지선이 깨끗합니까?",
+              "스타트모터 쪽 굵은 전원선이 정상입니까?"
             ]
           },
           weakBattery: {
-            title: "배터리 약화 가능성이 큽니다.",
-            desc: "따다닥 소리는 전압이 버티지 못해 릴레이가 반복적으로 붙었다 떨어질 때 자주 납니다.",
+            title: "배터리가 약할 가능성이 큽니다.",
+            desc: "따다닥 소리는 전압이 버티지 못해 반복적으로 붙었다 떨어질 때 자주 납니다.",
+            causes: ["배터리 약화", "충전 부족", "단자 부식"],
             checks: [
               "배터리 충전 상태가 충분합니까?",
               "시동 시 전압이 10V 이하로 떨어지지 않습니까?",
               "배터리 단자에 부식이 없습니까?",
-              "점프 시동 시 증상이 개선됩니까?",
-              "충전 후에도 반복되면 배터리 교체가 필요합니까?"
+              "점프 시동 시 증상이 개선됩니까?"
             ]
           },
           crankNoFire: {
-            title: "연료 또는 시동 조건 흐름을 봅니다.",
-            desc: "모터는 도는데 시동이 안 걸리면 연료 공급, 예열, ECU 전원, 안전조건을 확인합니다.",
+            title: "연료나 시동 조건을 봅니다.",
+            desc: "모터는 도는데 시동이 안 걸리면 연료, 예열, 안전조건을 확인합니다.",
+            causes: ["연료 부족", "연료필터 막힘", "예열 불량", "안전조건 불일치"],
             checks: [
               "연료가 충분합니까?",
               "연료필터 막힘이나 에어 유입은 없습니까?",
               "예열등이 정상 작동합니까?",
-              "전후진 중립, PTO OFF 조건이 맞습니까?",
-              "ECU 전원이나 경고등 이상은 없습니까?"
+              "전후진 중립, PTO OFF 조건이 맞습니까?"
             ]
           },
           noSound: {
-            title: "시동 신호 회로가 끊겼을 수 있습니다.",
-            desc: "아무 소리도 없으면 키스위치, 안전스위치, 릴레이 명령선을 먼저 봅니다.",
+            title: "시동 신호가 전달되지 않을 수 있습니다.",
+            desc: "아무 소리도 없으면 키, 안전스위치, 릴레이 쪽 신호를 봅니다.",
+            causes: ["중립 조건 불일치", "PTO ON", "안전스위치 불량", "키스위치 불량"],
             checks: [
               "전후진 레버가 중립입니까?",
               "PTO 스위치가 OFF입니까?",
               "클러치 또는 브레이크 안전스위치가 정상입니까?",
-              "스타트 릴레이에 신호 전압이 들어옵니까?",
-              "키스위치 START 단자 출력이 정상입니까?"
+              "시동 신호가 스타트모터 쪽까지 전달됩니까?"
             ]
           }
         },
-        principle: "시동 회로는 배터리 → 키스위치 → 안전스위치 → 릴레이 → 스타트모터로 이어지는 흐름입니다.",
-        maintenance: "배터리 교체일, 연료필터 교체일, 예열플러그 점검 여부를 확인하면 방향이 빨라집니다."
+        principle: "시동은 배터리의 전기가 키와 안전조건을 지나 스타트모터까지 전달되어야 이루어집니다.",
+        maintenance: "배터리 교체일, 연료필터 교체일, 예열플러그 점검 여부를 확인하면 좋습니다."
       },
 
-    hydraulic: {
-  title: "유압",
-  sub: "안 움직임 · 느림 · 딸꾹질",
-  questions: [
-    {
-      q: "유압이 어떻게 이상합니까?",
-      d: "복잡하게 보지 말고, 지금 보이는 움직임만 고르세요.",
-      options: [
-        { text: "움직이지 않는다", result: "noMove" },
-        { text: "느리다", result: "slow" },
-        { text: "딸꾹질한다", result: "hunting" }
-      ]
-    }
-  ],
-
-  results: {
-    noMove: {
-      title: "움직이지 않는 경우는 먼저 다섯 가지를 봅니다.",
-      desc: "오일이 부족하거나, 잠금 상태이거나, 신호가 가지 않거나, 솔이 붙었거나, 펌프가 압력을 만들지 못할 수 있습니다.",
-      checks: [
-        "유압오일이 부족하지 않습니까?",
-        "유압 잠금 또는 락 상태가 걸려 있지 않습니까?",
-        "스위치나 레버를 조작했을 때 신호가 전달됩니까?",
-        "솔레노이드 밸브가 붙어 있거나 고착된 느낌은 없습니까?",
-        "펌프가 압력을 만드는 소리나 반응이 있습니까?"
-      ],
-      causes: [
-        "오일 부족",
-        "락 상태",
-        "신호선 단선",
-        "솔 고착",
-        "펌프 고장"
-      ]
-    },
-
-    slow: {
-      title: "느린 경우는 먼저 두 가지를 봅니다.",
-      desc: "대부분 오일 부족이거나, 밸브 안에 이물질이 끼어 흐름이 답답해진 경우가 많습니다.",
-      checks: [
-        "유압오일이 부족하지 않습니까?",
-        "오일 상태가 탁하거나 이물질이 섞인 느낌은 없습니까?",
-        "레버를 조작했을 때 움직임이 답답하게 따라옵니까?",
-        "밸브 쪽에서 걸리는 느낌이나 반응 지연이 있습니까?"
-      ],
-      causes: [
-        "오일 부족",
-        "밸브 이물질"
-      ]
-    },
-
-    hunting: {
-      title: "딸꾹질하는 경우는 먼저 두 가지를 봅니다.",
-      desc: "움직임이 일정하지 않거나 덜컥거리면 필터 막힘 또는 실린더 내부 누유 가능성을 먼저 봅니다.",
-      checks: [
-        "최근 유압필터를 교체한 지 오래되었습니까?",
-        "작동 중 덜컥거리거나 끊기듯 움직입니까?",
-        "올라간 뒤 힘을 유지하지 못하고 조금씩 내려옵니까?",
-        "실린더 주변에 외부 누유가 없는데도 힘이 빠지는 느낌이 있습니까?"
-      ],
-      causes: [
-        "필터 막힘",
-        "실린더 누유"
-      ]
-    }
-  },
-
-  principle: "유압은 오일이 힘을 전달하는 구조입니다. 오일이 부족하면 힘이 약해지고, 막히면 느려지고, 새면 힘을 유지하지 못합니다.",
-  maintenance: "유압오일량, 유압필터 교체일, 실린더 누유 여부를 먼저 확인하세요."
-}
-
-      electric: {
-        title: "전기",
-        sub: "전원 · 퓨즈 · 센서 · 경고등",
+      hydraulic: {
+        title: "유압",
+        sub: "안 움직임 · 느림 · 딸꾹질",
         questions: [
           {
-            q: "전기 문제는 어떤 형태입니까?",
-            d: "전체 전원인지, 특정 장치인지, 경고등인지 나누어 봅니다.",
+            q: "유압이 어떻게 이상합니까?",
+            d: "복잡하게 보지 말고 지금 보이는 움직임만 고르세요.",
             options: [
-              { text: "전체 전원이 이상하다", result: "main" },
-              { text: "특정 장치만 안 된다", result: "part" },
-              { text: "경고등이 들어온다", result: "warning" }
+              { text: "움직이지 않는다", result: "noMove" },
+              { text: "느리다", result: "slow" },
+              { text: "딸꾹질한다", result: "hunting" }
             ]
           }
         ],
         results: {
-          main: {
-            title: "메인 전원 흐름을 봅니다.",
-            desc: "전체 전원 문제는 배터리, 메인퓨즈, 접지, 키스위치가 핵심입니다.",
+          noMove: {
+            title: "움직이지 않는 경우는 먼저 다섯 가지를 봅니다.",
+            desc: "오일 부족, 펌프 고장, 락 상태, 신호선 단선, 솔 고착을 먼저 봅니다.",
+            causes: ["오일 부족", "펌프 고장", "락 상태", "신호선 단선", "솔 고착"],
             checks: [
-              "배터리 전압이 충분합니까?",
-              "메인퓨즈가 정상입니까?",
-              "배터리 접지선이 정상입니까?",
-              "키 ON 전원 출력이 정상입니까?",
-              "계기판 커넥터 접촉 상태가 좋습니까?"
+              "유압오일이 부족하지 않습니까?",
+              "유압 잠금 또는 락 상태가 걸려 있지 않습니까?",
+              "스위치나 레버를 조작했을 때 신호가 전달됩니까?",
+              "솔레노이드 밸브가 붙어 있거나 고착된 느낌은 없습니까?",
+              "펌프가 압력을 만드는 소리나 반응이 있습니까?"
             ]
           },
-          part: {
-            title: "해당 회로의 퓨즈와 출력선을 봅니다.",
-            desc: "특정 장치만 안 되면 개별 퓨즈, 스위치, 커넥터 문제일 가능성이 큽니다.",
+          slow: {
+            title: "느린 경우는 먼저 두 가지를 봅니다.",
+            desc: "대부분 오일 부족이거나 밸브 안에 이물질이 끼어 흐름이 답답해진 경우가 많습니다.",
+            causes: ["오일 부족", "밸브 이물질"],
             checks: [
-              "해당 장치의 퓨즈가 정상입니까?",
-              "스위치 입력과 출력이 정상입니까?",
-              "커넥터 부식이나 빠짐은 없습니까?",
-              "해당 장치에 전압이 도착합니까?",
-              "장치 자체 불량 가능성은 없습니까?"
+              "유압오일이 부족하지 않습니까?",
+              "오일 상태가 탁하거나 이물질이 섞인 느낌은 없습니까?",
+              "레버를 조작했을 때 움직임이 답답하게 따라옵니까?",
+              "밸브 쪽에서 걸리는 느낌이나 반응 지연이 있습니까?"
             ]
           },
-          warning: {
-            title: "센서 입력 또는 제어기 판단을 봅니다.",
-            desc: "경고등은 센서값 이상, 단선, 접촉불량, 실제 고장 모두 가능합니다.",
+          hunting: {
+            title: "딸꾹질하는 경우는 먼저 두 가지를 봅니다.",
+            desc: "움직임이 일정하지 않거나 덜컥거리면 필터 막힘 또는 실린더 내부 누유 가능성을 먼저 봅니다.",
+            causes: ["필터 막힘", "실린더 누유"],
             checks: [
-              "경고등이 언제 들어오는지 확인했습니까?",
-              "센서 커넥터가 빠지지 않았습니까?",
-              "오일압력, 수온, 충전 상태가 실제로 정상입니까?",
-              "고장코드 확인이 가능합니까?",
-              "배선 흔들림에 따라 증상이 변합니까?"
+              "최근 유압필터를 교체한 지 오래되었습니까?",
+              "작동 중 덜컥거리거나 끊기듯 움직입니까?",
+              "올라간 뒤 힘을 유지하지 못하고 조금씩 내려옵니까?",
+              "실린더 주변에 외부 누유가 없는데도 힘이 빠지는 느낌이 있습니까?"
             ]
           }
         },
-        principle: "전기는 배터리에서 나와 퓨즈와 스위치를 거쳐 장치로 가고, 접지로 돌아와야 완성됩니다.",
-        maintenance: "배터리 교체일, 퓨즈박스 침수, 커넥터 부식 이력을 확인하세요."
+        principle: "유압은 오일이 힘을 전달하는 구조입니다. 오일이 부족하면 힘이 약해지고, 막히면 느려지고, 새면 힘을 유지하지 못합니다.",
+        maintenance: "유압오일량, 유압필터 교체일, 실린더 누유 여부를 먼저 확인하세요."
       },
 
       power: {
         title: "출력",
-        sub: "힘 부족 · 매연 · 부하 이상",
+        sub: "힘 없음 · 매연 · 부하",
         questions: [
           {
             q: "힘이 없는 증상이 언제 나타납니까?",
-            d: "항상 부족한지, 작업 중에만 부족한지 나누는 것이 중요합니다.",
+            d: "항상 힘이 없는지, 작업할 때만 그런지 고르세요.",
             options: [
               { text: "항상 힘이 없다", result: "always" },
               { text: "작업할 때만 힘이 없다", result: "load" },
@@ -576,59 +472,323 @@
         ],
         results: {
           always: {
-            title: "연료·흡기 흐름부터 봅니다.",
-            desc: "항상 힘이 없으면 공기와 연료 흐름 부족 가능성이 있습니다.",
+            title: "연료와 공기 흐름을 먼저 봅니다.",
+            desc: "엔진이 힘을 내기 위해서는 공기와 연료가 충분히 들어가야 합니다.",
+            causes: ["에어클리너 막힘", "연료필터 막힘", "연료라인 에어 유입"],
             checks: [
               "에어클리너가 막히지 않았습니까?",
               "연료필터 교체 시기가 지나지 않았습니까?",
               "연료라인에 에어 유입은 없습니까?",
-              "터보 흡기호스 빠짐이나 균열은 없습니까?",
               "엔진오일 양이 정상입니까?"
             ]
           },
           load: {
-            title: "부하 전달부와 연료 공급을 함께 봅니다.",
-            desc: "작업 중 힘이 없으면 연료 공급, 클러치, 작업기 부하를 같이 봐야 합니다.",
+            title: "작업 부하와 동력 전달을 함께 봅니다.",
+            desc: "작업 중에만 힘이 없으면 작업기 부하나 클러치, PTO 쪽도 봐야 합니다.",
+            causes: ["작업기 과부하", "클러치 미끄러짐", "연료 공급 부족"],
             checks: [
               "작업기 깊이가 과하지 않습니까?",
               "연료필터 막힘 가능성은 없습니까?",
               "클러치 미끄러짐은 없습니까?",
-              "PTO 전달부 이상음은 없습니까?",
-              "냉각수 온도가 과하게 오르지 않습니까?"
+              "PTO 전달부 이상음은 없습니까?"
             ]
           },
           smoke: {
             title: "연소 상태를 봅니다.",
-            desc: "매연 색에 따라 흡기 부족, 연료 과다, 오일 연소 가능성을 나눕니다.",
+            desc: "매연 색에 따라 공기 부족, 연료 문제, 오일 연소 가능성을 나눕니다.",
+            causes: ["흡기 부족", "연료 분사 이상", "오일 연소"],
             checks: [
               "검은 매연이면 에어클리너가 막히지 않았습니까?",
               "흰 연기면 예열이나 연료 분사 이상은 없습니까?",
               "푸른 연기면 오일 연소 가능성은 없습니까?",
-              "인젝터 상태가 정상입니까?",
               "터보 오일 누유 가능성은 없습니까?"
             ]
           }
         },
         principle: "출력은 연료, 공기, 압축, 연소, 동력전달 흐름이 맞아야 나옵니다.",
         maintenance: "에어클리너, 연료필터, 엔진오일, 냉각수 관리 이력을 확인하세요."
+      },
+
+      electric: {
+        title: "전기",
+        sub: "전원 · 퓨즈 · 경고등",
+        questions: [
+          {
+            q: "전기 문제는 어떤 형태입니까?",
+            d: "전체 전원인지, 특정 장치인지, 경고등인지 고르세요.",
+            options: [
+              { text: "전체 전원이 이상하다", result: "main" },
+              { text: "특정 장치만 안 된다", result: "part" },
+              { text: "경고등이 들어온다", result: "warning" }
+            ]
+          }
+        ],
+        results: {
+          main: {
+            title: "큰 전원 흐름을 봅니다.",
+            desc: "전체 전원 문제는 배터리, 메인퓨즈, 접지, 키 쪽이 핵심입니다.",
+            causes: ["배터리 문제", "메인퓨즈 단선", "접지 불량"],
+            checks: [
+              "배터리 전압이 충분합니까?",
+              "메인퓨즈가 정상입니까?",
+              "배터리 접지선이 정상입니까?",
+              "키 ON 전원 출력이 정상입니까?"
+            ]
+          },
+          part: {
+            title: "해당 장치로 가는 전기를 봅니다.",
+            desc: "특정 장치만 안 되면 개별 퓨즈, 스위치, 커넥터 가능성이 큽니다.",
+            causes: ["개별 퓨즈 단선", "스위치 불량", "커넥터 접촉 불량"],
+            checks: [
+              "해당 장치의 퓨즈가 정상입니까?",
+              "스위치 입력과 출력이 정상입니까?",
+              "커넥터 부식이나 빠짐은 없습니까?",
+              "해당 장치에 전압이 도착합니까?"
+            ]
+          },
+          warning: {
+            title: "센서나 실제 상태를 함께 봅니다.",
+            desc: "경고등은 센서 문제일 수도 있고 실제 이상일 수도 있습니다.",
+            causes: ["센서 접촉 불량", "실제 오일압력 이상", "수온 이상", "충전 이상"],
+            checks: [
+              "경고등이 언제 들어오는지 확인했습니까?",
+              "센서 커넥터가 빠지지 않았습니까?",
+              "오일압력, 수온, 충전 상태가 실제로 정상입니까?",
+              "배선 흔들림에 따라 증상이 변합니까?"
+            ]
+          }
+        },
+        principle: "전기는 배터리에서 나와 퓨즈와 스위치를 거쳐 장치로 가고, 접지로 돌아와야 완성됩니다.",
+        maintenance: "배터리 교체일, 퓨즈박스 침수, 커넥터 부식 이력을 확인하세요."
+      },
+
+      cooling: {
+        title: "냉각",
+        sub: "과열 · 냉각수 · 팬",
+        questions: [
+          {
+            q: "냉각 문제는 어떤 상황입니까?",
+            d: "온도가 오르는지, 냉각수가 줄어드는지 고르세요.",
+            options: [
+              { text: "온도가 계속 올라간다", result: "overheat" },
+              { text: "냉각수가 줄어든다", result: "loss" },
+              { text: "팬이나 벨트가 이상하다", result: "fan" }
+            ]
+          }
+        ],
+        results: {
+          overheat: {
+            title: "열을 밖으로 빼내지 못할 수 있습니다.",
+            desc: "라디에이터 막힘, 냉각수 부족, 팬벨트 문제를 먼저 봅니다.",
+            causes: ["라디에이터 막힘", "냉각수 부족", "팬벨트 불량"],
+            checks: [
+              "라디에이터 앞쪽 먼지와 볏짚을 청소했습니까?",
+              "냉각수 양이 충분합니까?",
+              "팬벨트 장력이 정상입니까?",
+              "워터펌프 누수나 소음은 없습니까?"
+            ]
+          },
+          loss: {
+            title: "냉각수가 새거나 소모될 수 있습니다.",
+            desc: "호스, 라디에이터, 워터펌프, 엔진 내부 가능성을 봅니다.",
+            causes: ["호스 누수", "라디에이터 누수", "워터펌프 누수", "엔진 내부 누수"],
+            checks: [
+              "호스 연결부 누수를 확인했습니까?",
+              "라디에이터 코어 누수가 없습니까?",
+              "워터펌프 주변에 물 자국이 없습니까?",
+              "엔진오일에 냉각수가 섞이지 않았습니까?"
+            ]
+          },
+          fan: {
+            title: "바람을 보내는 쪽을 봅니다.",
+            desc: "팬과 벨트가 제대로 돌지 않으면 냉각이 되지 않습니다.",
+            causes: ["팬벨트 장력 부족", "팬 파손", "이물질 끼임"],
+            checks: [
+              "팬벨트 장력과 균열을 확인했습니까?",
+              "팬 날개가 파손되지 않았습니까?",
+              "팬 주변 이물질 끼임은 없습니까?",
+              "벨트 풀리 흔들림은 없습니까?"
+            ]
+          }
+        },
+        principle: "냉각은 엔진 열을 냉각수가 받아 라디에이터로 보내고, 팬과 공기로 밖으로 버리는 흐름입니다.",
+        maintenance: "냉각수 교체일, 라디에이터 청소 주기, 팬벨트 교체 이력을 확인하세요."
+      },
+
+      steering: {
+        title: "조향",
+        sub: "핸들 무거움 · 쏠림 · 유격",
+        questions: [
+          {
+            q: "조향 문제는 어떤 형태입니까?",
+            d: "핸들이 무거운지, 쏠리는지, 유격이 큰지 고르세요.",
+            options: [
+              { text: "핸들이 무겁다", result: "heavy" },
+              { text: "한쪽으로 쏠린다", result: "pull" },
+              { text: "유격이 크다", result: "play" }
+            ]
+          }
+        ],
+        results: {
+          heavy: {
+            title: "조향 유압과 타이어를 봅니다.",
+            desc: "핸들이 무거우면 유압오일, 펌프, 타이어 공기압을 봅니다.",
+            causes: ["타이어 공기압 부족", "유압오일 부족", "조향펌프 문제"],
+            checks: [
+              "앞타이어 공기압이 충분합니까?",
+              "유압오일량이 충분합니까?",
+              "조향 시 펌프 소음이 커지지 않습니까?",
+              "조향 실린더 누유가 없습니까?"
+            ]
+          },
+          pull: {
+            title: "좌우 차이를 봅니다.",
+            desc: "쏠림은 좌우 타이어, 브레이크, 링크 차이에서 많이 생깁니다.",
+            causes: ["좌우 공기압 차이", "브레이크 끌림", "조향 링크 휘어짐"],
+            checks: [
+              "좌우 타이어 공기압이 같습니까?",
+              "타이어 마모 차이가 크지 않습니까?",
+              "브레이크 한쪽 끌림은 없습니까?",
+              "조향 링크가 휘지 않았습니까?"
+            ]
+          },
+          play: {
+            title: "핀과 링크 유격을 봅니다.",
+            desc: "유격이 크면 볼조인트, 너클, 핀, 베어링을 봐야 합니다.",
+            causes: ["볼조인트 마모", "너클핀 유격", "휠베어링 유격"],
+            checks: [
+              "핸들을 좌우로 흔들 때 헐거운 곳이 보입니까?",
+              "볼조인트 마모가 없습니까?",
+              "너클핀 유격이 없습니까?",
+              "휠베어링 유격이 없습니까?"
+            ]
+          }
+        },
+        principle: "조향은 운전자의 조작이 유압과 링크를 통해 앞바퀴 방향을 바꾸는 흐름입니다.",
+        maintenance: "타이어 공기압, 조향 링크 그리스 주입, 유압오일 관리 이력을 확인하세요."
+      },
+
+      implement: {
+        title: "작업기",
+        sub: "로터리 · 로더 · PTO",
+        questions: [
+          {
+            q: "작업기 문제는 어디에서 나타납니까?",
+            d: "PTO, 로터리, 로더 중 가까운 항목을 고르세요.",
+            options: [
+              { text: "PTO가 이상하다", result: "pto" },
+              { text: "로터리 작업이 이상하다", result: "rotary" },
+              { text: "로더 작동이 이상하다", result: "loader" }
+            ]
+          }
+        ],
+        results: {
+          pto: {
+            title: "PTO 동력 전달을 봅니다.",
+            desc: "PTO는 스위치, 클러치, 축 연결, 작업기 부하를 같이 봅니다.",
+            causes: ["PTO 스위치 문제", "축 연결 불량", "작업기 과부하"],
+            checks: [
+              "PTO 스위치 또는 레버가 정상입니까?",
+              "PTO 축 연결 상태가 정상입니까?",
+              "작업기 쪽 걸림이나 과부하는 없습니까?",
+              "PTO 회전 중 이상음은 없습니까?"
+            ]
+          },
+          rotary: {
+            title: "로터리 부하와 날 상태를 봅니다.",
+            desc: "로터리 문제는 날, 깊이, 기어박스, PTO 각도를 봅니다.",
+            causes: ["날 마모", "작업 깊이 과다", "기어박스 오일 부족"],
+            checks: [
+              "로터리 날 마모와 파손이 없습니까?",
+              "작업 깊이가 과하지 않습니까?",
+              "기어박스 오일이 충분합니까?",
+              "PTO 샤프트 각도와 길이가 적당합니까?"
+            ]
+          },
+          loader: {
+            title: "로더 유압 흐름을 봅니다.",
+            desc: "로더는 퀵커플러, 유압오일, 밸브, 실린더를 봅니다.",
+            causes: ["퀵커플러 체결 불량", "유압오일 부족", "실린더 누유"],
+            checks: [
+              "퀵커플러가 끝까지 체결되었습니까?",
+              "유압오일량이 충분합니까?",
+              "로더 밸브 링크가 정상입니까?",
+              "실린더 외부 누유가 없습니까?"
+            ]
+          }
+        },
+        principle: "작업기는 트랙터에서 나온 동력이나 유압을 받아 실제 일을 하는 끝단입니다.",
+        maintenance: "작업기 오일, 그리스 주입, 날 교체, PTO 샤프트 관리 이력을 확인하세요."
+      },
+
+      etc: {
+        title: "기타",
+        sub: "복합 증상 · 설명 어려움",
+        questions: [
+          {
+            q: "증상을 한 가지로 고르기 어렵습니까?",
+            d: "복합 증상은 먼저 상태를 기록하는 것이 중요합니다.",
+            options: [
+              { text: "여러 증상이 같이 나타난다", result: "complex" },
+              { text: "소리나 느낌이 이상하다", result: "noise" },
+              { text: "설명하기 어렵다", result: "unknown" }
+            ]
+          }
+        ],
+        results: {
+          complex: {
+            title: "기본 상태부터 나누어 봅니다.",
+            desc: "여러 문제가 같이 보이면 전원, 연료, 오일, 냉각부터 정리합니다.",
+            causes: ["최근 수리 영향", "오일류 문제", "전기 접촉 문제"],
+            checks: [
+              "증상이 처음 나타난 시점을 기억합니까?",
+              "최근 수리나 교체 부품이 있었습니까?",
+              "오일류와 냉각수 상태가 정상입니까?",
+              "경고등이 들어와 있습니까?"
+            ]
+          },
+          noise: {
+            title: "소리의 위치와 조건을 봅니다.",
+            desc: "이상음은 위치, 회전수, 부하, 작업 조건에 따라 달라집니다.",
+            causes: ["베어링 마모", "벨트 문제", "기어 소음", "작업기 간섭"],
+            checks: [
+              "소리가 나는 위치를 대략 알 수 있습니까?",
+              "공회전에서도 소리가 납니까?",
+              "작업할 때만 소리가 납니까?",
+              "주행 속도에 따라 소리가 변합니까?"
+            ]
+          },
+          unknown: {
+            title: "설명이 어려울수록 기록이 중요합니다.",
+            desc: "정확한 표현보다 언제, 어떤 조건에서 반복되는지가 중요합니다.",
+            causes: ["복합 문제", "간헐적 문제", "사용 조건 문제"],
+            checks: [
+              "기종과 기대번호를 확인했습니까?",
+              "증상이 나타난 작업 상황을 기억합니까?",
+              "계기판이나 경고등 사진을 찍을 수 있습니까?",
+              "증상이 반복되는 조건이 있습니까?"
+            ]
+          }
+        },
+        principle: "기계 문제는 대부분 발생, 전달, 사용, 복귀 중 어느 지점에서 흐름이 무너진 결과입니다.",
+        maintenance: "최근 정비, 오일 교환, 필터 교환, 부품 교체 이력을 먼저 정리하세요."
       }
     };
 
     let state = {
-      sessionId: null,
-      categoryKey: null,
-      resultKey: null,
-      questionIndex: 0,
-      checkIndex: 0,
-      answers: [],
-      checks: [],
-      openedPanels: [],
-      startedAt: null,
-      updatedAt: null
+      sessionId:null,
+      categoryKey:null,
+      questionIndex:0,
+      resultKey:null,
+      checkIndex:0,
+      answers:[],
+      checks:[],
+      openedPanels:[],
+      startedAt:null,
+      updatedAt:null
     };
 
     let historyStack = [];
-
     const categoryGrid = document.getElementById("categoryGrid");
 
     function init() {
@@ -651,52 +811,46 @@
     }
 
     function createSessionId() {
-      return "faeing_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+      return "faeing_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
     }
 
     function quietRecord() {
+      if (!state.sessionId) return;
+
       state.updatedAt = new Date().toISOString();
 
       const records = JSON.parse(localStorage.getItem("faeing_records") || "[]");
       const index = records.findIndex(r => r.sessionId === state.sessionId);
 
-      if (index >= 0) {
-        records[index] = { ...state };
-      } else {
-        records.push({ ...state });
-      }
+      if (index >= 0) records[index] = { ...state };
+      else records.push({ ...state });
 
       localStorage.setItem("faeing_records", JSON.stringify(records));
-
-      /*
-        나중에 Firebase로 바꿀 때는 여기 안에만 추가하면 됩니다.
-
-        예:
-        await addDoc(collection(db, "diagnosisRecords"), state);
-      */
     }
 
     function showScreen(id) {
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
       document.getElementById(id).classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top:0, behavior:"smooth" });
     }
 
     function startDiagnosis(key) {
       state = {
-        sessionId: createSessionId(),
-        categoryKey: key,
-        resultKey: null,
-        questionIndex: 0,
-        checkIndex: 0,
-        answers: [],
-        checks: [],
-        openedPanels: [],
-        startedAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        sessionId:createSessionId(),
+        categoryKey:key,
+        questionIndex:0,
+        resultKey:null,
+        checkIndex:0,
+        answers:[],
+        checks:[],
+        openedPanels:[],
+        startedAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString()
       };
 
-      historyStack = [{ type: "home" }];
+      historyStack = [{ type:"home" }];
       quietRecord();
       renderQuestion(0);
     }
@@ -722,20 +876,16 @@
 
         btn.onclick = () => {
           state.answers.push({
-            question: q.q,
-            answer: option.text,
-            time: new Date().toISOString()
+            question:q.q,
+            answer:option.text,
+            time:new Date().toISOString()
           });
 
-          historyStack.push({ type: "question", index });
-
+          historyStack.push({ type:"question", index });
           quietRecord();
 
-          if (option.next !== undefined) {
-            renderQuestion(option.next);
-          } else {
-            startChecks(option.result);
-          }
+          if (option.next !== undefined) renderQuestion(option.next);
+          else startChecks(option.result);
         };
 
         box.appendChild(btn);
@@ -748,7 +898,7 @@
       state.resultKey = resultKey;
       state.checkIndex = 0;
       state.checks = [];
-      historyStack.push({ type: "resultStart", resultKey });
+      historyStack.push({ type:"resultStart", resultKey });
       quietRecord();
       renderCheck();
     }
@@ -764,15 +914,13 @@
         return;
       }
 
-      const percent = ((state.checkIndex) / checks.length) * 100;
+      document.getElementById("progressBar").style.width =
+        `${(state.checkIndex / checks.length) * 100}%`;
 
-      document.getElementById("checkProgress").style.width = `${percent}%`;
       document.getElementById("checkLabel").textContent =
         `${state.checkIndex + 1} / ${checks.length}`;
 
       document.getElementById("checkTitle").textContent = current;
-      document.getElementById("checkDesc").textContent =
-        "확인한 상태에 가장 가까운 것을 선택하세요.";
 
       quietRecord();
       showScreen("checkScreen");
@@ -786,14 +934,12 @@
       state.checks.push({
         item,
         answer,
-        time: new Date().toISOString()
+        time:new Date().toISOString()
       });
 
-      historyStack.push({ type: "check", index: state.checkIndex });
-
+      historyStack.push({ type:"check", index:state.checkIndex });
       state.checkIndex++;
       quietRecord();
-
       renderCheck();
     }
 
@@ -801,8 +947,7 @@
       const category = diagnosisData[state.categoryKey];
       const result = category.results[state.resultKey];
 
-      document.getElementById("checkProgress").style.width = "100%";
-
+      document.getElementById("progressBar").style.width = "100%";
       document.getElementById("finalTitle").textContent = result.title;
       document.getElementById("finalDesc").textContent = result.desc;
 
@@ -811,23 +956,31 @@
 
       let html = "";
 
-      if (abnormal.length === 0 && unknown.length === 0) {
-        html = "확인 항목에서 뚜렷한 이상은 선택되지 않았습니다. 증상이 계속되면 다음 흐름을 더 확인해야 합니다.";
-      } else {
-        html += `<strong>우선 살펴볼 항목</strong><br>`;
-        abnormal.forEach(c => {
-          html += `• ${c.item}<br>`;
+      if (result.causes && result.causes.length > 0) {
+        html += `<strong>가능성이 높은 원인</strong><br>`;
+        result.causes.forEach(cause => {
+          html += `• ${cause}<br>`;
         });
-
-        if (unknown.length > 0) {
-          html += `<br><strong>확인이 어려웠던 항목</strong><br>`;
-          unknown.forEach(c => {
-            html += `• ${c.item}<br>`;
-          });
-        }
+        html += `<br>`;
       }
 
-      document.getElementById("finalSummary").innerHTML = html;
+      if (abnormal.length > 0) {
+        html += `<strong>이상이 체크된 항목</strong><br>`;
+        abnormal.forEach(item => {
+          html += `• ${item.item}<br>`;
+        });
+      } else {
+        html += `뚜렷한 이상 항목은 선택되지 않았습니다.`;
+      }
+
+      if (unknown.length > 0) {
+        html += `<br><br><strong>확인이 어려웠던 항목</strong><br>`;
+        unknown.forEach(item => {
+          html += `• ${item.item}<br>`;
+        });
+      }
+
+      document.getElementById("summary").innerHTML = html;
 
       document.getElementById("principlePanel").innerHTML =
         `<strong>구조원리</strong><br>${category.principle}`;
@@ -837,8 +990,7 @@
 
       document.getElementById("supportPanel").innerHTML =
         `<strong>도움요청</strong><br>
-        지금 확인한 흐름을 기준으로 기종, 기대번호, 사진, 연락처를 함께 남기면 다음 판단이 쉬워집니다.<br><br>
-        다음 단계에서는 이 영역을 실제 입력폼으로 연결하면 됩니다.`;
+        현재 확인한 흐름을 기준으로 기종, 기대번호, 사진, 연락처를 함께 전달하면 다음 판단이 쉬워집니다.`;
 
       document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
 
@@ -890,16 +1042,16 @@
 
     function goHome() {
       state = {
-        sessionId: null,
-        categoryKey: null,
-        resultKey: null,
-        questionIndex: 0,
-        checkIndex: 0,
-        answers: [],
-        checks: [],
-        openedPanels: [],
-        startedAt: null,
-        updatedAt: null
+        sessionId:null,
+        categoryKey:null,
+        questionIndex:0,
+        resultKey:null,
+        checkIndex:0,
+        answers:[],
+        checks:[],
+        openedPanels:[],
+        startedAt:null,
+        updatedAt:null
       };
 
       historyStack = [];
@@ -910,7 +1062,6 @@
   </script>
 </body>
 </html>
-
 
 
 
